@@ -1,3 +1,6 @@
+<head>
+    <link rel="stylesheet" href="{{ asset('css/mail.css') }}" type="text/css">
+</head>
 <div class="website">{{ config('app.name') }}</div>
 <div class="container">
     <h2>Сброс пароля на сайте</h2>
