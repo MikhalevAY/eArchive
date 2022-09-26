@@ -1,0 +1,18 @@
+<?php
+
+return [
+    'wrong_credentials' => 'Неверный логин/пароль',
+    'data_updated' => 'Данные обновлены',
+    'user_stored' => 'Новый пользователь добавлен',
+    'user_deleted' => 'Пользователь удалён',
+    'users_deleted' => 'Выбранные пользователи удалены',
+    'registration' => 'Регистрация на сайте ' . config('app.name'),
+    'reset_password' => 'Србос пароля на сайте ' . config('app.name'),
+    'restore_password' => 'Восстановление пароля на сайте ' . config('app.name'),
+    'new_password_sent' => 'Новый пароль отправлен на почту',
+    'instructions_sent' => 'Дальнейшие инструкции отправлены на почту',
+    'instructions_already_sent' => 'Инструкции уже были отправлены на почту',
+    'document_registered' => 'Новый документ зарегистрирован',
+    'document_stored' => 'Документ сохранен в черновики',
+    'wrong_file_format' => 'Неверный формат файла',
+];
