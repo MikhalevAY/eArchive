@@ -16,7 +16,7 @@
     }
     .container {
         background: #FAFAFA;
-        max-width: 500px;
+        max-width: 800px;
         margin: 0 auto;
         padding: 15px 30px;
     }

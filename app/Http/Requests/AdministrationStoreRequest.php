@@ -40,7 +40,7 @@ class AdministrationStoreRequest extends FormRequest
             'name' => 'required|string:255',
             'patronymic' => 'nullable|string:255',
             'role' => 'required|in:admin,archivist,reader,guest',
-            'email' => 'required|email:strict|unique:users,email,NULL,id,deleted_at,NULL',
+            'email' => 'required|email:strict|unique:users,email',
             'password' => 'required'
         ];
     }
