@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        User::createQuietly([
             'email' => 'admin@earchive.kz',
             'is_active' => 1,
             'name' => 'Админ',
