@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="./public/css/mail.css" type="text/css">
+    @include('emails.mail-css')
 </head>
 <div class="website">{{ config('app.name') }}</div>
 <div class="container">
