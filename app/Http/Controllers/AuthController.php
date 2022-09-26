@@ -17,8 +17,12 @@ class AuthController extends Controller
     {
     }
 
-    public function index(): View
+    public function index(): View|RedirectResponse
     {
+        if (auth()->check()) {
+            return to_route('archiveSearch');
+        }
+
         return view('auth.index');
     }
 

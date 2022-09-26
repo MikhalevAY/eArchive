@@ -462,7 +462,7 @@ form .file-label {
         font-size: 14px;
         line-height: 20px;
         color: #8F97A2;
-        max-width: 220px;
+        width: 220px;
         overflow: hidden;
         position: relative;
     }

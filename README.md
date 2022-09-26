@@ -1,5 +1,6 @@
 ## eArchive Project
 
 - cp .env.example .env
-- artisan migrate.
-- artisan db:seed.
+- php artisan storage:link
+- php artisan migrate.
+- php artisan db:seed.

@@ -14,6 +14,7 @@ class SystemSettingSeeder extends Seeder
      */
     public function run()
     {
+        //Todo Добавить файл при миграции
         SystemSetting::withoutEvents(function () {
             SystemSetting::create([
                 'logo' => 'logos/samruk-logo.svg',
