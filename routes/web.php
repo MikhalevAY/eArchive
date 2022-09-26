@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\{Artisan, Route};
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ArchiveController;
@@ -64,4 +64,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update-password', 'updatePassword')->name('updatePersonalPassword');
         Route::post('/update-photo', 'updatePhoto')->name('updatePersonalPhoto');
     });
+});
+
+Route::get('/artisan/{command}', function ($c) {
+    Artisan::call($c, []);
 });
