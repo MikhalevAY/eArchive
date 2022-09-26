@@ -52,8 +52,6 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Document::observe(DocumentObserver::class);
 
-        $systemService = SystemSetting::find(1);
-
         // Get menu available for user
         view()->composer('layouts.menu', function () {
             $menuItems = MenuItem::whereIn('id', function ($query) {
@@ -62,7 +60,10 @@ class AppServiceProvider extends ServiceProvider
             View::share('menuItems', $menuItems);
         });
 
-        View::share('companyLogo', $systemService->logo);
-        View::share('companyColor', $systemService->color);
+        $systemService = SystemSetting::find(1);
+        if ($systemService) {
+            View::share('companyLogo', $systemService->logo);
+            View::share('companyColor', $systemService->color);
+        }
     }
 }
