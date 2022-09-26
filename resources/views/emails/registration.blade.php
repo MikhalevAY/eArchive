@@ -1,3 +1,6 @@
+<head>
+    <link rel="stylesheet" href="./public/css/mail.css" type="text/css">
+</head>
 <div class="website">{{ config('app.name') }}</div>
 <div class="container">
     <p>Здравствуйте, {{ $surname . ' ' . $name }}</p>
