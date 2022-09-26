@@ -14,9 +14,11 @@ class SystemSettingSeeder extends Seeder
      */
     public function run()
     {
-        SystemSetting::createQuietly([
-            'logo' => 'logos/samruk-logo.svg',
-            'color' => '#0065AE',
-        ]);
+        SystemSetting::withoutEvents(function () {
+            SystemSetting::create([
+                'logo' => 'logos/samruk-logo.svg',
+                'color' => '#0065AE',
+            ]);
+        });
     }
 }

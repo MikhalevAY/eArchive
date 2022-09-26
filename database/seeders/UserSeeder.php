@@ -14,15 +14,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::createQuietly([
-            'email' => 'admin@earchive.kz',
-            'is_active' => 1,
-            'name' => 'Админ',
-            'surname' => 'Админов',
-            'role' => 'admin',
-            'password' => bcrypt('123qwe'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
+        User::withoutEvents(function () {
+            User::create([
+                'email' => 'admin@earchive.kz',
+                'is_active' => 1,
+                'name' => 'Админ',
+                'surname' => 'Админов',
+                'role' => 'admin',
+                'password' => bcrypt('123qwe'),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        });
     }
 }
