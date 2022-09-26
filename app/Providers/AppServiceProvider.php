@@ -63,8 +63,10 @@ class AppServiceProvider extends ServiceProvider
 
         if (Schema::hasTable('system_settings')) {
             $systemService = SystemSetting::find(1);
-            View::share('companyLogo', $systemService->logo);
-            View::share('companyColor', $systemService->color);
+            if ($systemService) {
+                View::share('companyLogo', $systemService->logo);
+                View::share('companyColor', $systemService->color);
+            }
         }
     }
 }
