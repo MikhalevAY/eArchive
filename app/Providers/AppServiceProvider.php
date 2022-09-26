@@ -20,6 +20,7 @@ use App\RepositoryInterfaces\DocumentRepositoryInterface;
 use App\RepositoryInterfaces\LogRepositoryInterface;
 use App\RepositoryInterfaces\PasswordRepositoryInterface;
 use App\RepositoryInterfaces\SystemSettingRepositoryInterface;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -60,8 +61,8 @@ class AppServiceProvider extends ServiceProvider
             View::share('menuItems', $menuItems);
         });
 
-        $systemService = SystemSetting::find(1);
-        if ($systemService) {
+        if (Schema::hasTable('system_settings')) {
+            $systemService = SystemSetting::find(1);
             View::share('companyLogo', $systemService->logo);
             View::share('companyColor', $systemService->color);
         }
