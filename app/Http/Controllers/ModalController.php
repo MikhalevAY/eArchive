@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use App\Models\User;
 use App\Services\DictionaryService;
 use Illuminate\View\View;
@@ -65,6 +66,13 @@ class ModalController extends Controller
     {
         return view('modal.search-documents')->with([
             'dictionaries' => $this->dictionaryService->all(),
+        ]);
+    }
+
+    public function deleteDocument(Document $document): View
+    {
+        return view('modal.delete-document')->with([
+            'document' => $document
         ]);
     }
 }

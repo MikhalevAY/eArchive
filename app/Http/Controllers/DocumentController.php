@@ -49,4 +49,12 @@ class DocumentController extends Controller
 
         return response()->json($data);
     }
+
+    public function delete(Document $document): JsonResponse
+    {
+        $data = $this->documentService->delete($document);
+        $data['closeWindow'] = true;
+
+        return response()->json($data);
+    }
 }

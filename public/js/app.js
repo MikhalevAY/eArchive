@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-    $(document).on('click', '.eye', changeInputType);
-
-
-
     $('.color').on('click', chooseColor);
 
     $('.colorChooser input').on('change', setColor);
@@ -26,22 +22,7 @@ $(document).ready(function () {
     //     }
     // });
 
-    applyDatepicker();
-
 });
-
-function applyDatepicker() {
-    $('input.date').datepicker({
-        showOn: "both",
-        monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-        dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-        dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
-        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-        dateFormat: 'yy-mm-dd',
-        firstDay: 1,
-    });
-}
 
 function toggleFileDelete() {
     $(this).closest('.file-block').find('.file-label').toggleClass('hidden');
@@ -73,10 +54,4 @@ function chooseColor() {
     $(this).addClass('active').css('border-color', $(this).data('border'))
         .siblings().removeClass('active').removeAttr('style');
     $('input[name=color]').val($(this).data('border'));
-}
-
-function changeInputType() {
-    $(this).parent().find('input').attr('type', function () {
-        return $(this).attr('type') === 'text' ? 'password' : 'text';
-    });
 }

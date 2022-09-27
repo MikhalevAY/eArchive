@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
     $('.phone').mask("+7 (999) 999-99-99");
+    $('.time').mask("99:99");
+
+    $(document).on('click', '.eye', changeInputType);
 
     $('form').each(function () {
         if (!$(this).hasClass('no-ajax'))
@@ -26,6 +29,8 @@ $(document).ready(function () {
         form.find('input[name=is_draft]').val('1');
         form.submit();
     });
+
+    applyDatepicker();
 
 });
 
@@ -57,6 +62,7 @@ function submitForm() {
                 setTimeout(closeWindow, 2000);
             }
             if (data.rowsToDelete) {
+                button.remove();
                 deleteRows(data.rowsToDelete);
             }
             result.addClass('success').html(data.message);
@@ -117,4 +123,24 @@ function inArray(a, array) {
             return true;
     }
     return false;
+}
+
+function changeInputType() {
+    $(this).toggleClass('opened');
+    $(this).parent().find('input').attr('type', function () {
+        return $(this).attr('type') === 'text' ? 'password' : 'text';
+    });
+}
+
+function applyDatepicker() {
+    $('input.date').datepicker({
+        showOn: "both",
+        monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
+        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+        dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        dateFormat: 'yy-mm-dd',
+        firstDay: 1,
+    });
 }

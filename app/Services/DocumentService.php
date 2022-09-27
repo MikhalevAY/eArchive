@@ -41,4 +41,9 @@ class DocumentService
     {
         return '';
     }
+
+    public function delete(Document $document): array
+    {
+        return $this->repository->delete($document);
+    }
 }

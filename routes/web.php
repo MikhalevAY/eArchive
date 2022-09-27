@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('add', 'add')->name('document.add');
             Route::get('list', 'list')->name('document.list');
             Route::post('store', 'store')->name('document.store');
+            Route::delete('/delete/{document}', 'delete')->name('document.delete');
         });
     });
 
@@ -57,6 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/modal/delete-user/{user}', 'deleteUser')->name('deleteUser');
         Route::post('/modal/delete-selected-users', 'deleteSelectedUsers')->name('deleteSelectedUsers');
         Route::post('/modal/search-documents', 'searchDocuments')->name('searchAvailableDocuments');
+        Route::post('/modal/delete-document/{document}', 'deleteDocument')->name('deleteDocument');
     });
 
     Route::controller(AccountController::class)->prefix('account')->group(function () {

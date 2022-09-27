@@ -28,14 +28,14 @@
                 </thead>
                 <tbody>
                 @forelse($documents as $document)
-                    <tr>
+                    <tr data-row="{{ $document->id }}">
                         <td class="light">{{ $document->updated_at->format('d.m.Y в H:i') }}</td>
                         <td>{{ $document->type->title }}</td>
                         <td>{{ $document->caseNomenclature->title }}</td>
                         <td>{{ $document->question }}</td>
                         <td>
                             <a class="link" href="">Открыть</a>
-                            <a class="delete delete-icon"></a>
+                            <a class="delete delete-icon modal-link" data-url="{{ route('deleteDocument', ['document' => $document->id]) }}"></a>
                         </td>
                     </tr>
                 @empty

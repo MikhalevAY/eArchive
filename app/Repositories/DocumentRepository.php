@@ -71,4 +71,14 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
             'message' => __('messages.data_updated')
         ];
     }
+
+    public function delete(Document $document): array
+    {
+        $document->delete();
+
+        return [
+            'message' => __('messages.document_deleted'),
+            'rowsToDelete' => [$document->id]
+        ];
+    }
 }

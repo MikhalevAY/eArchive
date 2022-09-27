@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
         // Get menu available for user
         view()->composer('layouts.menu', function () {
             $menuItems = MenuItem::whereIn('id', function ($query) {
-                $query->select('id')->from('menu_item_user')->where('user_role', auth()->user()->role);
+                $query->select('menu_item_id')->from('menu_item_user')->where('user_role', auth()->user()->role);
             })->get();
             View::share('menuItems', $menuItems);
         });

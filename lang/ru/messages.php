@@ -14,5 +14,6 @@ return [
     'instructions_already_sent' => 'Инструкции уже были отправлены на почту',
     'document_registered' => 'Новый документ зарегистрирован',
     'document_stored' => 'Документ сохранен в черновики',
+    'document_deleted' => 'Документ удалён',
     'wrong_file_format' => 'Неверный формат файла',
 ];

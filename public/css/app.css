@@ -386,10 +386,16 @@ form .eye {
     width: 24px;
     height: 24px;
     position: absolute;
-    background: url(../images/eye.svg) no-repeat center;
+    background: #8F97A1;
+    -webkit-mask: url(../images/eye.svg) no-repeat center;
+    mask: url(../images/eye.svg) no-repeat center;
     top: 40px;
     right: 15px;
     cursor: pointer;
+}
+form .eye.opened {
+    -webkit-mask: url(../images/eye-opened.svg) no-repeat center;
+    mask: url(../images/eye-opened.svg) no-repeat center;
 }
 form .result {
     padding-top: 16px;

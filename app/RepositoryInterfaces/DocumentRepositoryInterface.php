@@ -19,4 +19,6 @@ interface DocumentRepositoryInterface
     public function store(array $data) : array;
 
     public function update(array $data, Document $document): array;
+
+    public function delete(Document $document): array;
 }

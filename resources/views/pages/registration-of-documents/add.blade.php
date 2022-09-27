@@ -128,7 +128,14 @@
                 <div class="col-2">
                     <div class="row">
                         <span>Срок хранения</span>
-                        <input class="no-max-width" type="text" name="shelf_life" placeholder="Срок хранения" autocomplete="off" />
+                        <select name="shelf_life">
+                            <option value="">Не выбрано</option>
+                            <option value="1">1 год</option>
+                            <option value="3">3 года</option>
+                            <option value="5">5 лет</option>
+                            <option value="10">10 лет</option>
+                            <option value="9999">Без срока</option>
+                        </select>
                     </div>
                     <div class="row">
                         <span>ФИО исполнителя</span>
