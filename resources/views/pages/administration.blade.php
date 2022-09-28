@@ -12,8 +12,11 @@
                 <a class="modal-link right" data-url="{{ route('addUser') }}">Добавить пользователя</a>
             </h2>
             <form action="{{ route('administration') }}" method="get" class="no-ajax">
-                <div class="row">
-                    <input class="search" placeholder="Фамилия, имя или отчество" type="text" value="{{ request()->input('q') }}" name="q" autocomplete="off" />
+                <div class="row with-reset">
+                    <input class="inline-block" placeholder="Фамилия, имя или отчество" type="text" value="{{ request()->input('q') }}" name="q" autocomplete="off" />
+                    <input type="submit" value="" class="search">
+                    <input @class(['visible' => $showResetButton, 'reset-row-inputs' => true]) type="button" value="">
+
                     <div class="delete-selected">
                         <a class="delete modal-link" data-url="{{ route('deleteSelectedUsers') }}" data-checkboxes="elements"><i></i></a>
                     </div>

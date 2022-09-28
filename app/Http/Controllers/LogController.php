@@ -19,6 +19,7 @@ class LogController extends Controller
             'logs' => $this->service->getPaginated($request->validated()),
             'tHeads' => Log::$tHeads,
             'sortBy' => $this->service->getOrderBy($request->validated()),
+            'showResetButton' => $request->input('q') != ''
         ]);
     }
 }

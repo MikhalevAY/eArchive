@@ -23,6 +23,7 @@ class AdministrationController extends Controller
             'users' => $this->service->getPaginated($request->validated()),
             'tHeads' => User::$tHeads,
             'sortBy' => $this->service->getOrderBy($request->validated()),
+            'showResetButton' => $request->input('q') != '',
             'roleTitles' => User::ROLE_TITLES
         ]);
     }

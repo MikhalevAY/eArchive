@@ -23,6 +23,12 @@ $(document).ready(function () {
         $('#document-form').submit();
     });
 
+    $('.with-reset').find('input').on('input', toggleResetVisibility);
+    $('.reset-row-inputs').on('click', function () {
+        $(this).removeClass('visible');
+        $(this).closest('.row').find('input, select').val('');
+    });
+
     $('.save-document').on('click', function () {
         $(this).addClass('loading').attr('disabled', 'disabled');
         let form = $('#document-form');
@@ -81,6 +87,23 @@ function submitForm() {
     });
 
     return false;
+}
+
+function toggleResetVisibility() {
+    let cont = $(this).closest('.row');
+    let inputs = cont.find('select, input[type=text]');
+    let show = false;
+    inputs.each(function () {
+        if ($(this).val() !== '') {
+            show = true;
+        }
+    });
+
+    if (show) {
+        cont.find('.reset-row-inputs').addClass('visible');
+    } else {
+        cont.find('.reset-row-inputs').removeClass('visible');
+    }
 }
 
 function fileInput() {

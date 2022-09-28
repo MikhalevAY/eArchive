@@ -9,8 +9,10 @@
         <div class="wrapper">
             <h2>@yield('title')</h2>
             <form action="{{ route('logs') }}" method="get" class="no-ajax">
-                <div class="row">
-                    <input class="search" placeholder="Автор" type="text" value="{{ request()->input('q') }}" name="q" autocomplete="off" />
+                <div class="row with-reset">
+                    <input class="inline-block" placeholder="Автор" type="text" value="{{ request()->input('q') }}" name="q" autocomplete="off" />
+                    <input type="submit" value="" class="search">
+                    <input @class(['visible' => $showResetButton, 'reset-row-inputs' => true]) type="button" value="">
                 </div>
                 <table class="elements">
                     <thead>

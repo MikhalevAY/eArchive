@@ -265,6 +265,9 @@ input[type=password].error,
 select.error {
     border-color: #EC5757;
 }
+input[type=text].inline-block {
+    display: inline-block;
+}
 
 input[type=submit],
 input[type=button] {
@@ -342,6 +345,22 @@ form .col-3 .col-2 .row {
 form .row {
     margin-bottom: 24px;
     position: relative;
+}
+form .row input[type=button].reset-row-inputs {
+    width: 20px;
+    height: 20px;
+    display: none;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 0;
+    padding: 0;
+    background-color: var(--company-color);
+    mask: url(../images/change-password.svg) no-repeat center;
+    -webkit-mask: url(../images/change-password.svg) no-repeat center;
+}
+form .row input[type=button].reset-row-inputs.visible {
+    display: inline-block;
 }
 form .time {
     background: url(../images/clock.svg) no-repeat right 16px center;
@@ -497,8 +516,20 @@ form .file-label {
         left: 22px;
         margin: auto;
     }
-form .search {
-    background: url(../images/search.svg) no-repeat right 16px center;
+form input[type=submit].search {
+    background-color: #8F97A2;
+    mask: url(../images/search.svg) no-repeat center;
+    -webkit-mask: url(../images/search.svg) no-repeat center;
+    width: 30px;
+    height: 32px;
+    position: absolute;
+    top: 11px;
+    left: 341px;
+    border: none;
+    padding: 0;
+}
+form input[type=submit].search:hover {
+    background-color: var(--company-color);
 }
 
 input.no-max-width,
