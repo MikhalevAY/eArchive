@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccessRequest;
 use App\Models\Document;
 use App\Models\User;
+use App\Services\AccessRequestService;
 use App\Services\DictionaryService;
 use Illuminate\View\View;
 
 class ModalController extends Controller
 {
-    public function __construct(public DictionaryService $dictionaryService)
+    public function __construct(
+        public DictionaryService    $dictionaryService,
+        public AccessRequestService $accessRequestService
+    )
     {
     }
 
@@ -65,7 +70,7 @@ class ModalController extends Controller
     public function searchDocuments(): View
     {
         return view('modal.search-documents')->with([
-            'dictionaries' => $this->dictionaryService->all(),
+            'dictionaries' => $this->dictionaryService->byType(),
         ]);
     }
 
@@ -73,6 +78,18 @@ class ModalController extends Controller
     {
         return view('modal.delete-document')->with([
             'document' => $document
+        ]);
+    }
+
+    public function editAccessRequest(AccessRequest $accessRequest): View
+    {
+        if ($accessRequest->status == 'new') {
+            $this->accessRequestService->update(['status' => 'active'], $accessRequest);
+        }
+
+        return view('modal.access-request.edit')->with([
+            'accessRequest' => $accessRequest,
+            'statusTitle' => AccessRequest::$statusTitle,
         ]);
     }
 }

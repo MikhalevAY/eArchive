@@ -13,15 +13,19 @@ class DictionaryService
 
     public function all(): array
     {
-        $toReturn = [];
-        foreach ($this->repository->all() as $row) {
-            $toReturn[$row['type']][] = $row;
-        }
-        return $toReturn;
+        $all = $this->repository->all();
+        $all[''] = '';
+
+        return $all;
     }
 
-    public function byType(string $type): Collection
+    public function byType(): array
     {
-        return $this->repository->byType($type);
+        $toReturn = [];
+        foreach ($this->repository->byType() as $row) {
+            $toReturn[$row['type']][] = $row;
+        }
+
+        return $toReturn;
     }
 }

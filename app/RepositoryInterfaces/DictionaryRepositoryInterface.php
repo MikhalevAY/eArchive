@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
  **/
 interface DictionaryRepositoryInterface
 {
-    public function all(): Collection;
+    public function all(): array;
 
-    public function byType(string $type):  Collection;
+    public function byType(): Collection;
 }

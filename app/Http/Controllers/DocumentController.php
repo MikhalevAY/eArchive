@@ -38,7 +38,8 @@ class DocumentController extends Controller
     public function add(): View
     {
         return view('pages.registration-of-documents.add')->with([
-            'dictionaries' => $this->dictionaryService->all(),
+            'dictionaries' => $this->dictionaryService->byType(),
+            'shelfLife' => Document::$shelfLife
         ]);
     }
 

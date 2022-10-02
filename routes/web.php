@@ -1,16 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\{Artisan, Route};
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\PasswordController;
-use App\Http\Controllers\ArchiveController;
-use App\Http\Controllers\ModalController;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\SystemSettingController;
-use App\Http\Controllers\LogController;
 use App\Http\Controllers\AdministrationController;
+use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\LogController;
+use App\Http\Controllers\ModalController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ReadingRoomController;
+use App\Http\Controllers\SystemSettingController;
+use App\Http\Controllers\AccessRequestController;
 
 Route::get('/', [AuthController::class, 'index'])->name('authPage');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -23,12 +24,13 @@ Route::get('/new-password/{md5Email}', [PasswordController::class, 'new'])->name
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['checkUserPermission']], function () {
         Route::get('/archive-search', [ArchiveController::class, 'index'])->name('archiveSearch');
+        Route::get('/archive-search/view/{document}', [ArchiveController::class, 'view'])->name('viewDocument');
         Route::get('/system-settings', [SystemSettingController::class, 'index'])->name('systemSetting');
         Route::get('/registration-of-documents', [DocumentController::class, 'index'])->name('registrationOfDocuments');
         Route::get('/reading-room', [ReadingRoomController::class, 'index'])->name('readingRoom');
         Route::get('/administration', [AdministrationController::class, 'index'])->name('administration');
         Route::get('/system-logs', [LogController::class, 'index'])->name('logs');
-        Route::get('/requests', [SystemSettingController::class, 'index'])->name('requests');
+        Route::get('/access-requests', [AccessRequestController::class, 'index'])->name('accessRequests');
 
         Route::post('/system-settings/update', [SystemSettingController::class, 'update'])->name('updateSystemSetting');
 
@@ -46,6 +48,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('store', 'store')->name('document.store');
             Route::delete('/delete/{document}', 'delete')->name('document.delete');
         });
+
+        Route::controller(AccessRequestController::class)->prefix('access-requests')->group(function () {
+            Route::post('/update/{accessRequest}', 'update')->name('access-request.update');
+        });
     });
 
     Route::controller(ModalController::class)->group(function () {
@@ -59,6 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/modal/delete-selected-users', 'deleteSelectedUsers')->name('deleteSelectedUsers');
         Route::post('/modal/search-documents', 'searchDocuments')->name('searchAvailableDocuments');
         Route::post('/modal/delete-document/{document}', 'deleteDocument')->name('deleteDocument');
+        Route::post('/modal/access-request/edit/{accessRequest}', 'editAccessRequest')->name('editAccessRequest');
     });
 
     Route::controller(AccountController::class)->prefix('account')->group(function () {

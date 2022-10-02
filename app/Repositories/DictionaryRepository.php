@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 class DictionaryRepository implements DictionaryRepositoryInterface
 {
-    public function all(): Collection
+    public function all(): array
     {
-        return Dictionary::all();
+        return Dictionary::all()->pluck('title', 'id')->toArray();
     }
 
-    public function byType(string $type): Collection
+    public function byType(): Collection
     {
-        return Dictionary::where('type', $type)->orderBy('title', 'asc')->get();
+        return Dictionary::all();
     }
 }

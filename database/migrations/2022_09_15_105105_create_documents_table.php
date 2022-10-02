@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('author_email')->index();
             $table->string('outgoing_number')->nullable();
             $table->date('outgoing_date')->nullable();
-            $table->unsignedBigInteger('sender_id');
-            $table->unsignedBigInteger('receiver_id');
+            $table->unsignedBigInteger('sender_id')->nullable();
+            $table->unsignedBigInteger('receiver_id')->nullable();
             $table->string('addressee')->nullable();
             $table->text('question');
             $table->unsignedBigInteger('delivery_type_id')->nullable()->index();
@@ -41,6 +41,8 @@ return new class extends Migration
             $table->text('document_text')->nullable();
             $table->text('history')->nullable();
             $table->string('file');
+            $table->string('file_name');
+            $table->double('file_size')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

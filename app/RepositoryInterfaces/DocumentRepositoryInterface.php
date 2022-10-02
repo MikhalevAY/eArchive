@@ -16,7 +16,7 @@ interface DocumentRepositoryInterface
 
     public function getAll(array $params): Collection;
 
-    public function store(array $data) : array;
+    public function store(array $data) : Document;
 
     public function update(array $data, Document $document): array;
 

@@ -23,7 +23,7 @@
                             </div>
                         </th>
                     @endforeach
-                        <th class="w-140">Действия</th>
+                        <th class="w-170">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,7 +34,7 @@
                         <td>{{ $document->caseNomenclature->title }}</td>
                         <td>{{ $document->question }}</td>
                         <td>
-                            <a class="link" href="">Открыть</a>
+                            <a class="link" href="">Редактировать</a>
                             <a class="delete delete-icon modal-link" data-url="{{ route('deleteDocument', ['document' => $document->id]) }}"></a>
                         </td>
                     </tr>

@@ -15,6 +15,13 @@ $(document).ready(function () {
 
     $('.delete-file').on('click', toggleFileDelete);
 
+    $('.history-back').on('click', function () {
+        history.back();
+        return false;
+    });
+
+    $('.toggle-link').on('click', toggleDocumentInfo);
+
     // $(document).on('mouseup', function (e) {
     //     let container = $('.actions-menu');
     //     if (!container.is(e.target) && container.has(e.target).length === 0) {
@@ -23,6 +30,25 @@ $(document).ready(function () {
     // });
 
 });
+
+function toggleDocAccess() {
+    let $this = $(this), val;
+    if ($this.parent().hasClass('allowed')) {
+        $this.parent().attr('class', 'doc forbidden');
+        $this.val($this.data('allow'));
+        val = 0;
+    } else {
+        $this.parent().attr('class', 'doc allowed');
+        $this.val($this.data('forbid'));
+        val = 1;
+    }
+    $this.parent().find('input[type=hidden]').val(val);
+}
+
+function toggleDocumentInfo() {
+    $(this).hide().siblings('a').show();
+    $(this).parent().children('table').toggleClass('closed');
+}
 
 function toggleFileDelete() {
     $(this).closest('.file-block').find('.file-label').toggleClass('hidden');

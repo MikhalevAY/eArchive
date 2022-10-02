@@ -25,3 +25,11 @@ if (!function_exists('getUserAccess')) {
             ->where('user_role', $role)->get()->pluck('menu_item_id')->toArray();
     }
 }
+
+if (!function_exists('getEnding')) {
+    function getEnding(int $n, array $titles): string
+    {
+        $cases = [2, 0, 1, 1, 1, 2];
+        return $titles[($n % 100 > 4 && $n % 100 < 20) ? 2 : $cases[min($n % 10, 5)]];
+    }
+}

@@ -8,7 +8,10 @@ use Illuminate\Support\Collection;
 
 class DocumentService
 {
-    public function __construct(public DocumentRepositoryInterface $repository)
+    public function __construct(
+        public DocumentRepositoryInterface $repository,
+        public AttachmentService           $attachmentService
+    )
     {
     }
 
@@ -25,11 +28,21 @@ class DocumentService
     public function store(array $data): array
     {
         // Сохраняем документ
+        $data['file_name'] = $data['file']->getClientOriginalName();
+        $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 1);
         $file = $data['file']->store('documents', 'public');
         $data['file'] = $file;
-        $data = $this->repository->store($data);
+        $document = $this->repository->store($data);
 
-        return $data;
+        // Сохраняем вложения
+        $this->storeAttachments($data['attachments'], $document);
+
+        // TODO Права для документов
+        // TODO скан файла
+
+        return [
+            'message' => __('messages.' . ($data['is_draft'] == 1 ? 'document_stored' : 'document_registered')),
+        ];
     }
 
     public function update(array $data, Document $document): array
@@ -37,13 +50,17 @@ class DocumentService
         return [];
     }
 
-    private function storeAttachments($attachments, $documentId): string
-    {
-        return '';
-    }
-
     public function delete(Document $document): array
     {
         return $this->repository->delete($document);
+    }
+
+    private function storeAttachments(array $attachments, Document $document): void
+    {
+        if (!empty($attachments)) {
+            foreach ($attachments as $attachment) {
+                $this->attachmentService->store($attachment, $document);
+            }
+        }
     }
 }

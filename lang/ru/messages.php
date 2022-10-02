@@ -16,4 +16,5 @@ return [
     'document_stored' => 'Документ сохранен в черновики',
     'document_deleted' => 'Документ удалён',
     'wrong_file_format' => 'Неверный формат файла',
+    'access_request_updated' => 'Запрос на доступ подтвержден'
 ];

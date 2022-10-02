@@ -53,14 +53,9 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
         return $query;
     }
 
-    public function store(array $data): array
+    public function store(array $data): Document
     {
-        $document = Document::create($data);
-
-        return [
-            'message' => __('messages.' . ($data['is_draft'] == 1 ? 'document_stored' : 'document_registered')),
-            'data' => $document
-        ];
+        return Document::create($data);
     }
 
     public function update(array $data, Document $document): array

@@ -130,11 +130,9 @@
                         <span>Срок хранения</span>
                         <select name="shelf_life">
                             <option value="">Не выбрано</option>
-                            <option value="1">1 год</option>
-                            <option value="3">3 года</option>
-                            <option value="5">5 лет</option>
-                            <option value="10">10 лет</option>
-                            <option value="9999">Без срока</option>
+                            @foreach($shelfLife as $k => $time)
+                                <option value="{{ $k }}">{{ $time }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="row">

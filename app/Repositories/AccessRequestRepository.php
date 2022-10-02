@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Models\Log;
-use App\RepositoryInterfaces\LogRepositoryInterface;
+use App\Models\AccessRequest;
+use App\RepositoryInterfaces\AccessRequestRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
-class LogRepository extends BaseRepository implements LogRepositoryInterface
+class AccessRequestRepository extends BaseRepository implements AccessRequestRepositoryInterface
 {
     private const BY = 20;
 
@@ -25,8 +25,9 @@ class LogRepository extends BaseRepository implements LogRepositoryInterface
 
     private function prepareQuery($params): Builder
     {
-        $query = Log::selectRaw('logs.*, users.surname, users.name')
-            ->leftJoin('users', 'users.id', '=', 'logs.user_id');
+        $query = AccessRequest::selectRaw('access_requests.*, users.surname, users.name')
+            ->leftJoin('users', 'users.id', '=', 'access_requests.user_id')
+            ->withCount('documents');
 
         $query = $this->applyFilter($params, $query);
         $query = $this->applyOrderBy($params, $query);
@@ -46,8 +47,20 @@ class LogRepository extends BaseRepository implements LogRepositoryInterface
         return $query;
     }
 
-    public function create(array $data): void
+    public function update(array $params, AccessRequest $accessRequest): array
     {
-        Log::create($data);
+        $accessRequest->update($params);
+
+        if (isset($params['documents'])) {
+            foreach ($accessRequest->documents as $document) {
+                $accessRequest->documents()->updateExistingPivot($document->id, [
+                    'is_allowed' => $params['documents'][$document->id]
+                ]);
+            }
+        }
+
+        return [
+            'message' => __('messages.access_request_updated')
+        ];
     }
 }

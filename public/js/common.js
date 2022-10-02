@@ -57,6 +57,7 @@ function submitForm() {
         processData: false,
         success: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');
+            form.find('input[name=is_draft]').val('0');
             if (data.url) {
                 window.location.href = data.url;
             }
@@ -75,6 +76,7 @@ function submitForm() {
         },
         error: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');
+            form.find('input[name=is_draft]').val('0');
             let errors = JSON.parse(data.responseText);
             $.each(errors.errors, function (k, v) {
                 if (!inArray(v[0], message)) {

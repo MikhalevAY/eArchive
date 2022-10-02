@@ -2,8 +2,13 @@
 
 namespace App\Providers;
 
+use App\Observers\AccessRequestObserver;
 use App\Observers\DocumentObserver;
-use App\Models\{Document, MenuItem, SystemSetting, User};
+use App\Repositories\AccessRequestRepository;
+use App\Repositories\AttachmentRepository;
+use App\RepositoryInterfaces\AccessRequestRepositoryInterface;
+use App\RepositoryInterfaces\AttachmentRepositoryInterface;
+use App\Models\{AccessRequest, Document, MenuItem, SystemSetting, User};
 use App\Observers\SystemSettingObserver;
 use App\Observers\UserObserver;
 use App\Repositories\AccountRepository;
@@ -40,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AdministrationRepositoryInterface::class, AdministrationRepository::class);
         $this->app->bind(DictionaryRepositoryInterface::class, DictionaryRepository::class);
         $this->app->bind(DocumentRepositoryInterface::class, DocumentRepository::class);
+        $this->app->bind(AttachmentRepositoryInterface::class, AttachmentRepository::class);
+        $this->app->bind(AccessRequestRepositoryInterface::class, AccessRequestRepository::class);
     }
 
     /**
@@ -52,6 +59,7 @@ class AppServiceProvider extends ServiceProvider
         SystemSetting::observe(SystemSettingObserver::class);
         User::observe(UserObserver::class);
         Document::observe(DocumentObserver::class);
+        AccessRequest::observe(AccessRequestObserver::class);
 
         // Get menu available for user
         view()->composer('layouts.menu', function () {

@@ -19,8 +19,8 @@ class CheckFileExtension implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed $value
      * @return bool
      */
     public function passes($attribute, $value): bool
@@ -28,7 +28,7 @@ class CheckFileExtension implements Rule
         $ext = explode($value, '.');
         $ext = end($ext);
 
-        return in_array($ext, ['exe', 'php']);
+        return !in_array($ext, ['exe', 'php']);
     }
 
     /**

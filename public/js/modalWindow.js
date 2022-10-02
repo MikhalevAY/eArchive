@@ -51,6 +51,7 @@ function setDefaultFunctions() {
     $('.eye').on('click', changeInputType);
     $('.file-input').on('change', fileInput);
     $('.modal-link').unbind().bind('click', openWindow);
+    $('.toggle-doc-access').on('click', toggleDocAccess);
     applyDatepicker();
 }
 
