@@ -3,7 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\ActionIsAllowed;
-use App\Http\Middleware\checkUserPermission;
+use App\Http\Middleware\CheckUserPermission;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,7 +65,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'checkUserPermission' => checkUserPermission::class,
+        'checkUserPermission' => CheckUserPermission::class,
         'actionIsAllowed' => ActionIsAllowed::class
     ];
 }
