@@ -34,7 +34,7 @@ class Log extends Model
         ['title' => 'Автор', 'field' => 'surname', 'class' => ''],
         ['title' => 'IP адрес', 'field' => 'device_ip', 'class' => ''],
         ['title' => 'Объект', 'field' => 'text', 'class' => ''],
-        ['title' => 'Действие', 'field' => 'action', 'class' => ''],
+        ['title' => 'Действие', 'field' => 'action', 'class' => 'w-140'],
     ];
 
     public function user(): HasOne

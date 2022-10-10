@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'no_rights_to_delete' => 'У вас нет прав на удаление данных документов',
     'wrong_credentials' => 'Неверный логин/пароль',
     'data_updated' => 'Данные обновлены',
     'user_stored' => 'Новый пользователь добавлен',
@@ -15,6 +16,8 @@ return [
     'document_registered' => 'Новый документ зарегистрирован',
     'document_stored' => 'Документ сохранен в черновики',
     'document_deleted' => 'Документ удалён',
+    'documents_deleted' => 'Выбранные документы удалены',
     'wrong_file_format' => 'Неверный формат файла',
-    'access_request_updated' => 'Запрос на доступ подтвержден'
+    'access_request_updated' => 'Запрос на доступ подтвержден',
+    'access_request_stored' => 'Ваш запрос на доступ отправлен'
 ];

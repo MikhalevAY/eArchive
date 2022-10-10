@@ -33,3 +33,10 @@ if (!function_exists('getEnding')) {
         return $titles[($n % 100 > 4 && $n % 100 < 20) ? 2 : $cases[min($n % 10, 5)]];
     }
 }
+
+if (!function_exists('adminOrArchivist')) {
+    function adminOrArchivist(): bool
+    {
+        return in_array(auth()->user()->role, ['admin', 'archivist']);
+    }
+}

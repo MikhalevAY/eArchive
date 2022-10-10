@@ -17,8 +17,12 @@
                     <input type="submit" value="" class="search">
                     <input @class(['visible' => $showResetButton, 'reset-row-inputs' => true]) type="button" value="">
 
-                    <div class="delete-selected">
-                        <a class="delete modal-link" data-url="{{ route('deleteSelectedUsers') }}" data-checkboxes="elements"><i></i></a>
+                    <div class="additional-menu">
+                        <a class="delete modal-link"
+                           title="Удалить выбранные"
+                           data-url="{{ route('deleteSelectedUsers') }}"
+                           data-post="1"
+                           data-name="users"><i></i></a>
                     </div>
                 </div>
                 <table class="elements">
@@ -49,7 +53,7 @@
                         <tr data-row="{{ $user->id }}">
                             <td>
                                 <label class="checkbox">
-                                    <input type="checkbox" value="{{ $user->id }}" name="elements[]">
+                                    <input type="checkbox" value="{{ $user->id }}" name="users[]">
                                     <div class="checkmark"></div>
                                 </label>
                             </td>

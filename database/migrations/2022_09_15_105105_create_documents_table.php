@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->integer('is_draft')->default(false);
-            $table->unsignedBigInteger('document_type_id')->index();
+            $table->unsignedBigInteger('type_id')->index();
             $table->unsignedBigInteger('case_nomenclature_id')->index();
             $table->string('income_number')->nullable()->index();
             $table->date('registration_date');
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->date('answer_to_date')->nullable();
             $table->boolean('gr_document')->default(false);
             $table->string('performer')->nullable();
-            $table->text('document_text')->nullable();
+            $table->text('text')->nullable();
             $table->text('history')->nullable();
             $table->string('file');
             $table->string('file_name');
@@ -48,7 +48,7 @@ return new class extends Migration
         });
 
         Schema::table('documents', function (Blueprint $table) {
-            $table->foreign('document_type_id')->references('id')->on('dictionaries')->onDelete('restrict');
+            $table->foreign('type_id')->references('id')->on('dictionaries')->onDelete('restrict');
             $table->foreign('case_nomenclature_id')->references('id')->on('dictionaries')->onDelete('restrict');
             $table->foreign('sender_id')->references('id')->on('dictionaries')->onDelete('restrict');
             $table->foreign('receiver_id')->references('id')->on('dictionaries')->onDelete('restrict');

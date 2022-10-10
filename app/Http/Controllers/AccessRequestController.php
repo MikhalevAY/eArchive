@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AccessRequestIndexRequest;
+use App\Http\Requests\AccessRequestStoreRequest;
 use App\Http\Requests\AccessRequestUpdateRequest;
 use App\Models\AccessRequest;
 use App\Services\AccessRequestService;
@@ -30,6 +31,15 @@ class AccessRequestController extends Controller
     {
         $documents = $this->service->getDocumentIds($accessRequest, $request->all());
         $data = $this->service->update(array_merge($request->validated(), ['documents' => $documents]), $accessRequest);
+        $data['closeWindow'] = true;
+
+        return response()->json($data);
+    }
+
+    public function store(AccessRequestStoreRequest $request): JsonResponse
+    {
+        $data = $this->service->store($request->validated());
+        $data['reset'] = true;
         $data['closeWindow'] = true;
 
         return response()->json($data);

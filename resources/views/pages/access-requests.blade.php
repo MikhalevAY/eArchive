@@ -30,23 +30,23 @@
                         @endforeach
                             <th>Запрашиваемые документы</th>
                             <th>Причина</th>
-                            <th>Статус</th>
-                            <th>Действие</th>
+                            <th class="text-center">Статус</th>
+                            <th class="w-140 text-center">Действие</th>
                         </tr>
                     </thead>
                     <tbody>
                     @forelse($requests as $request)
                         <tr>
                             <td class="light">{{ $request->created_at->format('d.m.Y') }}</td>
-                            <td>{{ $request->surname . ' ' . $request->name }}</td>
+                            <td>{{ $request->full_name }}</td>
                             <td>
                                 {{ $request->documents_count }} документ{{ getEnding($request->documents_count, ['', 'а', 'ов']) }}
                             </td>
                             <td>{{ mb_substr($request->comment, 0, 100, 'utf8') }}</td>
-                            <td>
+                            <td class="text-center">
                                 <span class="status {{ $request->status }}">{{ $statusTitle[$request->status] }}</span>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <a class="modal-link button"
                                    data-class="access-request"
                                    data-url="{{ route('editAccessRequest', ['accessRequest' => $request->id]) }}">Посмотреть</a>

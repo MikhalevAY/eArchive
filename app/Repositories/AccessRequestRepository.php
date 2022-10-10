@@ -7,6 +7,7 @@ use App\RepositoryInterfaces\AccessRequestRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class AccessRequestRepository extends BaseRepository implements AccessRequestRepositoryInterface
 {
@@ -25,7 +26,7 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
 
     private function prepareQuery($params): Builder
     {
-        $query = AccessRequest::selectRaw('access_requests.*, users.surname, users.name')
+        $query = AccessRequest::selectRaw('access_requests.*, CONCAT(users.surname, " ", users.name) AS full_name')
             ->leftJoin('users', 'users.id', '=', 'access_requests.user_id')
             ->withCount('documents');
 
@@ -62,5 +63,25 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
         return [
             'message' => __('messages.access_request_updated')
         ];
+    }
+
+    public function store(array $params): array
+    {
+        $accessRequest = auth()->user()->accessRequests()->create($params);
+
+        return [
+            'accessRequest' => $accessRequest,
+            'message' => __('messages.access_request_stored')
+        ];
+    }
+
+    public function checkAccessRequests(Collection $documents): bool
+    {
+        $count = DB::table('access_request_document')
+            ->where('user_id', auth()->id())
+            ->whereIn('document_id', $documents->pluck('id')->toArray())
+            ->count();
+
+        return count($documents) == $count;
     }
 }

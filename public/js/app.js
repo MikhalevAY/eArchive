@@ -15,10 +15,14 @@ $(document).ready(function () {
 
     $('.delete-file').on('click', toggleFileDelete);
 
+    $('.delete-attachment').on('click', deleteAttachment);
+
     $('.history-back').on('click', function () {
         history.back();
         return false;
     });
+
+    $('.action-with-selected').on('click', actionWithSelected);
 
     $('.toggle-link').on('click', toggleDocumentInfo);
 
@@ -30,6 +34,13 @@ $(document).ready(function () {
     // });
 
 });
+
+function actionWithSelected() {
+    let documents = getChecked('documents');
+    if (documents.length > 0) {
+        document.location.href = $(this).data('href') + '?documents=' + documents.join(',');
+    }
+}
 
 function toggleDocAccess() {
     let $this = $(this), val;
@@ -51,7 +62,16 @@ function toggleDocumentInfo() {
 }
 
 function toggleFileDelete() {
-    $(this).closest('.file-block').find('.file-label').toggleClass('hidden');
+    let cont = $(this).closest('.file-block');
+    let file = cont.find('.file-label');
+    file.toggleClass('hidden');
+    cont.find('input[name=' + file.data('deleted') + ']').val(file.is(':visible') ? 1 : '');
+}
+
+function deleteAttachment() {
+    let cont = $(this).closest('.attachment');
+    cont.find('input[type=checkbox]').prop('checked', true);
+    cont.hide();
 }
 
 function toggleCheckboxes() {
@@ -67,7 +87,9 @@ function toggleActionsMenu() {
 }
 
 function setPerPage() {
-    $(this).closest('form').submit();
+    let url = new URL(document.location.href);
+    url.searchParams.set('per_page', $(this).val());
+    document.location.href = url.href;
 }
 
 function setColor() {

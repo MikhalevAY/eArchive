@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $(document).on('click', '.modal-link', openWindow);
     //$(document).on('click', '.modal-window', closeWindow);
+    $(document).on('click', '.modal-link', openWindow);
     $('.modal').on('click', function (e) {
         if (!$(e.target).hasClass('close'))
             e.stopPropagation();
@@ -10,6 +10,7 @@ $(document).ready(function () {
 function openWindow() {
     let $this = $(this);
     let modalWrapper = $('.modal-wrapper').html('');
+    let data = $this.data('post') !== '' ? getAllIds($this.data('name')) : null;
     $('.hover_').fadeIn(300);
     $('.modal').hide().attr('class', 'modal');
     $('.modal-window').fadeIn(300);
@@ -17,32 +18,28 @@ function openWindow() {
         $('body').addClass('no-scroll');
     }
     $.ajax({
-        url: $this.data('url'),
-        type: 'POST',
-        dataType: 'html',
-        success: function (html) {
+        'url': $this.data('url'),
+        'data': data,
+        'type': 'POST',
+        'dataType': 'html',
+        'success': function (html) {
             modalWrapper.html(html);
             $('.modal').fadeIn(300).addClass($this.data('class'));
             modalWrapper.find('form').each(function () {
                 if (!$(this).hasClass('no-ajax'))
                     $(this).on('submit', submitForm);
             });
-            if ($this.data('checkboxes')) {
-                setCheckboxInput($this.data('checkboxes'));
-            }
             setDefaultFunctions();
         },
-        error: function () {
+        'error': function () {
             $('.close').on('click', closeWindow);
         }
     });
 }
 
-function setCheckboxInput(name) {
-    let val = $('input[name="' + name + '[]"]').map(function () {
-        if ($(this).is(':checked')) return $(this).val();
-    }).get();
-    $('.modal').find('input[name=checkboxes]').val(val.join(','));
+function getAllIds(name) {
+    let elements = getChecked(name);
+    return {[name] : JSON.stringify(elements)};
 }
 
 function setDefaultFunctions() {
@@ -58,5 +55,6 @@ function setDefaultFunctions() {
 function closeWindow() {
     $('.modal').hide();
     $('.modal-window').fadeOut(300);
+    $('.elements').find('input[type=checkbox]').prop('checked', false);
     $('body').removeClass('no-scroll');
 }

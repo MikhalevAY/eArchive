@@ -24,5 +24,5 @@ interface AdministrationRepositoryInterface
 
     public function delete(User $user): array;
 
-    public function deleteSelected(array $ids): array;
+    public function deleteSelected(array $userIds): array;
 }

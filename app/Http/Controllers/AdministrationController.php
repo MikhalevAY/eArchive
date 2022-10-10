@@ -55,7 +55,7 @@ class AdministrationController extends Controller
 
     public function deleteSelected(AdministrationDeleteSelectedRequest $request): JsonResponse
     {
-        $data = $this->service->deleteSelected($request->input('checkboxes'));
+        $data = $this->service->deleteSelected($request->input('users'));
         $data['closeWindow'] = true;
 
         return response()->json($data);

@@ -30,12 +30,12 @@
                 @forelse($documents as $document)
                     <tr data-row="{{ $document->id }}">
                         <td class="light">{{ $document->updated_at->format('d.m.Y в H:i') }}</td>
-                        <td>{{ $document->type->title }}</td>
-                        <td>{{ $document->caseNomenclature->title }}</td>
+                        <td>{{ $document->type }}</td>
+                        <td>{{ $document->case_nomenclature }}</td>
                         <td>{{ $document->question }}</td>
                         <td>
-                            <a class="link" href="">Редактировать</a>
-                            <a class="delete delete-icon modal-link" data-url="{{ route('deleteDocument', ['document' => $document->id]) }}"></a>
+                            <a class="link" href="{{ route('document.edit', ['document' => $document]) }}">Редактировать</a>
+                            <a title="Удалить" class="delete delete-icon modal-link" data-url="{{ route('deleteDocument', ['document' => $document]) }}"></a>
                         </td>
                     </tr>
                 @empty

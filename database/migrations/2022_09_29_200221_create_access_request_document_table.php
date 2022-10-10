@@ -13,14 +13,14 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('access_request_document', function (Blueprint $table) {
-            $table->unsignedBigInteger('access_request_id');
+            $table->unsignedBigInteger('access_request_id')->nullable();
             $table->unsignedBigInteger('document_id');
             $table->unsignedBigInteger('user_id');
             $table->boolean('view')->default(false);
             $table->boolean('edit')->default(false);
             $table->boolean('download')->default(false);
             $table->boolean('delete')->default(false);
-            $table->boolean('is_allowed')->default(true);
+            $table->boolean('is_allowed')->nullable();
         });
 
         Schema::table('access_request_document', function (Blueprint $table) {

@@ -4,7 +4,7 @@
     @method('delete')
     @csrf
     <p class="hint">Вы уверены что хотите удалить данных пользователей?</p>
-    <input type="hidden" name="checkboxes" value="">
+    <input type="hidden" name="users" value="{{ $users }}">
     <input type="submit" value="Удалить"/>
     <div class="result center"></div>
 </form>

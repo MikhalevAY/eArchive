@@ -16,9 +16,17 @@ interface DocumentRepositoryInterface
 
     public function getAll(array $params): Collection;
 
-    public function store(array $data) : Document;
+    public function findByIds(array $documentIds): Collection;
 
-    public function update(array $data, Document $document): array;
+    public function store(array $data): Document;
 
-    public function delete(Document $document): array;
+    public function update(array $data, Document $document): Document;
+
+    public function delete(array $documentIds): void;
+
+    public function getNeeded(array $ids): Collection;
+
+    public function getActionsForDocument(int $documentId): array;
+
+    public function getAvailableForAction(array $ids, string $action): array;
 }

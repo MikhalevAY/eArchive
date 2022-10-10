@@ -21,7 +21,7 @@
         <span class="gray">Запрашиваемые документы</span>
         <div class="requested-documents">
         @foreach($accessRequest->documents as $document)
-            <div class="doc {{ $document->pivot->is_allowed == 1 ? 'allowed' : 'forbidden' }}">
+            <div class="doc {{ $document->pivot->is_allowed === 0  ? 'forbidden' : 'allowed' }}">
                 <div class="name">{{ $document->type->title }}</div>
                 <p>{{ $document->question }}</p>
                 @if($accessRequest->status != 'closed')

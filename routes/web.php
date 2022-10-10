@@ -24,7 +24,7 @@ Route::get('/new-password/{md5Email}', [PasswordController::class, 'new'])->name
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['checkUserPermission']], function () {
         Route::get('/archive-search', [ArchiveController::class, 'index'])->name('archiveSearch');
-        Route::get('/archive-search/view/{document}', [ArchiveController::class, 'view'])->name('viewDocument');
+        Route::get('/archive-search/list', [ArchiveController::class, 'list'])->name('archiveSearchList');
         Route::get('/system-settings', [SystemSettingController::class, 'index'])->name('systemSetting');
         Route::get('/registration-of-documents', [DocumentController::class, 'index'])->name('registrationOfDocuments');
         Route::get('/reading-room', [ReadingRoomController::class, 'index'])->name('readingRoom');
@@ -43,15 +43,31 @@ Route::group(['middleware' => ['auth']], function () {
         });
 
         Route::controller(DocumentController::class)->prefix('registration-of-documents')->group(function () {
-            Route::get('add', 'add')->name('document.add');
-            Route::get('list', 'list')->name('document.list');
-            Route::post('store', 'store')->name('document.store');
-            Route::delete('/delete/{document}', 'delete')->name('document.delete');
+            Route::get('/add', 'add')->name('document.add');
+            Route::get('/list', 'list')->name('document.list');
+            Route::post('/store', 'store')->name('document.store');
         });
 
         Route::controller(AccessRequestController::class)->prefix('access-requests')->group(function () {
             Route::post('/update/{accessRequest}', 'update')->name('access-request.update');
         });
+
+    });
+
+    Route::post('/access-requests/store', [AccessRequestController::class, 'store'])->name('access-request.store');
+
+    Route::controller(DocumentController::class)->prefix('documents')->group(function () {
+        Route::group(['middleware' => ['actionIsAllowed']], function () {
+            Route::get('/view/{document}', 'view')->name('document.view');
+            Route::get('/edit/{document}', 'edit')->name('document.edit');
+            Route::post('/update/{document}', 'update')->name('document.update');
+            Route::get('/download/{document}', 'download')->name('document.download');
+            Route::get('/print/{document}', 'print')->name('document.print');
+            Route::delete('/delete/{document}', 'delete')->name('document.delete');
+        });
+        Route::delete('/delete-selected', 'deleteSelected')->name('document.deleteSelected');
+        Route::get('/export-selected', 'exportSelected')->name('document.exportSelected');
+        Route::get('/download-selected', 'downloadSelected')->name('document.downloadSelected');
     });
 
     Route::controller(ModalController::class)->group(function () {
@@ -65,7 +81,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/modal/delete-selected-users', 'deleteSelectedUsers')->name('deleteSelectedUsers');
         Route::post('/modal/search-documents', 'searchDocuments')->name('searchAvailableDocuments');
         Route::post('/modal/delete-document/{document}', 'deleteDocument')->name('deleteDocument');
+        Route::post('/modal/delete-selected-documents', 'deleteSelectedDocuments')->name('deleteSelectedDocuments');
         Route::post('/modal/access-request/edit/{accessRequest}', 'editAccessRequest')->name('editAccessRequest');
+        Route::post('/modal/access-request/new/{document?}', 'newAccessRequest')->name('newAccessRequest');
     });
 
     Route::controller(AccountController::class)->prefix('account')->group(function () {

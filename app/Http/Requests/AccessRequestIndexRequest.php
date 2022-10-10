@@ -27,7 +27,7 @@ class AccessRequestIndexRequest extends FormRequest
             'page' => 'nullable|integer',
             'per_page' => 'nullable|integer|min:10',
             'q' => 'nullable',
-            'sort' => 'nullable|string|in:created_at,surname',
+            'sort' => 'nullable|string|in:created_at,full_name',
             'order' => 'nullable|in:asc,desc',
         ];
     }

@@ -34,7 +34,7 @@ class DraftDocumentsIndexRequest extends FormRequest
         return [
             'author_email' => 'required',
             'is_draft' => 'required',
-            'sort' => 'nullable|string|in:updated_at,question,document_type,case_nomenclature',
+            'sort' => 'nullable|string|in:updated_at,question,type,case_nomenclature',
             'order' => 'nullable|in:asc,desc',
         ];
     }

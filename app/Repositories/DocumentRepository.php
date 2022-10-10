@@ -2,11 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Filters\DocumentFilter;
 use App\Models\Document;
 use App\RepositoryInterfaces\DocumentRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class DocumentRepository extends BaseRepository implements DocumentRepositoryInterface
 {
@@ -23,16 +25,17 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
         return $this->prepareQuery($params)->get();
     }
 
+    public function findByIds(array $documentIds): Collection
+    {
+        return Document::whereIn('id', $documentIds)->get();
+    }
+
     private function prepareQuery($params): Builder
     {
-        $query = Document::selectRaw('documents.*, t.title as document_type, c.title as case_nomenclature')
-            ->leftJoin('dictionaries as t', 't.id', '=', 'documents.document_type_id')
+        $query = Document::selectRaw('documents.*, t.title as type, c.title as case_nomenclature, u.surname, u.name')
+            ->leftJoin('dictionaries as t', 't.id', '=', 'documents.type_id')
             ->leftJoin('dictionaries as c', 'c.id', '=', 'documents.case_nomenclature_id')
-            ->with(['type', 'caseNomenclature', 'author']);
-
-        if (!isset($params['is_draft'])) {
-            $query->leftJoin('users as u', 'u.email', '=', 'documents.author_email');
-        }
+            ->leftJoin('users as u', 'u.email', '=', 'documents.author_email');
 
         $query = $this->applyFilter($params, $query);
         $query = $this->applyOrderBy($params, $query);
@@ -42,15 +45,7 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
 
     private function applyFilter(array $params, Builder $query): Builder
     {
-        if (isset($params['is_draft'])) {
-            $query->where('documents.is_draft', true);
-        }
-
-        if (isset($params['author_email'])) {
-            $query->where('author_email', $params['author_email']);
-        }
-
-        return $query;
+        return DocumentFilter::apply($params, $query);
     }
 
     public function store(array $data): Document
@@ -58,22 +53,52 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
         return Document::create($data);
     }
 
-    public function update(array $data, Document $document): array
+    public function update(array $data, Document $document): Document
     {
         $document->update($data);
 
-        return [
-            'message' => __('messages.data_updated')
-        ];
+        return $document;
     }
 
-    public function delete(Document $document): array
+    public function delete(array $documentIds): void
     {
-        $document->delete();
+        foreach (Document::whereIn('id', $documentIds)->get() as $document) {
+            $document->delete();
+        }
+    }
 
-        return [
-            'message' => __('messages.document_deleted'),
-            'rowsToDelete' => [$document->id]
-        ];
+    public function getActionsForDocument(int $documentId): array
+    {
+        return DB::table('access_request_document')
+            ->select('view', 'edit', 'download', 'delete')
+            ->where('user_id', auth()->id())
+            ->where('document_id', $documentId)
+            ->where('is_allowed', true)
+            ->limit(1)
+            ->get()
+            ->toArray();
+    }
+
+    public function getAvailableForAction(array $ids, string $action): array
+    {
+        return DB::table('access_request_document')
+            ->where('user_id', auth()->id())
+            ->whereIn('document_id', $ids)
+            ->where('is_allowed', true)
+            ->where($action, true)
+            ->get()
+            ->pluck('document_id')
+            ->toArray();
+    }
+
+    public function getNeeded(array $ids): Collection
+    {
+        return Document::whereIn('id', $ids)
+            ->leftJoin('access_request_document as ad', function ($join) {
+                $join->on('ad.document_id', '=', 'documents.id')
+                    ->where('ad.user_id', '=', auth()->id());
+            })
+            ->whereNull('ad.is_allowed')
+            ->get();
     }
 }

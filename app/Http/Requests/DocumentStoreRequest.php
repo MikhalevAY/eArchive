@@ -33,7 +33,7 @@ class DocumentStoreRequest extends FormRequest
     {
         return [
             'author_email' => 'required',
-            'document_type_id' => 'required|exists:dictionaries,id',
+            'type_id' => 'required|exists:dictionaries,id',
             'case_nomenclature_id' => 'required|exists:dictionaries,id',
             'sender_id' => 'nullable|exists:dictionaries,id',
             'outgoing_number' => 'nullable|max:255',

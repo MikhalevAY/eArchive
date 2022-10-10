@@ -4,6 +4,7 @@ namespace App\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -67,18 +68,28 @@ class User extends Authenticatable
         return is_null($this->photo) ? '/images/default-photo.png' : '/storage/' . $this->photo;
     }
 
+    public function getFullNameAttribute(): string
+    {
+        return $this->surname . ' ' . $this->name;
+    }
+
     public function logs(): HasMany
     {
         return $this->hasMany(Log::class);
     }
 
-    protected function serializeDate(DateTimeInterface $date): string
-    {
-        return $date->format('Y-m-d H:i:s');
-    }
-
     public function drafts(): HasMany
     {
         return $this->hasMany(Document::class, 'author_email', 'email')->where('is_draft', true);
+    }
+
+    public function accessRequests(): HasMany
+    {
+        return $this->hasMany(AccessRequest::class);
+    }
+
+    protected function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

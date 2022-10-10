@@ -2,11 +2,16 @@
 
 namespace App\Services;
 
+use App\Models\Log;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService
 {
+    public function __construct(public LogService $logService)
+    {
+    }
+
     public function login(array $params): array
     {
         if (!Auth::attempt($params)) {
@@ -15,6 +20,13 @@ class AuthService
                 'password' => [],
             ]];
         }
+
+        $this->logService->create([
+            'action' => Log::ACTION_AUTH,
+            'model' => 'App\\\SystemSetting',
+            'model_id' => auth()->id(),
+            'text' => 'Вход в систему',
+        ]);
 
         return [
             'reset' => true,

@@ -58,9 +58,9 @@ class AdministrationService
         return $this->repository->delete($user);
     }
 
-    public function deleteSelected(string $ids): array
+    public function deleteSelected(array $userIds): array
     {
-        return $this->repository->deleteSelected(explode(',', $ids));
+        return $this->repository->deleteSelected($userIds);
     }
 
     public function resetPassword(User $user): array

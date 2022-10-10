@@ -13,10 +13,10 @@
                 <div class="col-2">
                     <div class="row">
                         <span>Тип документа</span>
-                        <select class="no-max-width" name="document_type_id">
+                        <select class="no-max-width" name="type_id">
                             <option value="">Выберите</option>
-                            @foreach($dictionaries['document_type'] as $documentType)
-                                <option value="{{ $documentType->id }}">{{ $documentType->title }}</option>
+                            @foreach($dictionaries['document_type'] as $type)
+                                <option value="{{ $type->id }}">{{ $type->title }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -182,7 +182,7 @@
                 <div class="row">
                     <span>Вложения к документу</span>
                     <label class="file-label no-max-width" for="attachments">
-                        <div><i class="file-name">Выберите файлы</i></div>
+                        <div><i data-text="Выберите файлы" class="file-name">Выберите файлы</i></div>
                         <input class="file-input" id="attachments" type="file" name="attachments[]" multiple>
                     </label>
                 </div>

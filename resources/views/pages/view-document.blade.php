@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $dictionaries[$document->document_type_id])
+@section('title', $dictionaries[$document->type_id])
 
 @section('content')
     @include('layouts.menu')
@@ -10,9 +10,10 @@
             <div class="document-detailed">
                 <h2>@yield('title')</h2>
                 <div class="action-links">
-                    @foreach($actions as $class => $access)
-                        <a class="{{ $class }} {{ var_export($access) }}" @if($access) href="#" @endif></a>
-                    @endforeach
+                    <a class="print {{ var_export($actions['view']) }}" @if($actions['view']) href="{{ route('document.print', ['document' => $document]) }}" target="_blank" @endif></a>
+                    <a class="edit {{ var_export($actions['edit']) }}" @if($actions['edit']) href="{{ route('document.edit', ['document' => $document]) }}" @endif></a>
+                    <a class="download {{ var_export($actions['download']) }}" @if($actions['download']) href="{{ route('document.download', ['document' => $document]) }}" @endif></a>
+                    <a class="modal-link delete {{ var_export($actions['delete']) }}" @if($actions['delete']) data-url="{{ route('deleteDocument', ['document' => $document]) }}" @endif></a>
                 </div>
                 <p>{{ $document->question }}</p>
                 <div class="document-info">
@@ -57,12 +58,14 @@
                 </div>
                 <div class="divider"></div>
                 <div class="document-text">
-                    <p>{!! nl2br($document->document_text) !!}</p>
+                    <p>{!! nl2br($document->text) !!}</p>
                 </div>
 
                 <div class="divider"></div>
                 <div class="files">
-                    <a class="download-archive">Скачать архив</a>
+                    @if($actions['download'])
+                    <a class="download-archive" href="{{ route('document.download', ['document' => $document]) }}">Скачать архив</a>
+                    @endif
                     <h5>Основной документ</h5>
                     <div class="list">
                         <div class="file-block">

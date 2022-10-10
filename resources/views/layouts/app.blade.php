@@ -29,8 +29,8 @@
         <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery.maskedinput.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('js/modalWindow.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/modalWindow.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

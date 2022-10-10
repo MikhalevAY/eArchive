@@ -19,10 +19,10 @@ abstract class BaseRepository
         return $query;
     }
 
-    public function getOrderBy(array $params): array
+    public function getOrderBy(array $params, string $defaultSort = self::SORT): array
     {
         $order = $params['order'] ?? self::ORDER;
-        $sort = $params['sort'] ?? self::SORT;
+        $sort = $params['sort'] ?? $defaultSort;
 
         return ['sort' => $sort, 'order' => $order];
     }

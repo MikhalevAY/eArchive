@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Attachment;
 use App\Models\Document;
 use App\RepositoryInterfaces\AttachmentRepositoryInterface;
 use Illuminate\Http\UploadedFile;
@@ -32,8 +33,33 @@ class AttachmentService
             'document_id' => $document->id,
             'name' => $attachment->getClientOriginalName(),
             'file' => $file,
-            'size' => round(($attachment->getSize() / 1024 / 1024), 1)
+            'size' => round(($attachment->getSize() / 1024 / 1024), 3)
         ]);
+    }
+
+    public function delete(int $attachment): void
+    {
+        $attachment = $this->repository->get($attachment);
+        @unlink(public_path('storage/' . $attachment->file));
+        $this->repository->delete($attachment);
+    }
+
+    public function storeMany(array $attachments, Document $document): void
+    {
+        if (!empty($attachments)) {
+            foreach ($attachments as $attachment) {
+                $this->store($attachment, $document);
+            }
+        }
+    }
+
+    public function deleteMany(array $attachments): void
+    {
+        if (!empty($attachments)) {
+            foreach ($attachments as $attachment) {
+                $this->delete($attachment);
+            }
+        }
     }
 
     private function createStorage(string $folder): void

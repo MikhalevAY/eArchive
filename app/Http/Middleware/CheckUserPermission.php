@@ -6,7 +6,7 @@ use App\Models\MenuItem;
 use Closure;
 use Illuminate\Http\Request;
 
-class checkUserPermission
+class CheckUserPermission
 {
     public function handle(Request $request, Closure $next)
     {

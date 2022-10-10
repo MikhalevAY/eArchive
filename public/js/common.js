@@ -36,6 +36,10 @@ $(document).ready(function () {
         form.submit();
     });
 
+    $('.cancel').on('click', function () {
+        history.back();
+    });
+
     applyDatepicker();
 
 });
@@ -58,6 +62,7 @@ function submitForm() {
         success: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');
             form.find('input[name=is_draft]').val('0');
+            result.addClass('success').html(data.message);
             if (data.url) {
                 window.location.href = data.url;
             }
@@ -72,7 +77,9 @@ function submitForm() {
                 button.remove();
                 deleteRows(data.rowsToDelete);
             }
-            result.addClass('success').html(data.message);
+            if (data.class) {
+                result.removeClass('success error').addClass(data.class);
+            }
         },
         error: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');
@@ -89,6 +96,12 @@ function submitForm() {
     });
 
     return false;
+}
+
+function getChecked(name) {
+    return $('input[name="' + name + '[]"]').map(function () {
+        if ($(this).is(':checked')) return $(this).val();
+    }).get();
 }
 
 function toggleResetVisibility() {
@@ -112,7 +125,7 @@ function fileInput() {
     let $this = $(this);
     let $span = $this.parent().find('i');
     if ($this.prop('multiple')) {
-        $span.html($this.val() !== '' ? 'Выбранных файлов: ' + $this.get(0).files.length : 'Выберите файлы');
+        $span.html($this.val() !== '' ? 'Выбранных файлов: ' + $this.get(0).files.length : $span.data('text'));
     } else {
         $span.html($this.val() !== '' ? $this.get(0).files[0].name : 'Выберите файл');
     }

@@ -84,15 +84,15 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
         ];
     }
 
-    public function deleteSelected(array $ids): array
+    public function deleteSelected(array $userIds): array
     {
-        foreach (User::whereIn('id', $ids)->get() as $user) {
+        foreach (User::whereIn('id', $userIds)->get() as $user) {
             $user->delete();
         }
 
         return [
             'message' => __('messages.users_deleted'),
-            'rowsToDelete' => $ids
+            'rowsToDelete' => $userIds
         ];
     }
 }

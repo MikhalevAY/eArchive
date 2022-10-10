@@ -352,6 +352,7 @@ input[type=button] {
         font-size: 14px;
         line-height: 16px;
         border-radius: 12px;
+        text-decoration: none;
         color: var(--company-color);
         border: 1px solid var(--company-color);
         transition: all .2s linear;
@@ -559,35 +560,76 @@ form .label-hint {
 form .max-500 {
     max-width: 500px;
 }
-form .delete-selected {
+form .additional-menu {
     position: absolute;
     top: 0;
     right: 0;
 }
-    form .delete-selected a {
+    form .additional-menu a {
         display: block;
+        float: left;
+        margin-left: 10px;
         cursor: pointer;
-        width: 54px;
+        min-width: 54px;
         height: 54px;
         box-sizing: border-box;
         border-radius: 12px;
         border: 1px solid;
+        position: relative;
+        text-decoration: none;
         border-color: var(--company-color);
         transition: all .2s linear;
     }
-    form .delete-selected i {
+    form .additional-menu .smaller {
+        min-width: 48px;
+        height: 40px;
+        line-height: 38px;
+        font-size: 14px;
+        color: var(--company-color);
+    }
+    form .additional-menu .with-text {
+        padding: 0 12px 0 44px;
+    }
+    form .additional-menu i {
         display: block;
-        width: 100%;
-        height: 100%;
-        -webkit-mask: url(../images/delete.svg) no-repeat center;
-        mask: url(../images/delete.svg) no-repeat center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        width: 20px;
+        height: 20px;
         background-color: var(--company-color);
         transition: all .2s linear;
     }
-    form .delete-selected a:hover {
-        background-color: var(--company-color);
+    form .additional-menu .with-text i {
+        left: 12px;
+        translate: 0 -50%;
     }
-    form .delete-selected a:hover i {
+    form .additional-menu .delete i {
+        -webkit-mask: url(../images/delete.svg) no-repeat center;
+        mask: url(../images/delete.svg) no-repeat center;
+    }
+    form .additional-menu .access-request i {
+        -webkit-mask: url(../images/request.svg) no-repeat center;
+        mask: url(../images/request.svg) no-repeat center;
+    }
+    form .additional-menu .download i {
+        -webkit-mask: url(../images/download.svg) no-repeat center;
+        -webkit-mask-size: 20px;
+        mask: url(../images/download.svg) no-repeat center;
+        mask-size: 20px;
+    }
+    form .additional-menu .export i {
+        -webkit-mask: url(../images/upload.svg) no-repeat center;
+        -webkit-mask-size: 20px;
+        mask: url(../images/upload.svg) no-repeat center;
+        mask-size: 20px;
+    }
+    form .additional-menu a:hover {
+        background-color: var(--company-color);
+        color: #FFF;
+    }
+    form .additional-menu a:hover i {
         background-color: #FFF;
     }
 form .eye {
@@ -641,10 +683,13 @@ form .file-label {
         color: #303030;
         display: inline-block;
         padding-left: 28px;
-        background: url(../images/upload.svg) no-repeat left center;
+        background: url(../images/download.svg) no-repeat left center / 20px;
     }
     form .file-label i {
         font-style: normal;
+        max-width: 350px;
+        overflow: hidden;
+        display: block;
     }
     form .uploaded-file {
         background: #F8F8F8;
@@ -655,7 +700,8 @@ form .file-label {
         height: 80px;
         position: relative;
     }
-    form .uploaded-file .delete {
+    form .uploaded-file .delete,
+    .attachments .attachment .delete {
         position: absolute;
         width: 20px;
         height: 20px;
@@ -664,13 +710,27 @@ form .file-label {
         right: 22px;
         cursor: pointer;
     }
+    .attachments .attachment .delete {
+        top: 24px;
+    }
+    form .uploaded-file .file-img,
+    .attachments .attachment .file-img {
+        margin: 12px 6px 12px 12px;
+        width: 28px;
+        height: 28px;
+        float: left;
+        background: var(--company-color);
+        mask: url(../images/uploaded-file.svg) no-repeat center;
+        -webkit-mask: url(../images/uploaded-file.svg) no-repeat center;
+    }
     form .uploaded-file .logo {
         position: relative;
         height: 100%;
         width: 142px;
         float: left;
     }
-    form .uploaded-file .info {
+    form .uploaded-file .info,
+    .attachments .attachment .info {
         float: left;
         padding-top: 15px;
         font-size: 14px;
@@ -679,6 +739,10 @@ form .file-label {
         width: 220px;
         overflow: hidden;
         position: relative;
+    }
+    form .no-max-width .info,
+    .attachments .attachment .info {
+        width: auto;
     }
     form .uploaded-file .info:after {
         content: '';
@@ -689,7 +753,11 @@ form .file-label {
         width: 40px;
         background: linear-gradient(90deg, rgba(248,248,248,0) 0%, rgba(248,248,248,1) 60%);
     }
-    form .uploaded-file .info h3 {
+    form .no-max-width .info:after {
+        display: none;
+    }
+    form .uploaded-file .info h3,
+    .attachments .attachment h3 {
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
@@ -721,10 +789,33 @@ form input[type=submit].search:hover {
     background-color: var(--company-color);
 }
 
+.attachments {
+    background: #F8F8F8;
+    border: 1px solid #E3E4EB;
+    padding: 5px 0 0;
+    border-radius: 10px;
+}
+    .attachments .attachment {
+        margin: 0 5px 5px;
+        padding-bottom: 10px;
+        position: relative;
+        border-top: 1px dashed #DDD;
+    }
+    .attachments .attachment:after {
+        content: '';
+        clear: both;
+        display: block;
+    }
+    .attachments .attachment:first-child {
+        border-top: none;
+        padding-bottom: 5px;
+    }
+
 input.no-max-width,
 select.no-max-width,
 textarea.no-max-width,
-label.no-max-width {
+label.no-max-width,
+form .uploaded-file.no-max-width {
     max-width: none;
 }
 
@@ -747,6 +838,10 @@ label.no-max-width {
     .col-menu .logo {
         display: inline-block;
         margin: 0 20px;
+    }
+    .col-menu img {
+        display: block;
+        max-width: 200px;
     }
 .col-content {
     width: calc(100% - 320px);
@@ -793,6 +888,7 @@ label.no-max-width {
     }
     .document-detailed .action-links a {
         display: inline-block;
+        cursor: pointer;
         width: 48px;
         height: 40px;
         border: 1px solid var(--company-color);
@@ -893,6 +989,7 @@ label.no-max-width {
         right: 0;
         margin: 0 auto;
         top: -140px;
+        max-width: 200px;
     }
 
 .content-top {
@@ -1009,6 +1106,10 @@ label.no-max-width {
     line-height: 16px;
     margin-bottom: 15px;
     padding-left: 28px;
+}
+.requested-documents .name.np,
+.requested-documents .doc p.np {
+    padding-left: 0;
 }
 .requested-documents .access {
     display: flex;
@@ -1387,6 +1488,7 @@ label.no-max-width {
         font-weight: 600;
         color: #303030;
         text-align: left;
+        white-space: nowrap;
     }
     .elements th:first-child {
         border-radius: 12px 0 0 0;
@@ -1405,6 +1507,14 @@ label.no-max-width {
         padding: 22px 16px;
         color: #303030;
         background: #FFF;
+    }
+    .elements .less-padding {
+        padding: 0 16px;
+    }
+    .elements .no-access td {
+        background: #F8f8F8;
+        color: #8F97A2;
+        cursor: default;
     }
     .elements tr:last-child td:first-child {
         border-radius: 0 0 0 12px;
@@ -1427,7 +1537,7 @@ label.no-max-width {
         line-height: 16px;
         padding: 10px 16px;
         height: auto;
-        background: #FFF;
+        background: transparent;
         color: var(--company-color);
         transition: all .2s linear;
     }
@@ -1452,6 +1562,9 @@ label.no-max-width {
         color: var(--company-color);
         text-decoration: none;
         margin-right: 25px;
+    }
+    .elements .link:hover {
+        text-decoration: underline;
     }
     .elements .asc {
         display: block;
@@ -1509,6 +1622,7 @@ label.no-max-width {
         cursor: pointer;
         border-radius: 8px;
         margin-bottom: 4px;
+        text-decoration: none;
     }
     .elements .submenu a:hover {
         background-color: #F8F8F8;
@@ -1518,6 +1632,15 @@ label.no-max-width {
     }
     .elements .submenu .reset-password {
         background: url(../images/change-password.svg) no-repeat 8px center;
+    }
+    .elements .submenu .view {
+        background: url(../images/view-document.svg) no-repeat 8px center;
+    }
+    .elements .submenu .download {
+        background: url(../images/download.svg) no-repeat 8px center / 20px;
+    }
+    .elements .submenu .print {
+        background: url(../images/print.svg) no-repeat 8px center / 20px;
     }
     .elements .submenu .delete {
         color: #EC5757;

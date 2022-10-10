@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewAccessRequestRequest;
 use App\Models\AccessRequest;
 use App\Models\Document;
 use App\Models\User;
 use App\Services\AccessRequestService;
 use App\Services\DictionaryService;
+use App\Services\DocumentService;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class ModalController extends Controller
 {
     public function __construct(
         public DictionaryService    $dictionaryService,
-        public AccessRequestService $accessRequestService
+        public AccessRequestService $accessRequestService,
+        public DocumentService $documentService
     )
     {
     }
@@ -64,7 +68,9 @@ class ModalController extends Controller
 
     public function deleteSelectedUsers(): View
     {
-        return view('modal.delete-selected-users');
+        return view('modal.delete-selected-users')->with([
+            'users' => request()->input('users')
+        ]);
     }
 
     public function searchDocuments(): View
@@ -77,7 +83,15 @@ class ModalController extends Controller
     public function deleteDocument(Document $document): View
     {
         return view('modal.delete-document')->with([
+            'redirect' => Str::contains(url()->previous(), ['view']),
             'document' => $document
+        ]);
+    }
+
+    public function deleteSelectedDocuments(): View
+    {
+        return view('modal.delete-selected-documents')->with([
+            'documents' => request()->input('documents')
         ]);
     }
 
@@ -91,5 +105,20 @@ class ModalController extends Controller
             'accessRequest' => $accessRequest,
             'statusTitle' => AccessRequest::$statusTitle,
         ]);
+    }
+
+    public function newAccessRequest(NewAccessRequestRequest $request, Document $document = null): View
+    {
+        $documents = isset($document) ? collect([$document]) : $this->documentService->getNeeded($request->input('documents'));
+        $exists = $this->accessRequestService->checkAccessRequests($documents);
+
+        if ($exists || empty($documents)) {
+            return view('modal.access-request.exists');
+        } else {
+            return view('modal.access-request.new')->with([
+                'documents' => $documents,
+                'jsonDocuments' => json_encode($documents->pluck('id')->toArray(), true),
+            ]);
+        }
     }
 }

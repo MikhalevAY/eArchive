@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
+ * @property integer $id
  * @property integer $user_id
  * @property string $comment
  * @property string $status
@@ -22,7 +23,7 @@ class AccessRequest extends Model
 
     public static array $tHeads = [
         ['title' => 'Дата', 'field' => 'created_at', 'class' => ''],
-        ['title' => 'Автор', 'field' => 'surname', 'class' => ''],
+        ['title' => 'Автор', 'field' => 'full_name', 'class' => ''],
     ];
 
     public static array $statusTitle = [

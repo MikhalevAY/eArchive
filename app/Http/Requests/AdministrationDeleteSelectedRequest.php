@@ -16,6 +16,13 @@ class AdministrationDeleteSelectedRequest extends FormRequest
         return true;
     }
 
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'users' => json_decode($this->users, true)
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,14 +31,14 @@ class AdministrationDeleteSelectedRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'checkboxes' => 'required'
+            'users' => 'required'
         ];
     }
 
     public function messages(): array
     {
         return [
-            'checkboxes.required' => 'Выберите хотя бы одного пользователя'
+            'users.required' => 'Выберите хотя бы одного пользователя'
         ];
     }
 }

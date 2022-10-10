@@ -18,27 +18,26 @@ class Document extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'document_type_id', 'case_nomenclature_id', 'income_number', 'registration_date', 'registration_time',
-        'author_email', 'outgoing_number', 'outgoing_date', 'sender_id', 'receiver_id', 'addressee', 'question',
-        'delivery_type_id', 'number_of_sheets', 'language_id', 'summary', 'shelf_life', 'note', 'answer_to_number',
-        'gr_document', 'performer', 'document_text', 'history', 'file', 'file_name', 'is_draft', 'answer_to_date',
-        'file_size'
+        'type_id', 'case_nomenclature_id', 'income_number', 'registration_date', 'registration_time', 'author_email',
+        'outgoing_number', 'outgoing_date', 'sender_id', 'receiver_id', 'addressee', 'question', 'delivery_type_id',
+        'number_of_sheets', 'language_id', 'summary', 'shelf_life', 'note', 'answer_to_number', 'gr_document',
+        'performer', 'text', 'history', 'file', 'file_name', 'is_draft', 'answer_to_date', 'file_size'
     ];
 
     protected $dates = ['registration_date', 'registration_time', 'outgoing_date', 'answer_to_date'];
 
     public static array $tHeads = [
-        ['title' => 'Рег. номер', 'field' => 'income_number', 'class' => ''],
-        ['title' => 'Тип документа', 'field' => 'document_type', 'class' => ''],
+        ['title' => 'Рег. номер', 'field' => 'id', 'class' => ''],
+        ['title' => 'Тип документа', 'field' => 'type', 'class' => ''],
         ['title' => 'Номенклатура дел', 'field' => 'case_nomenclature', 'class' => ''],
         ['title' => 'Характер вопроса', 'field' => 'question', 'class' => ''],
-        ['title' => 'Автор', 'field' => 'author', 'class' => ''],
+        ['title' => 'Автор', 'field' => 'surname', 'class' => ''],
         ['title' => 'Дата', 'field' => 'registration_date', 'class' => ''],
     ];
 
     public static array $draftTHeads = [
         ['title' => 'Редактирование', 'field' => 'updated_at', 'class' => ''],
-        ['title' => 'Тип документа', 'field' => 'document_type', 'class' => ''],
+        ['title' => 'Тип документа', 'field' => 'type', 'class' => ''],
         ['title' => 'Номенклатура дел', 'field' => 'case_nomenclature', 'class' => ''],
         ['title' => 'Характер вопроса', 'field' => 'question', 'class' => ''],
     ];
@@ -63,12 +62,32 @@ class Document extends Model
 
     public function type(): BelongsTo
     {
-        return $this->belongsTo(Dictionary::class, 'document_type_id', 'id');
+        return $this->belongsTo(Dictionary::class, 'type_id', 'id');
     }
 
     public function caseNomenclature(): BelongsTo
     {
         return $this->belongsTo(Dictionary::class, 'case_nomenclature_id', 'id');
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Dictionary::class, 'language_id', 'id');
+    }
+
+    public function deliveryType(): BelongsTo
+    {
+        return $this->belongsTo(Dictionary::class, 'delivery_type_id', 'id');
+    }
+
+    public function sender(): BelongsTo
+    {
+        return $this->belongsTo(Dictionary::class, 'sender_id', 'id');
+    }
+
+    public function receiver(): BelongsTo
+    {
+        return $this->belongsTo(Dictionary::class, 'receiver_id', 'id');
     }
 
     public function attachments(): HasMany
