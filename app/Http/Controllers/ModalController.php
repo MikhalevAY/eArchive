@@ -17,7 +17,7 @@ class ModalController extends Controller
     public function __construct(
         public DictionaryService    $dictionaryService,
         public AccessRequestService $accessRequestService,
-        public DocumentService $documentService
+        public DocumentService      $documentService
     )
     {
     }
@@ -107,18 +107,27 @@ class ModalController extends Controller
         ]);
     }
 
-    public function newAccessRequest(NewAccessRequestRequest $request, Document $document = null): View
+    public function newAccessRequest(NewAccessRequestRequest $request, int $document = null): View
     {
-        $documents = isset($document) ? collect([$document]) : $this->documentService->getNeeded($request->input('documents'));
-        $exists = $this->accessRequestService->checkAccessRequests($documents);
-
-        if ($exists || empty($documents)) {
-            return view('modal.access-request.exists');
-        } else {
-            return view('modal.access-request.new')->with([
-                'documents' => $documents,
-                'jsonDocuments' => json_encode($documents->pluck('id')->toArray(), true),
+        if (empty($request->input('documents')) && is_null($document)) {
+            return view('modal.access-request.exists')->with([
+                'text' => __('messages.select_at_least_one_document')
             ]);
         }
+
+        $documents = $this->documentService->getAvailableForRequest(
+            is_null($document) ? $request->input('documents') : [$document]
+        );
+
+        if ($documents->isEmpty()) {
+            return view('modal.access-request.exists')->with([
+                'text' => __('messages.access_request_exists')
+            ]);
+        }
+
+        return view('modal.access-request.new')->with([
+            'documents' => $documents,
+            'jsonDocuments' => json_encode($documents->pluck('id')->toArray()),
+        ]);
     }
 }

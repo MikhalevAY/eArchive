@@ -11,15 +11,18 @@
             @if($document->download == 1 || adminOrArchivist())
                 <a href="{{ route('document.download', ['document' => $document]) }}" class="download">Скачать</a>
             @endif
+            @if(!adminOrArchivist())
+                <a class="access-request modal-link" data-class="access-request" data-url="{{ route('newAccessRequest', ['document' => $document]) }}">Запросить доступ</a>
+            @endif
             @if($document->delete == 1 || adminOrArchivist())
                 <a class="modal-link delete" data-url="{{ route('deleteDocument', ['document' => $document]) }}">Удалить</a>
             @endif
         </div>
     </div>
 @else
-    @if(is_null($document->is_allowed))
+    @if($document->is_allowed == -1)
+        <span class="status active">На рассмотрении</span>
+    @else
         <a class="button modal-link" data-class="access-request" data-url="{{ route('newAccessRequest', ['document' => $document]) }}">Запросить</a>
-    @else($document->is_allowed == 0)
-        <span class="status closed">Доступ запрещён</span>
     @endif
 @endif

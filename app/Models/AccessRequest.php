@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
  * @property integer $user_id
  * @property string $comment
  * @property string $status
- * @property BelongsToMany $documents
+ * @property HasMany $documentAccesses
  */
 class AccessRequest extends Model
 {
@@ -42,16 +43,9 @@ class AccessRequest extends Model
         return $this->user->surname . ' ' . $this->user->name;
     }
 
-    public function documents(): BelongsToMany
+    public function documentAccesses(): HasMany
     {
-        return $this->belongsToMany(Document::class)->with('type')->withPivot([
-            'view',
-            'edit',
-            'download',
-            'delete',
-            'is_allowed',
-            'user_id'
-        ]);
+        return $this->hasMany(DocumentAccess::class, 'access_request_id','id');
     }
 
     protected function serializeDate(DateTimeInterface $date): string

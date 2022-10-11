@@ -60,45 +60,47 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
         return $document;
     }
 
-    public function delete(array $documentIds): void
+    public function delete(Collection $documents): void
     {
-        foreach (Document::whereIn('id', $documentIds)->get() as $document) {
-            $document->delete();
-        }
+        $documents->each->delete();
     }
 
     public function getActionsForDocument(int $documentId): array
     {
-        return DB::table('access_request_document')
+        return DB::table('document_accesses')
             ->select('view', 'edit', 'download', 'delete')
-            ->where('user_id', auth()->id())
-            ->where('document_id', $documentId)
-            ->where('is_allowed', true)
-            ->limit(1)
-            ->get()
-            ->toArray();
-    }
-
-    public function getAvailableForAction(array $ids, string $action): array
-    {
-        return DB::table('access_request_document')
-            ->where('user_id', auth()->id())
-            ->whereIn('document_id', $ids)
-            ->where('is_allowed', true)
-            ->where($action, true)
-            ->get()
-            ->pluck('document_id')
-            ->toArray();
-    }
-
-    public function getNeeded(array $ids): Collection
-    {
-        return Document::whereIn('id', $ids)
-            ->leftJoin('access_request_document as ad', function ($join) {
-                $join->on('ad.document_id', '=', 'documents.id')
-                    ->where('ad.user_id', '=', auth()->id());
+            ->whereIn('id', function ($query) {
+                $query->selectRaw('MAX(id)')
+                    ->from('document_accesses')
+                    ->where('user_id', auth()->id())
+                    ->groupBy('document_id');
             })
-            ->whereNull('ad.is_allowed')
+            ->where('is_allowed', true)
+            ->where('document_id', $documentId)
+            ->orderBy('id', 'desc')
+            ->get()
+            ->toArray();
+    }
+
+    public function getAvailableForAction(array $documentIds, string $action): Collection
+    {
+        return Document::select('documents.*')
+            ->documentAccessJoin()
+            ->whereIn('documents.id', $documentIds)
+            ->where('da.is_allowed', true)
+            ->where('da.' . $action, true)
+            ->get();
+    }
+
+    public function getAvailableForRequest(array $documentIds): Collection
+    {
+        return Document::select('documents.*')
+            ->documentAccessJoin()
+            ->whereIn('documents.id', $documentIds)
+            ->where(function ($query) {
+                $query->whereNotNull('da.is_allowed')
+                    ->orWhereNull('da.id');
+            })
             ->get();
     }
 }

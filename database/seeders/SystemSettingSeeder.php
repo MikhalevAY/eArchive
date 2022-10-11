@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\SystemSetting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class SystemSettingSeeder extends Seeder
 {

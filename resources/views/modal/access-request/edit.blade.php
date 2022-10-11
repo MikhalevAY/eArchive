@@ -20,29 +20,29 @@
     <div class="row">
         <span class="gray">Запрашиваемые документы</span>
         <div class="requested-documents">
-        @foreach($accessRequest->documents as $document)
-            <div class="doc {{ $document->pivot->is_allowed === 0  ? 'forbidden' : 'allowed' }}">
-                <div class="name">{{ $document->type->title }}</div>
-                <p>{{ $document->question }}</p>
+        @foreach($accessRequest->documentAccesses as $documentAccess)
+            <div class="doc {{ $documentAccess->is_allowed === 0  ? 'forbidden' : 'allowed' }}">
+                <div class="name">{{ $documentAccess->document->type->title }}</div>
+                <p>{{ $documentAccess->document->question }}</p>
                 @if($accessRequest->status != 'closed')
                 <input class="no-bg toggle-doc-access" type="button" data-allow="Разрешить" data-forbid="Отклонить" value="Отклонить">
-                <input type="hidden" name="document-{{ $document->id }}" value="1">
+                <input type="hidden" name="document-{{ $documentAccess->document_id }}" value="1">
                 @endif
                 <div class="access">
                     <div class="access-element">
-                        <div class="circle {{ $document->pivot->view == 1 ? 'checked' : '' }}"></div>
+                        <div class="circle {{ $documentAccess->view == 1 ? 'checked' : '' }}"></div>
                         <i>Просмотр</i>
                     </div>
                     <div class="access-element">
-                        <div class="circle {{ $document->pivot->edit == 1 ? 'checked' : '' }}"></div>
+                        <div class="circle {{ $documentAccess->edit == 1 ? 'checked' : '' }}"></div>
                         <i>Редактирование</i>
                     </div>
                     <div class="access-element">
-                        <div class="circle {{ $document->pivot->download == 1 ? 'checked' : '' }}"></div>
+                        <div class="circle {{ $documentAccess->download == 1 ? 'checked' : '' }}"></div>
                         <i>Скачивание</i>
                     </div>
                     <div class="access-element">
-                        <div class="circle {{ $document->pivot->delete == 1 ? 'checked' : '' }}"></div>
+                        <div class="circle {{ $documentAccess->delete == 1 ? 'checked' : '' }}"></div>
                         <i>Удаление</i>
                     </div>
                 </div>

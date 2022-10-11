@@ -9,7 +9,10 @@ use Illuminate\Support\Collection;
 
 class AccessRequestService
 {
-    public function __construct(public AccessRequestRepositoryInterface $repository)
+    public function __construct(
+        public AccessRequestRepositoryInterface $repository,
+        public DocumentAccessService            $documentAccessService
+    )
     {
     }
 
@@ -25,6 +28,14 @@ class AccessRequestService
 
     public function update(array $params, AccessRequest $accessRequest): array
     {
+        if (isset($params['documents'])) {
+            foreach ($accessRequest->documentAccesses as $documentAccess) {
+                $this->documentAccessService->update([
+                    'is_allowed' => $params['documents'][$documentAccess->document_id]
+                ], $documentAccess);
+            }
+        }
+
         return $this->repository->update($params, $accessRequest);
     }
 
@@ -32,31 +43,11 @@ class AccessRequestService
     {
         $data = $this->repository->store($params);
 
-        $this->attachDocuments($params, $data['accessRequest']);
-
-        return $data;
-    }
-
-    public function getDocumentIds(AccessRequest $accessRequest, array $params): array
-    {
-        $documents = [];
-        foreach ($accessRequest->documents()->allRelatedIds()->toArray() as $document) {
-            $documents[$document] = $params['document-' . $document] ?? 0;
-        }
-
-        return $documents;
-    }
-
-    public function checkAccessRequests(Collection $documents): bool
-    {
-        return $this->repository->checkAccessRequests($documents);
-    }
-
-    private function attachDocuments(array $params, AccessRequest $accessRequest): void
-    {
         foreach ($params['documents'] as $documentId) {
-            $accessRequest->documents()->attach($documentId, [
+            $this->documentAccessService->store([
                 'user_id' => auth()->id(),
+                'access_request_id' => $data['accessRequest']->id,
+                'document_id' => $documentId,
                 'view' => isset($params['view'][$documentId]),
                 'edit' => isset($params['edit'][$documentId]),
                 'download' => isset($params['download'][$documentId]),
@@ -64,5 +55,17 @@ class AccessRequestService
                 'is_allowed' => null
             ]);
         }
+
+        return $data;
+    }
+
+    public function getDocumentIds(AccessRequest $accessRequest, array $params): array
+    {
+        $documents = [];
+        foreach ($accessRequest->documentAccesses()->pluck('document_id')->toArray() as $document) {
+            $documents[$document] = $params['document-' . $document] ?? 0;
+        }
+
+        return $documents;
     }
 }

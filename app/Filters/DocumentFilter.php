@@ -23,22 +23,15 @@ class DocumentFilter
         }
 
         if (isset($params['available']) && !adminOrArchivist()) {
-            $query->leftJoin('access_request_document as ad', 'ad.document_id', '=', 'documents.id')
-                ->selectRaw('ad.view, ad.edit, ad.delete, ad.download, ad.is_allowed')
-                ->leftJoin('users as ud', 'ud.id', '=', 'ad.user_id')
-                ->where('ad.is_allowed', true)
-                ->where('ad.user_id', auth()->id())
-                ->where('ad.view', true);
+            $query->documentAccessJoin()
+                ->selectRaw('da.view, da.edit, da.delete, da.download, da.is_allowed')
+                ->where('da.is_allowed', true)
+                ->where('da.view', true);
         }
 
         if (isset($params['all_documents']) && !adminOrArchivist()) {
-            $query->leftJoin('access_request_document as ad', function ($join) {
-                $join->on('ad.document_id', '=', 'documents.id')
-                    ->where('ad.user_id', '=', auth()->id())
-                    ->whereNotNull('ad.is_allowed');
-            })
-                ->selectRaw('ad.view, ad.edit, ad.delete, ad.download, ad.is_allowed')
-                ->leftJoin('users as ud', 'ud.id', '=', 'ad.user_id');
+            $query->documentAccessJoin()
+                ->selectRaw('da.view, da.edit, da.delete, da.download, IF(da.id IS NOT NULL, IFNULL(da.is_allowed, -1), NULL) AS is_allowed');
         }
 
         return $query;

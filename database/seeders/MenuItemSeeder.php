@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\MenuItem;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MenuItemSeeder extends Seeder
@@ -21,7 +20,7 @@ class MenuItemSeeder extends Seeder
             ['number' => 3, 'title' => 'Читальный зал', 'url' => 'reading-room'],
             ['number' => 4, 'title' => 'Администрирование', 'url' => 'administration'],
             ['number' => 5, 'title' => 'Журнал логов', 'url' => 'system-logs'],
-            ['number' => 6, 'title' => 'Запросы', 'url' => 'access-request'],
+            ['number' => 6, 'title' => 'Запросы', 'url' => 'access-requests'],
             ['number' => 7, 'title' => 'Настройка системы', 'url' => 'system-settings'],
         ];
 

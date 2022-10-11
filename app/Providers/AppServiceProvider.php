@@ -6,6 +6,7 @@ use App\Observers\AccessRequestObserver;
 use App\Observers\DocumentObserver;
 use App\Repositories\AccessRequestRepository;
 use App\Repositories\AttachmentRepository;
+use App\Repositories\DocumentAccessRepository;
 use App\RepositoryInterfaces\AccessRequestRepositoryInterface;
 use App\RepositoryInterfaces\AttachmentRepositoryInterface;
 use App\Models\{AccessRequest, Document, MenuItem, SystemSetting, User};
@@ -21,10 +22,13 @@ use App\Repositories\SystemSettingRepository;
 use App\RepositoryInterfaces\AccountRepositoryInterface;
 use App\RepositoryInterfaces\AdministrationRepositoryInterface;
 use App\RepositoryInterfaces\DictionaryRepositoryInterface;
+use App\RepositoryInterfaces\DocumentAccessRepositoryInterface;
 use App\RepositoryInterfaces\DocumentRepositoryInterface;
 use App\RepositoryInterfaces\LogRepositoryInterface;
 use App\RepositoryInterfaces\PasswordRepositoryInterface;
 use App\RepositoryInterfaces\SystemSettingRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -47,6 +51,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DocumentRepositoryInterface::class, DocumentRepository::class);
         $this->app->bind(AttachmentRepositoryInterface::class, AttachmentRepository::class);
         $this->app->bind(AccessRequestRepositoryInterface::class, AccessRequestRepository::class);
+        $this->app->bind(DocumentAccessRepositoryInterface::class, DocumentAccessRepository::class);
     }
 
     /**

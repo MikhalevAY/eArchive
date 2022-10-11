@@ -28,7 +28,7 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
     {
         $query = AccessRequest::selectRaw('access_requests.*, CONCAT(users.surname, " ", users.name) AS full_name')
             ->leftJoin('users', 'users.id', '=', 'access_requests.user_id')
-            ->withCount('documents');
+            ->withCount('documentAccesses');
 
         $query = $this->applyFilter($params, $query);
         $query = $this->applyOrderBy($params, $query);
@@ -52,14 +52,6 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
     {
         $accessRequest->update($params);
 
-        if (isset($params['documents'])) {
-            foreach ($accessRequest->documents as $document) {
-                $accessRequest->documents()->updateExistingPivot($document->id, [
-                    'is_allowed' => $params['documents'][$document->id]
-                ]);
-            }
-        }
-
         return [
             'message' => __('messages.access_request_updated')
         ];
@@ -73,15 +65,5 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
             'accessRequest' => $accessRequest,
             'message' => __('messages.access_request_stored')
         ];
-    }
-
-    public function checkAccessRequests(Collection $documents): bool
-    {
-        $count = DB::table('access_request_document')
-            ->where('user_id', auth()->id())
-            ->whereIn('document_id', $documents->pluck('id')->toArray())
-            ->count();
-
-        return count($documents) == $count;
     }
 }

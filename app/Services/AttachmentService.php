@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Attachment;
 use App\Models\Document;
 use App\RepositoryInterfaces\AttachmentRepositoryInterface;
 use Illuminate\Http\UploadedFile;
@@ -22,9 +21,7 @@ class AttachmentService
     {
         $folder = 'attachments/' . $document->id;
 
-        if (!File::exists('storage/' . $folder)) {
-            $this->createStorage($folder);
-        }
+        $this->createStorage($folder);
 
         $newName = Str::random(self::FILENAME_LENGTH) . '.' . $attachment->getClientOriginalExtension();
         $file = $attachment->storeAs($folder, $newName, 'public');
@@ -64,6 +61,8 @@ class AttachmentService
 
     private function createStorage(string $folder): void
     {
-        Storage::disk('public')->makeDirectory($folder);
+        if (!File::exists('storage/' . $folder)) {
+            Storage::disk('public')->makeDirectory($folder);
+        }
     }
 }

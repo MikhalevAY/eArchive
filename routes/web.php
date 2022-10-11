@@ -24,7 +24,7 @@ Route::get('/new-password/{md5Email}', [PasswordController::class, 'new'])->name
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['checkUserPermission']], function () {
         Route::get('/archive-search', [ArchiveController::class, 'index'])->name('archiveSearch');
-        Route::get('/archive-search/list', [ArchiveController::class, 'list'])->name('archiveSearchList');
+        Route::get('/archive-search/results', [ArchiveController::class, 'results'])->name('archiveSearchList');
         Route::get('/system-settings', [SystemSettingController::class, 'index'])->name('systemSetting');
         Route::get('/registration-of-documents', [DocumentController::class, 'index'])->name('registrationOfDocuments');
         Route::get('/reading-room', [ReadingRoomController::class, 'index'])->name('readingRoom');

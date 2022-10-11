@@ -50,6 +50,7 @@ class AdministrationService
         $this->mailService->send([$data['email']], $message, __('messages.registration'));
 
         $data['password'] = bcrypt($data['password']);
+
         return $this->repository->store($data);
     }
 

@@ -22,11 +22,11 @@ interface DocumentRepositoryInterface
 
     public function update(array $data, Document $document): Document;
 
-    public function delete(array $documentIds): void;
+    public function delete(Collection $documents): void;
 
-    public function getNeeded(array $ids): Collection;
+    public function getAvailableForRequest(array $documentIds): Collection;
+
+    public function getAvailableForAction(array $documentIds, string $action): Collection;
 
     public function getActionsForDocument(int $documentId): array;
-
-    public function getAvailableForAction(array $ids, string $action): array;
 }

@@ -6,9 +6,9 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property integer $id
@@ -49,6 +49,19 @@ class Document extends Model
         10 => '10 лет',
         9999 => 'Без срока',
     ];
+
+    public function scopeDocumentAccessJoin($query)
+    {
+        return $query->leftJoin(DB::raw('(
+                SELECT *
+                FROM document_accesses
+                WHERE id in (
+                    SELECT MAX(id) FROM document_accesses WHERE user_id = ' . auth()->id() . ' GROUP BY document_id
+                )
+            ) AS da'), function ($join) {
+            $join->on('da.document_id', '=', 'documents.id');
+        });
+    }
 
     public function scopeNotDeleted($query)
     {

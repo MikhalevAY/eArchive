@@ -40,7 +40,7 @@
                             <td class="light">{{ $request->created_at->format('d.m.Y') }}</td>
                             <td>{{ $request->full_name }}</td>
                             <td>
-                                {{ $request->documents_count }} документ{{ getEnding($request->documents_count, ['', 'а', 'ов']) }}
+                                {{ $request->document_accesses_count }} документ{{ getEnding($request->document_accesses_count, ['', 'а', 'ов']) }}
                             </td>
                             <td>{{ mb_substr($request->comment, 0, 100, 'utf8') }}</td>
                             <td class="text-center">

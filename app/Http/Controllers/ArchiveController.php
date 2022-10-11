@@ -24,7 +24,7 @@ class ArchiveController extends Controller
         ]);
     }
 
-    public function list(ArchiveSearchIndexRequest $request): View
+    public function results(ArchiveSearchIndexRequest $request): View
     {
         return view('pages.archive-search.results')->with([
             'tHeads' => Document::$tHeads,

@@ -411,6 +411,8 @@ input[type=button] {
             position: absolute;
             top: 8px;
             right: 8px;
+            background: #FFF;
+            padding-left: 9px;
         }
         .files .file-block span {
             color: #303030;
@@ -899,6 +901,7 @@ form .uploaded-file.no-max-width {
     }
     .document-detailed .action-links .false {
         opacity: 0.5;
+        cursor: default;
     }
     .document-detailed .action-links a:after {
         content: '';
@@ -1461,6 +1464,7 @@ form .uploaded-file.no-max-width {
     border-radius: 4px;
     text-transform: uppercase;
     margin: 0;
+    text-align: center;
 }
 .status.new {
     color: #5DB676;
@@ -1638,6 +1642,9 @@ form .uploaded-file.no-max-width {
     }
     .elements .submenu .download {
         background: url(../images/download.svg) no-repeat 8px center / 20px;
+    }
+    .elements .submenu .access-request {
+        background: url(../images/request.svg) no-repeat 8px center / 20px;
     }
     .elements .submenu .print {
         background: url(../images/print.svg) no-repeat 8px center / 20px;

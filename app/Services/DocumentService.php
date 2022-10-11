@@ -91,7 +91,7 @@ class DocumentService
 
     public function delete(Document $document): array
     {
-        $this->repository->delete([$document->id]);
+        $this->repository->delete(collect([$document]));
 
         return [
             'message' => __('messages.document_deleted'),
@@ -101,27 +101,27 @@ class DocumentService
 
     public function deleteSelected(array $documentIds): array
     {
-        $documentIds = $this->getAvailableForAction($documentIds, 'delete');
+        $documents = $this->getAvailableForAction($documentIds, 'delete');
 
-        if (count($documentIds) == 0) {
+        if ($documents->isEmpty()) {
             return [
                 'message' => __('messages.no_rights_to_delete'),
                 'class' => 'error'
             ];
         }
 
-        $this->repository->delete($documentIds);
+        $this->repository->delete($documents);
 
         return [
             'closeWindow' => true,
             'message' => __('messages.documents_deleted'),
-            'rowsToDelete' => $documentIds
+            'rowsToDelete' => $documents->pluck('id')->toArray()
         ];
     }
 
-    public function getNeeded(array $documents): Collection
+    public function getAvailableForRequest(array $documentIds): Collection
     {
-        return $this->repository->getNeeded($documents);
+        return $this->repository->getAvailableForRequest($documentIds);
     }
 
     public function download(Document $document): BinaryFileResponse
@@ -131,9 +131,7 @@ class DocumentService
 
     public function downloadSelected(array $documentIds): BinaryFileResponse|RedirectResponse
     {
-        $documents = $this->repository->findByIds(
-            $this->getAvailableForAction($documentIds, 'download')
-        );
+        $documents = $this->getAvailableForAction($documentIds, 'download');
 
         if ($documents->isEmpty()) {
             return redirect()->back();
@@ -149,9 +147,7 @@ class DocumentService
 
     public function exportSelected(array $documentIds): BinaryFileResponse|RedirectResponse
     {
-        $documents = $this->repository->findByIds(
-            $this->getAvailableForAction($documentIds, 'view')
-        );
+        $documents = $this->getAvailableForAction($documentIds, 'view');
 
         if ($documents->isEmpty()) {
             return redirect()->back();
@@ -160,8 +156,11 @@ class DocumentService
         return $this->pdfService->exportSelected($documents);
     }
 
-    public function getAvailableForAction(array $ids, string $action): array
+    public function getAvailableForAction(array $documentIds, string $action): Collection
     {
-        return adminOrArchivist() ? $ids : $this->repository->getAvailableForAction($ids, $action);
+        return adminOrArchivist() ?
+            $this->repository->findByIds($documentIds)
+            :
+            $this->repository->getAvailableForAction($documentIds, $action);
     }
 }
