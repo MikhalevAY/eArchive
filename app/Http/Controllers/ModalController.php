@@ -109,20 +109,12 @@ class ModalController extends Controller
 
     public function newAccessRequest(NewAccessRequestRequest $request, int $document = null): View
     {
-        if (empty($request->input('documents')) && is_null($document)) {
-            return view('modal.access-request.exists')->with([
-                'text' => __('messages.select_at_least_one_document')
-            ]);
-        }
-
         $documents = $this->documentService->getAvailableForRequest(
             is_null($document) ? $request->input('documents') : [$document]
         );
 
         if ($documents->isEmpty()) {
-            return view('modal.access-request.exists')->with([
-                'text' => __('messages.access_request_exists')
-            ]);
+            return view('modal.access-request.exists');
         }
 
         return view('modal.access-request.new')->with([

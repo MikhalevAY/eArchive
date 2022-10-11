@@ -11,6 +11,13 @@ $(document).ready(function () {
 
     $('.actions-menu').on('click', toggleActionsMenu);
 
+    $(document).on('mouseup', function (e) {
+        let container = $('.actions-menu');
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+            container.find('.submenu').removeClass('opened');
+        }
+    });
+
     $('.checkbox-toggle-all').on('change', toggleCheckboxes);
 
     $('.delete-file').on('click', toggleFileDelete);
@@ -25,13 +32,6 @@ $(document).ready(function () {
     $('.action-with-selected').on('click', actionWithSelected);
 
     $('.toggle-link').on('click', toggleDocumentInfo);
-
-    // $(document).on('mouseup', function (e) {
-    //     let container = $('.actions-menu');
-    //     if (!container.is(e.target) && container.has(e.target).length === 0) {
-    //         container.find('.submenu').removeClass('opened');
-    //     }
-    // });
 
 });
 

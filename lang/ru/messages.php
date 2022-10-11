@@ -20,6 +20,4 @@ return [
     "wrong_file_format" => "Неверный формат файла",
     "access_request_updated" => "Запрос на доступ подтвержден",
     "access_request_stored" => "Ваш запрос на доступ отправлен",
-    "select_at_least_one_document" => "Выберите хотя бы один документ",
-    "access_request_exists" => "Запрос на этот докмент(ы) уже отправлен\nОжидайте ответа от администратора"
 ];

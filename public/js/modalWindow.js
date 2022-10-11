@@ -10,7 +10,15 @@ $(document).ready(function () {
 function openWindow() {
     let $this = $(this);
     let modalWrapper = $('.modal-wrapper').html('');
-    let data = $this.data('post') !== '' ? getAllIds($this.data('name')) : null;
+
+    let data = null;
+    if (typeof $this.data('post') !== 'undefined') {
+        data = getAllIds($this.data('name'));
+        if (JSON.parse(data.documents).length === 0) {
+            return false;
+        }
+    }
+
     $('.hover_').fadeIn(300);
     $('.modal').hide().attr('class', 'modal');
     $('.modal-window').fadeIn(300);
@@ -39,7 +47,7 @@ function openWindow() {
 
 function getAllIds(name) {
     let elements = getChecked(name);
-    return {[name] : JSON.stringify(elements)};
+    return {[name]: JSON.stringify(elements)};
 }
 
 function setDefaultFunctions() {
@@ -47,7 +55,6 @@ function setDefaultFunctions() {
     $('.close').on('click', closeWindow);
     $('.eye').on('click', changeInputType);
     $('.file-input').on('change', fileInput);
-    $('.modal-link').unbind().bind('click', openWindow);
     $('.toggle-doc-access').on('click', toggleDocAccess);
     applyDatepicker();
 }

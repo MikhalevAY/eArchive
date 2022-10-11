@@ -35,6 +35,7 @@ class ReadingRoomIndexRequest extends FormRequest
             'page' => 'nullable|integer',
             'per_page' => 'nullable|integer',
             'q' => 'nullable',
+            'gr_document' => 'nullable|in:on',
             'sort' => 'nullable|string|in:id,type,case_nomenclature,registration_date,question,surname',
             'order' => 'nullable|in:asc,desc',
         ];
