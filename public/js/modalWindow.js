@@ -14,7 +14,7 @@ function openWindow() {
     let data = null;
     if (typeof $this.data('post') !== 'undefined') {
         data = getAllIds($this.data('name'));
-        if (JSON.parse(data.documents).length === 0) {
+        if (JSON.parse(data[$this.data('name')]).length === 0) {
             return false;
         }
     }
