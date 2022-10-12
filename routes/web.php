@@ -35,11 +35,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/system-settings/update', [SystemSettingController::class, 'update'])->name('updateSystemSetting');
 
         Route::controller(AdministrationController::class)->prefix('administration')->group(function () {
-            Route::post('/update/{user}', 'update')->name('adm.updateUser');
-            Route::post('/store', 'store')->name('adm.storeUser');
+            Route::post('/update/{user}', 'update')->name('adm.update');
+            Route::post('/set-state/{user}', 'setState')->name('adm.setState');
+            Route::post('/store', 'store')->name('adm.store');
             Route::post('/reset-password/{user}', 'resetPassword')->name('adm.resetPassword');
-            Route::delete('/delete/{user}', 'delete')->name('adm.deleteUser');
-            Route::delete('/delete-selected', 'deleteSelected')->name('adm.deleteSelectedUsers');
+            Route::delete('/delete/{user}', 'delete')->name('adm.delete');
+            Route::delete('/delete-selected', 'deleteSelected')->name('adm.deleteSelected');
         });
 
         Route::controller(DocumentController::class)->prefix('registration-of-documents')->group(function () {
@@ -78,6 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/modal/add-user', 'addUser')->name('addUser');
         Route::post('/modal/reset-user-password/{user}', 'resetPassword')->name('resetPassword');
         Route::post('/modal/delete-user/{user}', 'deleteUser')->name('deleteUser');
+        Route::post('/modal/change-user-state/{user}', 'changeUserState')->name('changeUserState');
         Route::post('/modal/delete-selected-users', 'deleteSelectedUsers')->name('deleteSelectedUsers');
         Route::post('/modal/search-documents', 'searchDocuments')->name('searchAvailableDocuments');
         Route::post('/modal/delete-document/{document}', 'deleteDocument')->name('deleteDocument');

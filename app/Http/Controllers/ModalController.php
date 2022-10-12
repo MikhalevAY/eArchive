@@ -66,6 +66,14 @@ class ModalController extends Controller
         ]);
     }
 
+    public function changeUserState(User $user): View
+    {
+        return view('modal.change-user-state')->with([
+            'user' => $user,
+            'state' => $user->is_active == 1 ? 'Деактивировать' : 'Активировать'
+        ]);
+    }
+
     public function deleteSelectedUsers(): View
     {
         return view('modal.delete-selected-users')->with([

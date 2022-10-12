@@ -1,6 +1,6 @@
 <h2>Редактировать данные</h2>
 <a class="close"></a>
-<form action="{{ route('adm.updateUser', ['user' => $user->id]) }}" method="post">
+<form action="{{ route('adm.update', ['user' => $user->id]) }}" method="post">
     @csrf
     <div class="row">
         <span>Фамилия</span>

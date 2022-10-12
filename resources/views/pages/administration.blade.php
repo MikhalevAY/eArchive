@@ -67,6 +67,7 @@
                                     <div class="submenu">
                                         <a class="modal-link edit" data-url="{{ route('editUser', ['user' => $user->id]) }}">Редактировать</a>
                                         <a class="modal-link reset-password" data-url="{{ route('resetPassword', ['user' => $user->id]) }}">Сбросить пароль</a>
+                                        <a class="modal-link set-state" data-url="{{ route('changeUserState', ['user' => $user->id]) }}">{{ $user->is_active ? 'Деактивировать' : 'Активировать' }}</a>
                                         <a class="modal-link delete" data-url="{{ route('deleteUser', ['user' => $user->id]) }}">Удалить</a>
                                     </div>
                                 </div>

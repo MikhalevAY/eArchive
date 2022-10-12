@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdministrationDeleteSelectedRequest;
 use App\Http\Requests\AdministrationIndexRequest;
+use App\Http\Requests\AdministrationSetStateRequest;
 use App\Http\Requests\AdministrationStoreRequest;
 use App\Http\Requests\AdministrationUpdateRequest;
 use App\Models\User;
@@ -32,6 +33,16 @@ class AdministrationController extends Controller
     {
         $data = $this->service->update($request->validated(), $user);
         $data['closeWindow'] = true;
+
+        return response()->json($data);
+    }
+
+    public function setState(AdministrationSetStateRequest $request, User $user): JsonResponse
+    {
+        $data = $this->service->update($request->validated(), $user);
+        $data['closeWindow'] = true;
+        $data['changeStateBtn'] = $user->is_active ? 'Деактивировать' : 'Активировать';
+        $data['row'] = $user->id;
 
         return response()->json($data);
     }

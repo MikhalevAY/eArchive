@@ -16,7 +16,7 @@ class LoginRequest extends FormRequest
         return true;
     }
 
-    public function passedValidation()
+    public function prepareForValidation()
     {
         $this->merge([
             'is_active' => 1,
@@ -26,6 +26,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'is_active' => 'required|int',
             'email' => 'required',
             'password' => 'required',
         ];

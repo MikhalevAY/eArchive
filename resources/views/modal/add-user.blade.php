@@ -1,6 +1,6 @@
 <h2>Редактировать данные</h2>
 <a class="close"></a>
-<form action="{{ route('adm.storeUser') }}" method="post">
+<form action="{{ route('adm.store') }}" method="post">
     @csrf
     <div class="row">
         <span>Фамилия</span>

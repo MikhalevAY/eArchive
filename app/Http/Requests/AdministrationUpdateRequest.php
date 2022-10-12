@@ -24,6 +24,7 @@ class AdministrationUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'is_active' => 'nullable|in:0,1',
             'surname' => 'required|string:255',
             'name' => 'required|string:255',
             'patronymic' => 'nullable|string:255',

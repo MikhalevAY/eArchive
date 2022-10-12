@@ -80,6 +80,9 @@ function submitForm() {
             if (data.class) {
                 result.removeClass('success error').addClass(data.class);
             }
+            if(data.changeStateBtn) {
+                $('tr[data-row=' + data.row + ']').find('.set-state').text(data.changeStateBtn);
+            }
         },
         error: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');

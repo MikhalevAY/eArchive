@@ -1,6 +1,6 @@
 <h2>Удалить выбранных пользователей</h2>
 <a class="close"></a>
-<form action="{{ route('adm.deleteSelectedUsers') }}">
+<form action="{{ route('adm.deleteSelected') }}">
     @method('delete')
     @csrf
     <p class="hint">Вы уверены что хотите удалить данных пользователей?</p>
