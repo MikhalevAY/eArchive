@@ -31,7 +31,8 @@ class NewAccessRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'documents.*' => 'integer|exists:documents,id'
+            'documents' => 'required|array',
+            'documents.*' => 'exists:documents,id',
         ];
     }
 }

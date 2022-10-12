@@ -43,6 +43,10 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
             });
         }
 
+        if (isset($params['role'])) {
+            $query->whereIn('role', $params['role']);
+        }
+
         return $query;
     }
 

@@ -6,6 +6,7 @@ use App\Models\Log;
 use App\Models\User;
 use App\RepositoryInterfaces\AdministrationRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
@@ -25,6 +26,11 @@ class AdministrationService
     public function getPaginated(array $params): LengthAwarePaginator
     {
         return $this->repository->getPaginated($params);
+    }
+
+    public function getAll(array $params): Collection
+    {
+        return $this->repository->getAll($params);
     }
 
     public function getOrderBy(array $params): array

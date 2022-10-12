@@ -222,16 +222,6 @@
                     </div>
                 </div>
 
-                <div class="col-1 m-b-15">
-                    <div class="row">
-                        <label class="checkbox">
-                            <input class="checkbox-toggle-all" name="available_for_all" type="checkbox">
-                            <div class="checkmark"></div>
-                            <i>Доступен всем</i>
-                        </label>
-                    </div>
-                </div>
-
                 <input type="hidden" name="is_draft" value="0">
                 <input type="button" value="Сохранить" class="submit-button register-document">
                 <input type="button" value="Отменить" class="no-bg cancel"/>

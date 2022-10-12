@@ -12,5 +12,7 @@ interface DocumentAccessRepositoryInterface
 {
     public function store(array $data): void;
 
+    public function storeMany(array $data): void;
+
     public function update(array $data, DocumentAccess $documentAccess): void;
 }

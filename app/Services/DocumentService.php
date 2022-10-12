@@ -15,7 +15,8 @@ class DocumentService
         public DocumentRepositoryInterface $repository,
         public AttachmentService           $attachmentService,
         public PdfService                  $pdfService,
-        public ZipArchiveService           $zipArchiveService
+        public ZipArchiveService           $zipArchiveService,
+        public DocumentAccessService       $documentAccessService
     )
     {
     }
@@ -35,18 +36,6 @@ class DocumentService
         return $this->repository->getOrderBy($params, $defaultSort);
     }
 
-    private function saveDocumentFile(array $data): array
-    {
-        if (isset($data['file'])) {
-            $data['file_name'] = $data['file']->getClientOriginalName();
-            $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 1);
-            $file = $data['file']->store('documents', 'public');
-            $data['file'] = $file;
-        }
-
-        return $data;
-    }
-
     public function store(array $data): array
     {
         // Сохраняем документ
@@ -58,7 +47,11 @@ class DocumentService
             $this->attachmentService->storeMany($data['attachments'], $document);
         }
 
-        // TODO Права для документов
+        // Права для документа
+        if (isset($data['available_for_all'])) {
+            $this->documentAccessService->setAvailableForAll($document->id);
+        }
+
         // TODO скан файла
 
         return [
@@ -81,7 +74,6 @@ class DocumentService
             $this->attachmentService->storeMany($data['attachments'], $document);
         }
 
-        // TODO Права для документов
         // TODO скан файла
 
         return [
@@ -162,5 +154,17 @@ class DocumentService
             $this->repository->findByIds($documentIds)
             :
             $this->repository->getAvailableForAction($documentIds, $action);
+    }
+
+    private function saveDocumentFile(array $data): array
+    {
+        if (isset($data['file'])) {
+            $data['file_name'] = $data['file']->getClientOriginalName();
+            $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 1);
+            $file = $data['file']->store('documents', 'public');
+            $data['file'] = $file;
+        }
+
+        return $data;
     }
 }

@@ -95,6 +95,7 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
     public function getAvailableForRequest(array $documentIds): Collection
     {
         return Document::select('documents.*')
+            ->with('type')
             ->documentAccessJoin()
             ->whereIn('documents.id', $documentIds)
             ->where(function ($query) {
