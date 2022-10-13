@@ -203,7 +203,7 @@
 </div>
 
 <div class="text">
-    <span>Краткое содержание</span>
+    <span>Текст документа</span>
     <p>{{ $document->text }}</p>
 </div>
 
