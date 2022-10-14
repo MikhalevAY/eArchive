@@ -12,7 +12,14 @@ class DocumentAccess extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'document_id', 'access_request_id', 'view', 'edit', 'download', 'delete', 'is_allowed'
+        'user_id',
+        'document_id',
+        'access_request_id',
+        'view',
+        'edit',
+        'download',
+        'delete',
+        'is_allowed'
     ];
 
     protected $dates = ['created_at'];
@@ -34,6 +41,6 @@ class DocumentAccess extends Model
 
     public function document(): BelongsTo
     {
-        return $this->belongsTo(Document::class);
+        return $this->belongsTo(Document::class)->withTrashed();
     }
 }
