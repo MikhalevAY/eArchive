@@ -1239,6 +1239,14 @@ form .uploaded-file.no-max-width {
     padding-left: 28px;
 }
 
+.requested-documents .name i {
+    color: #999;
+    font-style: normal;
+    font-size: 14px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
 .requested-documents .doc p {
     color: #8F97A2;
     font-size: 14px;
