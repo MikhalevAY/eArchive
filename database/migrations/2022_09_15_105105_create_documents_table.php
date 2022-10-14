@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,12 +26,12 @@ return new class extends Migration
             $table->date('outgoing_date')->nullable();
             $table->unsignedBigInteger('sender_id')->nullable();
             $table->unsignedBigInteger('receiver_id')->nullable();
-            $table->string('addressee')->nullable();
+            $table->string('addressee')->nullable()->index();
             $table->text('question');
             $table->unsignedBigInteger('delivery_type_id')->nullable()->index();
             $table->integer('number_of_sheets')->nullable();
             $table->unsignedBigInteger('language_id')->nullable();
-            $table->text('summary')->index();
+            $table->text('summary');
             $table->integer('shelf_life');
             $table->text('note')->nullable();
             $table->string('answer_to_number')->nullable();
@@ -55,6 +55,8 @@ return new class extends Migration
             $table->foreign('delivery_type_id')->references('id')->on('dictionaries')->onDelete('restrict');
             $table->foreign('language_id')->references('id')->on('dictionaries')->onDelete('restrict');
         });
+
+        DB::statement('CREATE FULLTEXT INDEX documents_full_text_index ON `documents` (`text`) WITH PARSER ngram');
     }
 
     /**
@@ -64,6 +66,7 @@ return new class extends Migration
      */
     public function down()
     {
+        DB::statement('ALTER TABLE `documents` DROP INDEX documents_full_text_index');
         Schema::dropIfExists('documents');
     }
 };

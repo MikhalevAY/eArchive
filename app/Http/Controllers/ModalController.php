@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ModalSearchRequest;
 use App\Http\Requests\NewAccessRequestRequest;
 use App\Models\AccessRequest;
 use App\Models\Document;
@@ -15,11 +16,10 @@ use Illuminate\View\View;
 class ModalController extends Controller
 {
     public function __construct(
-        public DictionaryService    $dictionaryService,
+        public DictionaryService $dictionaryService,
         public AccessRequestService $accessRequestService,
-        public DocumentService      $documentService
-    )
-    {
+        public DocumentService $documentService
+    ) {
     }
 
     public function editPersonalData(): View
@@ -81,10 +81,11 @@ class ModalController extends Controller
         ]);
     }
 
-    public function searchDocuments(): View
+    public function searchDocuments(ModalSearchRequest $request): View
     {
         return view('modal.search-documents')->with([
             'dictionaries' => $this->dictionaryService->byType(),
+            'get' => $request->input('get')
         ]);
     }
 

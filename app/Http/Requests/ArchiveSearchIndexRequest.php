@@ -19,7 +19,8 @@ class ArchiveSearchIndexRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'all_documents' => 1
+            'all_documents' => 1,
+            'sort' => $this->sort ?? 'id'
         ]);
     }
 
@@ -35,6 +36,16 @@ class ArchiveSearchIndexRequest extends FormRequest
             'page' => 'nullable|integer',
             'per_page' => 'nullable|integer',
             'id' => 'nullable|integer',
+            'type_id' => 'nullable|integer',
+            'case_nomenclature_id' => 'nullable|integer',
+            'sender_id' => 'nullable|integer',
+            'receiver_id' => 'nullable|integer',
+            'question' => 'nullable|string',
+            'addressee' => 'nullable|string',
+            'income_number' => 'nullable|string',
+            'registration_date_from' => 'nullable|date_format:Y-m-d',
+            'registration_date_to' => 'nullable|date_format:Y-m-d',
+            'text' => 'nullable|max:500',
             'gr_document' => 'nullable|in:on',
             'sort' => 'nullable|string|in:id,type,case_nomenclature,registration_date,question,surname',
             'order' => 'nullable|in:asc,desc',

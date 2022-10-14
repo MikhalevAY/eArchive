@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     $('.phone').mask("+7 (999) 999-99-99");
+    $('.date').mask('9999-99-99');
     $('.time').mask("99:99");
 
     $(document).on('click', '.eye', changeInputType);
@@ -80,7 +81,7 @@ function submitForm() {
             if (data.class) {
                 result.removeClass('success error').addClass(data.class);
             }
-            if(data.changeStateBtn) {
+            if (data.changeStateBtn) {
                 $('tr[data-row=' + data.row + ']').find('.set-state').text(data.changeStateBtn);
             }
         },

@@ -19,6 +19,10 @@ function openWindow() {
         }
     }
 
+    if (typeof $this.data('data') !== 'undefined') {
+        data = $this.data('data');
+    }
+
     $('.hover_').fadeIn(300);
     $('.modal').hide().attr('class', 'modal');
     $('.modal-window').fadeIn(300);
@@ -52,6 +56,7 @@ function getAllIds(name) {
 
 function setDefaultFunctions() {
     $('.phone').mask("+7 (999) 999-99-99");
+    $('.date').mask('9999-99-99');
     $('.close').on('click', closeWindow);
     $('.eye').on('click', changeInputType);
     $('.file-input').on('change', fileInput);

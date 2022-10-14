@@ -9,13 +9,16 @@
         <div class="wrapper">
             <h2>
                 @yield('title')
-                <a class="modal-link right" data-url="{{ route('searchAvailableDocuments') }}" data-class="search-documents">Найти документ</a>
+                <a class="modal-link right"
+                   data-url="{{ route('searchAvailableDocuments') }}"
+                   data-class="search-documents"
+                   @if(!empty($get)) data-data="{{ $get }}" @endif>Найти документ</a>
             </h2>
             <form action="{{ route('readingRoom') }}" method="get" class="no-ajax">
                 <table class="elements">
                     <thead>
-                        <tr>
-                            @foreach($tHeads as $th)
+                    <tr>
+                        @foreach($tHeads as $th)
                             <th class="{{ $th['class'] }}" data-field="{{ $th['field'] }}">
                                 {{ $th['title'] }}
                                 <div class="sorting">
@@ -25,9 +28,9 @@
                                        class="desc {{ implode('-', $sortBy) == $th['field'] . '-desc' ? 'active' : '' }}"></a>
                                 </div>
                             </th>
-                            @endforeach
-                            <th class="text-center">Действия</th>
-                        </tr>
+                        @endforeach
+                        <th class="text-center">Действия</th>
+                    </tr>
                     </thead>
                     <tbody>
                     @forelse($documents as $document)

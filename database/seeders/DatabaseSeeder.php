@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             SystemSettingSeeder::class,
             MenuItemSeeder::class,
             DictionarySeeder::class,
-            MenuItemUserSeeder::class
+            MenuItemUserSeeder::class,
+            StopWordsSeeder::class,
         ]);
+        //Document::factory(1000)->createQuietly();
     }
 }

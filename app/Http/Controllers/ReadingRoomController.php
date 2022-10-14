@@ -18,6 +18,7 @@ class ReadingRoomController extends Controller
         return view('pages.reading-room')->with([
             'documents' => $this->documentService->getPaginated($request->validated()),
             'tHeads' => Document::$tHeads,
+            'get' => json_encode(['get' => request()->all()]),
             'sortBy' => $this->documentService->getOrderBy($request->validated(), 'id'),
         ]);
     }
