@@ -24,7 +24,7 @@
                 <div class="doc {{ $documentAccess->is_allowed === 0  ? 'forbidden' : 'allowed' }}">
                     <div class="name">
                         {{ $documentAccess->document->type->title }}
-                        {{ !is_null($documentAccess->document->deleted_at) ? '<i>(удалено)</i>' : '' }}
+                        {!! !is_null($documentAccess->document->deleted_at) ? '<i>(удалено)</i>' : '' !!}
                     </div>
                     <p>{{ $documentAccess->document->question }}</p>
                     @if($accessRequest->status != 'closed')
