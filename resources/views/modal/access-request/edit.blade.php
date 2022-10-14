@@ -20,34 +20,35 @@
     <div class="row">
         <span class="gray">Запрашиваемые документы</span>
         <div class="requested-documents">
-        @foreach($accessRequest->documentAccesses as $documentAccess)
-            <div class="doc {{ $documentAccess->is_allowed === 0  ? 'forbidden' : 'allowed' }}">
-                <div class="name">{{ $documentAccess->document->type->title }}</div>
-                <p>{{ $documentAccess->document->question }}</p>
-                @if($accessRequest->status != 'closed')
-                <input class="no-bg toggle-doc-access" type="button" data-allow="Разрешить" data-forbid="Отклонить" value="Отклонить">
-                <input type="hidden" name="document-{{ $documentAccess->document_id }}" value="1">
-                @endif
-                <div class="access">
-                    <div class="access-element">
-                        <div class="circle {{ $documentAccess->view == 1 ? 'checked' : '' }}"></div>
-                        <i>Просмотр</i>
-                    </div>
-                    <div class="access-element">
-                        <div class="circle {{ $documentAccess->edit == 1 ? 'checked' : '' }}"></div>
-                        <i>Редактирование</i>
-                    </div>
-                    <div class="access-element">
-                        <div class="circle {{ $documentAccess->download == 1 ? 'checked' : '' }}"></div>
-                        <i>Скачивание</i>
-                    </div>
-                    <div class="access-element">
-                        <div class="circle {{ $documentAccess->delete == 1 ? 'checked' : '' }}"></div>
-                        <i>Удаление</i>
+            @foreach($accessRequest->documentAccesses as $documentAccess)
+                <div class="doc {{ $documentAccess->is_allowed === 0  ? 'forbidden' : 'allowed' }}">
+                    <div class="name">{{ $documentAccess->document->type?->title }}</div>
+                    <p>{{ $documentAccess->document->question }}</p>
+                    @if($accessRequest->status != 'closed')
+                        <input class="no-bg toggle-doc-access" type="button" data-allow="Разрешить"
+                               data-forbid="Отклонить" value="Отклонить">
+                        <input type="hidden" name="document-{{ $documentAccess->document_id }}" value="1">
+                    @endif
+                    <div class="access">
+                        <div class="access-element">
+                            <div class="circle {{ $documentAccess->view == 1 ? 'checked' : '' }}"></div>
+                            <i>Просмотр</i>
+                        </div>
+                        <div class="access-element">
+                            <div class="circle {{ $documentAccess->edit == 1 ? 'checked' : '' }}"></div>
+                            <i>Редактирование</i>
+                        </div>
+                        <div class="access-element">
+                            <div class="circle {{ $documentAccess->download == 1 ? 'checked' : '' }}"></div>
+                            <i>Скачивание</i>
+                        </div>
+                        <div class="access-element">
+                            <div class="circle {{ $documentAccess->delete == 1 ? 'checked' : '' }}"></div>
+                            <i>Удаление</i>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
         </div>
     </div>
     <div class="divider"></div>
@@ -56,10 +57,10 @@
         <p>{{ $accessRequest->comment }}</p>
     </div>
     @if($accessRequest->status != 'closed')
-    <div class="buttons">
-        <input type="submit" value="Подтвердить"/>
-        <input type="button" value="Отменить" onClick="closeWindow()" class="no-bg">
-    </div>
-    <div class="result"></div>
+        <div class="buttons">
+            <input type="submit" value="Подтвердить"/>
+            <input type="button" value="Отменить" onClick="closeWindow()" class="no-bg">
+        </div>
+        <div class="result"></div>
     @endif
 </form>
