@@ -170,11 +170,13 @@ class DocumentService
         $extension = explode('.', $fileName);
         $extension = end($extension);
 
+        $filePath = public_path('/storage' . $fileName);
+
         return match ($extension) {
-            'pdf' => (new PdfScanner())->getText($fileName),
-            'txt' => (new TxtScanner())->getText($fileName),
-            'jpg' => (new JpgScanner())->getText($fileName),
-            'doc', 'docx' => (new DocScanner())->getText($fileName),
+            'pdf' => (new PdfScanner())->getText($filePath),
+            'txt' => (new TxtScanner())->getText($filePath),
+            'jpg' => (new JpgScanner())->getText($filePath),
+            'doc', 'docx' => (new DocScanner())->getText($filePath),
         };
     }
 }

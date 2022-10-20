@@ -2,10 +2,18 @@
 
 namespace App\Scanners;
 
+use Illuminate\Support\Facades\File;
+
 class PdfScanner extends BaseScanner implements ScannerInterface
 {
-    public function getText(string $fileName): string
+    public function getText(string $filePath): string
     {
-        // TODO: Implement getText() method.
+        if (!File::exists($filePath)) {
+            return '';
+        }
+
+        $text = '';
+
+        return $text;
     }
 }
