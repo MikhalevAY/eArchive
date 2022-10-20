@@ -6,28 +6,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ReadingRoomIndexRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
     }
 
+    private function prepareText(string $text): string
+    {
+        return implode(' or ', explode(' ', $text));
+    }
+
     public function prepareForValidation()
     {
         $this->merge([
-            'available' => 1
+            'available' => 1,
+            'text' => $this->text != '' ? $this->prepareText($this->text) : null,
         ]);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules(): array
     {
         return [

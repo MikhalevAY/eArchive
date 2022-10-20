@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Dictionary;
 use App\RepositoryInterfaces\DictionaryRepositoryInterface;
-use Illuminate\Support\Collection;
 
 class DictionaryService
 {
@@ -27,5 +27,15 @@ class DictionaryService
         }
 
         return $toReturn;
+    }
+
+    public function store(array $data): array
+    {
+        return $this->repository->store($data);
+    }
+
+    public function delete(Dictionary $dictionary): array
+    {
+        return $this->repository->delete($dictionary);
     }
 }

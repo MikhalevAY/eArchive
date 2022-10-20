@@ -7,12 +7,7 @@ use Illuminate\Database\Seeder;
 
 class MenuItemSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         $menuItems = [
             ['number' => 1, 'title' => 'Поиск в архиве', 'url' => 'archive-search'],
@@ -21,7 +16,8 @@ class MenuItemSeeder extends Seeder
             ['number' => 4, 'title' => 'Администрирование', 'url' => 'administration'],
             ['number' => 5, 'title' => 'Журнал логов', 'url' => 'system-logs'],
             ['number' => 6, 'title' => 'Запросы', 'url' => 'access-requests'],
-            ['number' => 7, 'title' => 'Настройка системы', 'url' => 'system-settings'],
+            ['number' => 7, 'title' => 'Справочники', 'url' => 'dictionaries'],
+            ['number' => 8, 'title' => 'Настройка системы', 'url' => 'system-settings'],
         ];
 
         collect($menuItems)->each(function ($menuItem) {

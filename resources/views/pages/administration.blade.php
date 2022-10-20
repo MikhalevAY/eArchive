@@ -13,7 +13,8 @@
             </h2>
             <form action="{{ route('administration') }}" method="get" class="no-ajax">
                 <div class="row with-reset">
-                    <input class="inline-block" placeholder="Фамилия, имя или отчество" type="text" value="{{ request()->input('q') }}" name="q" autocomplete="off" />
+                    <input class="inline-block" placeholder="Фамилия, имя или отчество" type="text"
+                           value="{{ request()->input('q') }}" name="q" autocomplete="off"/>
                     <input type="submit" value="" class="search">
                     <input @class(['visible' => $showResetButton, 'reset-row-inputs' => true]) type="button" value="">
 
@@ -27,14 +28,14 @@
                 </div>
                 <table class="elements">
                     <thead>
-                        <tr>
-                            <th class="width-20">
-                                <label class="checkbox">
-                                    <input class="checkbox-toggle-all" type="checkbox">
-                                    <div class="checkmark"></div>
-                                </label>
-                            </th>
-                            @foreach($tHeads as $th)
+                    <tr>
+                        <th class="width-20">
+                            <label class="checkbox">
+                                <input class="checkbox-toggle-all" type="checkbox">
+                                <div class="checkmark"></div>
+                            </label>
+                        </th>
+                        @foreach($tHeads as $th)
                             <th class="{{ $th['class'] }}" data-field="{{ $th['field'] }}">
                                 {{ $th['title'] }}
                                 <div class="sorting">
@@ -44,35 +45,13 @@
                                        class="desc {{ implode('-', $sortBy) == $th['field'] . '-desc' ? 'active' : '' }}"></a>
                                 </div>
                             </th>
-                            @endforeach
-                            <th class="text-center">Действия</th>
-                        </tr>
+                        @endforeach
+                        <th class="text-center">Действия</th>
+                    </tr>
                     </thead>
                     <tbody>
                     @forelse($users as $user)
-                        <tr data-row="{{ $user->id }}">
-                            <td>
-                                <label class="checkbox">
-                                    <input type="checkbox" value="{{ $user->id }}" name="users[]">
-                                    <div class="checkmark"></div>
-                                </label>
-                            </td>
-                            <td class="light">{{ $user->id }}</td>
-                            <td>{{ $user->surname }}</td>
-                            <td>{{ $user->name . ' ' . $user->patronymic }}</td>
-                            <td>{{ $roleTitles[$user->role] }}</td>
-                            <td class="text-center">{{ $user->created_at->format('d.m.Y в H:i') }}</td>
-                            <td>
-                                <div class="actions-menu">
-                                    <div class="submenu">
-                                        <a class="modal-link edit" data-url="{{ route('editUser', ['user' => $user->id]) }}">Редактировать</a>
-                                        <a class="modal-link reset-password" data-url="{{ route('resetPassword', ['user' => $user->id]) }}">Сбросить пароль</a>
-                                        <a class="modal-link set-state" data-url="{{ route('changeUserState', ['user' => $user->id]) }}">{{ $user->is_active ? 'Деактивировать' : 'Активировать' }}</a>
-                                        <a class="modal-link delete" data-url="{{ route('deleteUser', ['user' => $user->id]) }}">Удалить</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        @include('components.user-row', ['user' => $user, 'role' => $roleTitles[$user->role]])
                     @empty
                         <tr>
                             <td></td>

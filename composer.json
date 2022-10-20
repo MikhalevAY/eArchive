@@ -17,7 +17,8 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "phpmailer/phpmailer": "^6.6"
+        "phpmailer/phpmailer": "^6.6",
+        "phpoffice/phpword": "^0.18.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

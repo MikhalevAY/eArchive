@@ -1,17 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\{Artisan, Route};
+use App\Http\Controllers\AccessRequestController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdministrationController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DictionaryController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\ModalController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ReadingRoomController;
 use App\Http\Controllers\SystemSettingController;
-use App\Http\Controllers\AccessRequestController;
+use Illuminate\Support\Facades\{Artisan, Route};
 
 Route::get('/', [AuthController::class, 'index'])->name('authPage');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -31,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/administration', [AdministrationController::class, 'index'])->name('administration');
         Route::get('/system-logs', [LogController::class, 'index'])->name('logs');
         Route::get('/access-requests', [AccessRequestController::class, 'index'])->name('accessRequests');
+        Route::get('/dictionaries', [DictionaryController::class, 'index'])->name('dictionaries');
 
         Route::post('/system-settings/update', [SystemSettingController::class, 'update'])->name('updateSystemSetting');
 
@@ -43,6 +45,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('/delete-selected', 'deleteSelected')->name('adm.deleteSelected');
         });
 
+        Route::controller(DictionaryController::class)->prefix('dictionaries')->group(function () {
+            Route::post('/store', 'store')->name('dictionary.store');
+            Route::delete('/delete/{dictionary}', 'delete')->name('dictionary.delete');
+        });
+
         Route::controller(DocumentController::class)->prefix('registration-of-documents')->group(function () {
             Route::get('/add', 'add')->name('document.add');
             Route::get('/list', 'list')->name('document.list');
@@ -52,7 +59,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::controller(AccessRequestController::class)->prefix('access-requests')->group(function () {
             Route::post('/update/{accessRequest}', 'update')->name('access-request.update');
         });
-
     });
 
     Route::post('/access-requests/store', [AccessRequestController::class, 'store'])->name('access-request.store');
@@ -86,6 +92,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/modal/delete-selected-documents', 'deleteSelectedDocuments')->name('deleteSelectedDocuments');
         Route::post('/modal/access-request/edit/{accessRequest}', 'editAccessRequest')->name('editAccessRequest');
         Route::post('/modal/access-request/new/{document?}', 'newAccessRequest')->name('newAccessRequest');
+        Route::post('/modal/add-dictionary-item/{type}', 'newDictionaryItem')->name('newDictionaryItem');
+        Route::post('/modal/delete-dictionary-item/{dictionary}', 'deleteDictionaryItem')->name('deleteDictionaryItem');
     });
 
     Route::controller(AccountController::class)->prefix('account')->group(function () {

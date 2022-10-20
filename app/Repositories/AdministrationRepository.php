@@ -4,9 +4,9 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\RepositoryInterfaces\AdministrationRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
 
 class AdministrationRepository extends BaseRepository implements AdministrationRepositoryInterface
 {
@@ -74,7 +74,7 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
 
         return [
             'message' => __('messages.user_stored'),
-            'data' => $user
+            'user' => $user
         ];
     }
 

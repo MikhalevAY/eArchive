@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ModalSearchRequest;
 use App\Http\Requests\NewAccessRequestRequest;
 use App\Models\AccessRequest;
+use App\Models\Dictionary;
 use App\Models\Document;
 use App\Models\User;
 use App\Services\AccessRequestService;
@@ -129,6 +130,21 @@ class ModalController extends Controller
         return view('modal.access-request.new')->with([
             'documents' => $documents,
             'jsonDocuments' => json_encode($documents->pluck('id')->toArray()),
+        ]);
+    }
+
+    public function newDictionaryItem(string $type): View
+    {
+        return view('modal.add-dictionary-item')->with([
+            'type' => $type,
+            'typeTitle' => Dictionary::TITLES[$type]
+        ]);
+    }
+
+    public function deleteDictionaryItem(Dictionary $dictionary): View
+    {
+        return view('modal.delete-dictionary-item')->with([
+            'dictionaryItem' => $dictionary
         ]);
     }
 }

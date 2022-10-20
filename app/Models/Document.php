@@ -18,10 +18,34 @@ class Document extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'type_id', 'case_nomenclature_id', 'income_number', 'registration_date', 'registration_time', 'author_email',
-        'outgoing_number', 'outgoing_date', 'sender_id', 'receiver_id', 'addressee', 'question', 'delivery_type_id',
-        'number_of_sheets', 'language_id', 'summary', 'shelf_life', 'note', 'answer_to_number', 'gr_document',
-        'performer', 'text', 'history', 'file', 'file_name', 'is_draft', 'answer_to_date', 'file_size'
+        'type_id',
+        'case_nomenclature_id',
+        'income_number',
+        'registration_date',
+        'registration_time',
+        'author_email',
+        'outgoing_number',
+        'outgoing_date',
+        'sender_id',
+        'receiver_id',
+        'addressee',
+        'question',
+        'delivery_type_id',
+        'number_of_sheets',
+        'language_id',
+        'summary',
+        'shelf_life',
+        'note',
+        'answer_to_number',
+        'gr_document',
+        'performer',
+        'text',
+        'history',
+        'file',
+        'file_name',
+        'is_draft',
+        'answer_to_date',
+        'file_size'
     ];
 
     protected $dates = ['registration_date', 'registration_time', 'outgoing_date', 'answer_to_date'];
@@ -52,15 +76,20 @@ class Document extends Model
 
     public function scopeDocumentAccessJoin($query)
     {
-        return $query->leftJoin(DB::raw('(
+        return $query->leftJoin(
+            DB::raw(
+                '(
                 SELECT *
                 FROM document_accesses
                 WHERE id in (
                     SELECT MAX(id) FROM document_accesses WHERE user_id = ' . auth()->id() . ' GROUP BY document_id
                 )
-            ) AS da'), function ($join) {
-            $join->on('da.document_id', '=', 'documents.id');
-        });
+            ) AS da'
+            ),
+            function ($join) {
+                $join->on('da.document_id', '=', 'documents.id');
+            }
+        );
     }
 
     public function scopeNotDeleted($query)
@@ -70,7 +99,7 @@ class Document extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'author_email', 'email');
+        return $this->belongsTo(User::class, 'author_email', 'email')->withTrashed();
     }
 
     public function type(): BelongsTo

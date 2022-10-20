@@ -41,7 +41,7 @@ class DocumentFilter
 
         // Характер вопроса
         if (isset($params['question'])) {
-            $query->where('documents.question', $params['question']);
+            $query->where('documents.question', 'like', '%' . $params['question'] . '%');
         }
 
         // ID
@@ -66,6 +66,7 @@ class DocumentFilter
 
         // Текст
         if (isset($params['text'])) {
+            $query->whereRaw('text_idx @@ websearch_to_tsquery(\'russian\', \'' . $params['text'] . '\')');
         }
 
         // GR документ

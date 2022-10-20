@@ -8,14 +8,11 @@ use Illuminate\Support\Facades\File;
 
 class SystemSettingSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
-        File::makeDirectory(public_path('storage/logos'));
+        if (!File::exists(public_path('storage/logos'))) {
+            File::makeDirectory(public_path('storage/logos'));
+        }
         File::copy(public_path('images/samruk-logo.svg'), public_path('storage/logos/samruk-logo.svg'));
 
         SystemSetting::withoutEvents(function () {

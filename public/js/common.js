@@ -63,7 +63,7 @@ function submitForm() {
         success: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');
             form.find('input[name=is_draft]').val('0');
-            result.addClass('success').html(data.message);
+            showPopUp(data.class ?? 'success', data.message);
             if (data.url) {
                 window.location.href = data.url;
             }
@@ -72,17 +72,20 @@ function submitForm() {
                 $('input[type=file]').trigger('change');
             }
             if (data.closeWindow) {
-                setTimeout(closeWindow, 2000);
+                closeWindow();
             }
             if (data.rowsToDelete) {
                 button.remove();
                 deleteRows(data.rowsToDelete);
             }
-            if (data.class) {
-                result.removeClass('success error').addClass(data.class);
+            if (data.newRow) {
+                addRow(data.newRow);
             }
             if (data.changeStateBtn) {
                 $('tr[data-row=' + data.row + ']').find('.set-state').text(data.changeStateBtn);
+            }
+            if (data.dictionaryItem) {
+                newDictionaryItem(data.dictionaryItem);
             }
         },
         error: function (data) {
@@ -95,11 +98,42 @@ function submitForm() {
                 }
                 showError(k, form);
             });
-            result.addClass('error').html(message.join('<br />'));
+            showPopUp('error', message.join('<br />'));
         }
     });
 
     return false;
+}
+
+function newDictionaryItem(item) {
+    let deleteBtn = $('<a />', {
+        'class': 'modal-link delete right',
+        'data-url': '/modal/delete-dictionary-item/' + item.id
+    });
+
+    let div = $('<div />', {
+        'class': 'item',
+        'data-row': item.id,
+        'html': item.title
+    });
+
+    div.append(deleteBtn);
+
+    $('.items[data-type="' + item.type + '"]').find('input').before(div);
+}
+
+function showPopUp(state, text) {
+    let popUp = $('<div />', {
+        'class': 'pop-up ' + state,
+        'html': text
+    });
+
+    $('.pop-ups').prepend(popUp);
+    setTimeout(function () {
+        popUp.fadeOut(200, function () {
+            $(this).remove();
+        });
+    }, 2000);
 }
 
 function getChecked(name) {
@@ -135,9 +169,14 @@ function fileInput() {
     }
 }
 
+function addRow(newRow) {
+    $('.elements').find('tbody').prepend(newRow);
+    $('.actions-menu').off().on('click', toggleActionsMenu);
+}
+
 function deleteRows(rows) {
     for (let row of rows) {
-        $('.elements').find('tr[data-row=' + row + ']').remove();
+        $('.elements').find('[data-row=' + row + ']').remove();
     }
 }
 

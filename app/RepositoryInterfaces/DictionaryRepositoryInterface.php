@@ -2,6 +2,7 @@
 
 namespace App\RepositoryInterfaces;
 
+use App\Models\Dictionary;
 use App\Repositories\DictionaryRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -13,4 +14,8 @@ interface DictionaryRepositoryInterface
     public function all(): array;
 
     public function byType(): Collection;
+
+    public function store(array $data): array;
+
+    public function delete(Dictionary $dictionary): array;
 }

@@ -33,7 +33,15 @@ $(document).ready(function () {
 
     $('.toggle-link').on('click', toggleDocumentInfo);
 
+    $('.dictionary h1').on('click', toggleItems);
+
 });
+
+function toggleItems() {
+    let cont = $(this).parent();
+    cont.toggleClass('closed');
+    cont.find('.items').slideToggle(100);
+}
 
 function actionWithSelected() {
     let documents = getChecked('documents');

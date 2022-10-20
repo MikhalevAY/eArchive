@@ -38,7 +38,9 @@
                             <td class="light">{{ $document->id }}</td>
                             <td>{{ $document->type }}</td>
                             <td>{{ $document->case_nomenclature }}</td>
-                            <td>{{ $document->question }}</td>
+                            <td>
+                                <p class="m-h-95">{{ $document->question }}</p>
+                            </td>
                             <td>{{ $document->surname }} {{ $document->name }}</td>
                             <td>{{ $document->created_at->format('d.m.Y') }}</td>
                             <td>

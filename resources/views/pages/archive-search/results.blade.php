@@ -12,29 +12,32 @@
                     <h2>@yield('title')</h2>
                     <div class="additional-menu">
                         @if(!adminOrArchivist())
-                        <a class="smaller with-text access-request modal-link"
-                           data-post="1"
-                           data-name="documents"
-                           data-url="{{ route('newAccessRequest') }}"
-                           data-class="access-request">
-                            <i></i>Запросить доступ
-                        </a>
+                            <a class="smaller with-text access-request modal-link"
+                               data-post="1"
+                               data-name="documents"
+                               data-url="{{ route('newAccessRequest') }}"
+                               data-class="access-request">
+                                <i></i>Запросить доступ
+                            </a>
                         @endif
-                        <a class="smaller with-text export action-with-selected" data-href="{{ route('document.exportSelected') }}"><i></i>Выгрузить в отчет</a>
-                        <a title="Скачать выбранные" class="smaller download action-with-selected" data-href="{{ route('document.downloadSelected') }}"><i></i></a>
-                        <a title="Удалить выбранные" class="smaller delete modal-link" data-url="{{ route('deleteSelectedDocuments') }}" data-post="1" data-name="documents"><i></i></a>
+                        <a class="smaller with-text export action-with-selected"
+                           data-href="{{ route('document.exportSelected') }}"><i></i>Выгрузить в отчет</a>
+                        <a title="Скачать выбранные" class="smaller download action-with-selected"
+                           data-href="{{ route('document.downloadSelected') }}"><i></i></a>
+                        <a title="Удалить выбранные" class="smaller delete modal-link"
+                           data-url="{{ route('deleteSelectedDocuments') }}" data-post="1" data-name="documents"><i></i></a>
                     </div>
                 </div>
                 <table class="elements">
                     <thead>
-                        <tr>
-                            <th class="width-20">
-                                <label class="checkbox">
-                                    <input class="checkbox-toggle-all" type="checkbox">
-                                    <div class="checkmark"></div>
-                                </label>
-                            </th>
-                            @foreach($tHeads as $th)
+                    <tr>
+                        <th class="width-20">
+                            <label class="checkbox">
+                                <input class="checkbox-toggle-all" type="checkbox">
+                                <div class="checkmark"></div>
+                            </label>
+                        </th>
+                        @foreach($tHeads as $th)
                             <th class="{{ $th['class'] }}" data-field="{{ $th['field'] }}">
                                 {{ $th['title'] }}
                                 <div class="sorting">
@@ -44,9 +47,9 @@
                                        class="desc {{ implode('-', $sortBy) == $th['field'] . '-desc' ? 'active' : '' }}"></a>
                                 </div>
                             </th>
-                            @endforeach
-                            <th class="text-center">Действия</th>
-                        </tr>
+                        @endforeach
+                        <th class="text-center">Действия</th>
+                    </tr>
                     </thead>
                     <tbody>
                     @forelse($documents as $document)
@@ -60,7 +63,9 @@
                             <td class="light">{{ $document->id }}</td>
                             <td>{{ $document->type }}</td>
                             <td>{{ $document->case_nomenclature }}</td>
-                            <td>{{ $document->question }}</td>
+                            <td>
+                                <p class="m-h-95">{{ $document->question }}</p>
+                            </td>
                             <td>{{ $document->surname }} {{ $document->name }}</td>
                             <td>{{ $document->created_at->format('d.m.Y') }}</td>
                             <td class="less-padding">

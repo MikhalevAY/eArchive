@@ -16,11 +16,10 @@ class AdministrationService
 
     public function __construct(
         public AdministrationRepositoryInterface $repository,
-        public MailService                       $mailService,
-        public PasswordService                   $passwordService,
-        public LogService                        $logService,
-    )
-    {
+        public MailService $mailService,
+        public PasswordService $passwordService,
+        public LogService $logService,
+    ) {
     }
 
     public function getPaginated(array $params): LengthAwarePaginator
@@ -45,19 +44,24 @@ class AdministrationService
 
     public function store(array $data): array
     {
-        $message = View::make('emails.registration', [
+        $message = view('emails.registration', [
             'email' => $data['email'],
             'password' => $data['password'],
             'surname' => $data['surname'],
             'name' => $data['name']
-        ]);
-        $message->render();
-
+        ])->render();
         $this->mailService->send([$data['email']], $message, __('messages.registration'));
 
         $data['password'] = bcrypt($data['password']);
 
-        return $this->repository->store($data);
+        $data = $this->repository->store($data);
+
+        $data['newRow'] = view('components.user-row', [
+            'user' => $data['user'],
+            'role' => User::ROLE_TITLES[$data['user']->role],
+        ])->render();
+
+        return $data;
     }
 
     public function delete(User $user): array

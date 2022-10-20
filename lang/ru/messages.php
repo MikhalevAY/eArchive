@@ -20,4 +20,7 @@ return [
     'wrong_file_format' => 'Неверный формат файла',
     'access_request_updated' => 'Запрос на доступ подтвержден',
     'access_request_stored' => 'Ваш запрос на доступ отправлен',
+    'dictionary_deleted' => 'Элемент справочника удалён',
+    'cannot_be_deleted' => 'Данный элемент не может быть удалён',
+    'dictionary_item_stored' => 'Новый элемент справочника добавлен',
 ];

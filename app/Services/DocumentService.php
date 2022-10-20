@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Document;
 use App\RepositoryInterfaces\DocumentRepositoryInterface;
+use App\Scanners\{DocScanner, JpgScanner, PdfScanner, TxtScanner};
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -13,12 +14,11 @@ class DocumentService
 {
     public function __construct(
         public DocumentRepositoryInterface $repository,
-        public AttachmentService           $attachmentService,
-        public PdfService                  $pdfService,
-        public ZipArchiveService           $zipArchiveService,
-        public DocumentAccessService       $documentAccessService
-    )
-    {
+        public AttachmentService $attachmentService,
+        public PdfService $pdfService,
+        public ZipArchiveService $zipArchiveService,
+        public DocumentAccessService $documentAccessService
+    ) {
     }
 
     public function getAll(array $params): Collection
@@ -39,7 +39,9 @@ class DocumentService
     public function store(array $data): array
     {
         // Сохраняем документ
-        $data = $this->saveDocumentFile($data);
+        $data = $this->uploadDocumentFile($data);
+        $data['text'] = $this->getTextFromFile($data['file']);
+
         $document = $this->repository->store($data);
 
         // Сохраняем вложения
@@ -52,8 +54,6 @@ class DocumentService
             $this->documentAccessService->setAvailableForAll($document->id);
         }
 
-        // TODO скан файла
-
         return [
             'message' => __('messages.' . ($data['is_draft'] == 1 ? 'document_stored' : 'document_registered')),
         ];
@@ -61,7 +61,7 @@ class DocumentService
 
     public function update(array $data, Document $document): array
     {
-        $data = $this->saveDocumentFile($data);
+        $data = $this->uploadDocumentFile($data);
         $document = $this->repository->update($data, $document);
 
         // Удаляем вложения
@@ -156,15 +156,25 @@ class DocumentService
             $this->repository->getAvailableForAction($documentIds, $action);
     }
 
-    private function saveDocumentFile(array $data): array
+    private function uploadDocumentFile(array $data): array
     {
-        if (isset($data['file'])) {
-            $data['file_name'] = $data['file']->getClientOriginalName();
-            $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 1);
-            $file = $data['file']->store('documents', 'public');
-            $data['file'] = $file;
-        }
+        $data['file_name'] = $data['file']->getClientOriginalName();
+        $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 1);
+        $data['file'] = $data['file']->store('documents', 'public');
 
         return $data;
+    }
+
+    private function getTextFromFile(string $fileName): string
+    {
+        $extension = explode('.', $fileName);
+        $extension = end($extension);
+
+        return match ($extension) {
+            'pdf' => (new PdfScanner())->getText($fileName),
+            'txt' => (new TxtScanner())->getText($fileName),
+            'jpg' => (new JpgScanner())->getText($fileName),
+            'doc', 'docx' => (new DocScanner())->getText($fileName),
+        };
     }
 }

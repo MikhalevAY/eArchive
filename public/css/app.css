@@ -1521,6 +1521,11 @@ form .uploaded-file.no-max-width {
     mask: url(../images/icon-7.svg) no-repeat center;
 }
 
+.menu .icon-8 span {
+    -webkit-mask: url(../images/icon-8.svg) no-repeat center;
+    mask: url(../images/icon-8.svg) no-repeat center;
+}
+
 .colors {
     display: flex;
     flex-wrap: wrap;
@@ -1583,6 +1588,64 @@ form .uploaded-file.no-max-width {
 .colorChooser input::-webkit-color-swatch {
     border: none;
     border-radius: 8px;
+}
+
+.dictionary {
+    padding: 20px 16px;
+    border: 1px solid #E3E4EB;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    transition: all .2s linear;
+    position: relative;
+}
+
+.dictionary:after {
+    content: '';
+    position: absolute;
+    top: 26px;
+    right: 16px;
+    display: block;
+    width: 12px;
+    height: 6px;
+    background: url(../images/select-arrow.svg) no-repeat center;
+}
+
+.dictionary.closed:after {
+    transform: rotate(180deg);
+}
+
+.dictionary h1 {
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 20px;
+    color: #303030;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.dictionary.closed:hover {
+    background: #F8F8F8;
+}
+
+.dictionary .items {
+    display: none;
+    padding-top: 20px;
+    border: none;
+    margin: 0;
+}
+
+.dictionary .item {
+    line-height: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #E3E4EB;
+    margin-bottom: 12px;
+}
+
+.dictionary input[type=button] {
+    margin-top: 12px;
+    height: 40px;
+    line-height: 38px;
 }
 
 .pagination-row:after {
@@ -1674,6 +1737,34 @@ form .uploaded-file.no-max-width {
     background: #F3F3F3;
 }
 
+.pop-ups {
+    position: fixed;
+    z-index: 1000;
+    top: 10px;
+    right: 10px;
+    text-align: right;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.pop-ups .pop-up {
+    border-radius: 12px;
+    padding: 12px 22px;
+    margin-top: 10px;
+}
+
+.pop-ups .success {
+    background: #EFF8F2;
+    color: #5DB676;
+}
+
+.pop-ups .error {
+    background: #FEEFEF;
+    color: #EC5757;
+}
+
 .elements {
     width: 100%;
     border: 1px solid #E3E4EB;
@@ -1705,6 +1796,11 @@ form .uploaded-file.no-max-width {
 
 .elements .w-170 {
     width: 170px;
+}
+
+.elements .m-h-95 {
+    max-height: 95px;
+    overflow: hidden;
 }
 
 .elements td {
@@ -1766,7 +1862,8 @@ form .uploaded-file.no-max-width {
     margin-left: 14px;
 }
 
-.elements .delete-icon {
+.elements .delete-icon,
+.items .delete {
     width: 24px;
     height: 24px;
     background: url(../images/delete.svg) no-repeat center;
@@ -1860,6 +1957,10 @@ form .uploaded-file.no-max-width {
 
 .elements .submenu .reset-password {
     background: url(../images/change-password.svg) no-repeat 8px center;
+}
+
+.elements .submenu .set-state {
+    background: url(../images/set-state.svg) no-repeat 8px center;
 }
 
 .elements .submenu .view {
