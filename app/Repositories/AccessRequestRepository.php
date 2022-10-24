@@ -7,12 +7,9 @@ use App\RepositoryInterfaces\AccessRequestRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class AccessRequestRepository extends BaseRepository implements AccessRequestRepositoryInterface
 {
-    private const BY = 20;
-
     public function getPaginated(array $params): LengthAwarePaginator
     {
         $perPage = $params['per_page'] ?? self::BY;
@@ -26,7 +23,8 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
 
     private function prepareQuery($params): Builder
     {
-        $query = AccessRequest::selectRaw('access_requests.*, CONCAT(users.surname, " ", users.name) AS full_name')
+        $query = AccessRequest::query()
+            ->selectRaw('access_requests.*, CONCAT(users.surname, \' \', users.name) AS full_name')
             ->leftJoin('users', 'users.id', '=', 'access_requests.user_id')
             ->withCount('documentAccesses');
 
@@ -53,7 +51,7 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
         $accessRequest->update($params);
 
         return [
-            'message' => __('messages.access_request_updated')
+            'message' => __('messages.access_request_updated'),
         ];
     }
 
@@ -63,7 +61,7 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
 
         return [
             'accessRequest' => $accessRequest,
-            'message' => __('messages.access_request_stored')
+            'message' => __('messages.access_request_stored'),
         ];
     }
 }

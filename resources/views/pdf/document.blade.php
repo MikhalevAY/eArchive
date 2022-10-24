@@ -202,16 +202,11 @@
     </div>
 </div>
 
-<div class="text">
-    <span>Текст документа</span>
-    <p>{{ $document->text }}</p>
-</div>
-
 @if($document->gr_document)
-<div class="row">
-    <div class="checkbox">
-        <div></div>
+    <div class="row">
+        <div class="checkbox">
+            <div></div>
+        </div>
+        <div class="label">GR-документ</div>
     </div>
-    <div class="label">GR-документ</div>
-</div>
 @endif

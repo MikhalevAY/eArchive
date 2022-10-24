@@ -10,8 +10,6 @@ use Illuminate\Support\Collection;
 
 class LogRepository extends BaseRepository implements LogRepositoryInterface
 {
-    private const BY = 20;
-
     public function getPaginated(array $params): LengthAwarePaginator
     {
         $perPage = $params['per_page'] ?? self::BY;
@@ -25,7 +23,8 @@ class LogRepository extends BaseRepository implements LogRepositoryInterface
 
     private function prepareQuery($params): Builder
     {
-        $query = Log::selectRaw('logs.*, users.surname, users.name')
+        $query = Log::query()
+            ->selectRaw('logs.*, users.surname, users.name')
             ->leftJoin('users', 'users.id', '=', 'logs.user_id');
 
         $query = $this->applyFilter($params, $query);
@@ -48,6 +47,6 @@ class LogRepository extends BaseRepository implements LogRepositoryInterface
 
     public function create(array $data): void
     {
-        Log::create($data);
+        Log::query()->create($data);
     }
 }

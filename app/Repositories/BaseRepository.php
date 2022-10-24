@@ -8,6 +8,7 @@ abstract class BaseRepository
 {
     public const ORDER = 'desc';
     public const SORT = 'created_at';
+    public const BY = 20;
 
     protected function applyOrderBy(array $params, Builder $query): Builder
     {

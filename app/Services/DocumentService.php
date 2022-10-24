@@ -61,7 +61,11 @@ class DocumentService
 
     public function update(array $data, Document $document): array
     {
-        $data = $this->uploadDocumentFile($data);
+        if (isset($data['file'])) {
+            $data = $this->uploadDocumentFile($data);
+            $data['text'] = $this->getTextFromFile($data['file']);
+        }
+
         $document = $this->repository->update($data, $document);
 
         // Удаляем вложения
@@ -73,8 +77,6 @@ class DocumentService
         if (isset($data['attachments'])) {
             $this->attachmentService->storeMany($data['attachments'], $document);
         }
-
-        // TODO скан файла
 
         return [
             'message' => __('messages.data_updated'),
@@ -159,7 +161,7 @@ class DocumentService
     private function uploadDocumentFile(array $data): array
     {
         $data['file_name'] = $data['file']->getClientOriginalName();
-        $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 1);
+        $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 3);
         $data['file'] = $data['file']->store('documents', 'public');
 
         return $data;
@@ -168,9 +170,9 @@ class DocumentService
     private function getTextFromFile(string $fileName): string
     {
         $extension = explode('.', $fileName);
-        $extension = end($extension);
+        $extension = strtolower(end($extension));
 
-        $filePath = public_path('/storage' . $fileName);
+        $filePath = public_path('storage/' . $fileName);
 
         return match ($extension) {
             'pdf' => (new PdfScanner())->getText($filePath),

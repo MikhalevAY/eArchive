@@ -3,14 +3,23 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
+/**
+ * @property integer $id
+ * @property integer $user_id
+ * @property integer $document_id
+ * @property integer $access_request_id
+ * @property integer $view
+ * @property integer $edit
+ * @property integer $download
+ * @property integer $delete
+ * @property integer $is_allowed
+ */
 class DocumentAccess extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'user_id',
         'document_id',
@@ -19,7 +28,7 @@ class DocumentAccess extends Model
         'edit',
         'download',
         'delete',
-        'is_allowed'
+        'is_allowed',
     ];
 
     protected $dates = ['created_at'];

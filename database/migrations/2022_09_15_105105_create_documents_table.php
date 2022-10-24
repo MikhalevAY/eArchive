@@ -32,7 +32,7 @@ return new class extends Migration {
             $table->date('answer_to_date')->nullable();
             $table->boolean('gr_document')->default(false);
             $table->string('performer')->nullable();
-            $table->text('text')->nullable();
+            $table->longText('text')->nullable();
             $table->text('history')->nullable();
             $table->string('file');
             $table->string('file_name');

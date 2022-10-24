@@ -7,21 +7,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class DocumentUpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules(): array
     {
         return [
@@ -46,7 +36,7 @@ class DocumentUpdateRequest extends FormRequest
             'answer_to_date' => 'nullable|date_format:Y-m-d',
             'performer' => 'nullable|max:255',
             'gr_document' => 'nullable',
-            'file' => 'nullable|required_with:file_deleted|mimes:jpeg,jpg,pdf',
+            'file' => 'nullable|required_with:file_deleted|mimes:jpeg,jpg,pdf,doc,docx,txt',
             'history' => 'nullable',
             'available_for_all' => 'nullable',
             'is_draft' => 'nullable',

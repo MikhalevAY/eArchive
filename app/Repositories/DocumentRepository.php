@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class DocumentRepository extends BaseRepository implements DocumentRepositoryInterface
 {
-    private const BY = 20;
-
     public function getPaginated(array $params): LengthAwarePaginator
     {
         $perPage = $params['per_page'] ?? self::BY;
@@ -27,12 +25,13 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
 
     public function findByIds(array $documentIds): Collection
     {
-        return Document::whereIn('id', $documentIds)->get();
+        return Document::query()->whereIn('id', $documentIds)->get();
     }
 
     private function prepareQuery($params): Builder
     {
-        $query = Document::selectRaw('documents.*, t.title as type, c.title as case_nomenclature, u.surname, u.name')
+        $query = Document::query()
+            ->selectRaw('documents.*, t.title as type, c.title as case_nomenclature, u.surname, u.name')
             ->leftJoin('dictionaries as t', 't.id', '=', 'documents.type_id')
             ->leftJoin('dictionaries as c', 'c.id', '=', 'documents.case_nomenclature_id')
             ->leftJoin('users as u', 'u.email', '=', 'documents.author_email');
@@ -84,7 +83,8 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
 
     public function getAvailableForAction(array $documentIds, string $action): Collection
     {
-        return Document::select('documents.*')
+        return Document::query()
+            ->select('documents.*')
             ->documentAccessJoin()
             ->whereIn('documents.id', $documentIds)
             ->where('da.is_allowed', true)
@@ -94,7 +94,8 @@ class DocumentRepository extends BaseRepository implements DocumentRepositoryInt
 
     public function getAvailableForRequest(array $documentIds): Collection
     {
-        return Document::select('documents.*')
+        return Document::query()
+            ->select('documents.*')
             ->with('type')
             ->documentAccessJoin()
             ->whereIn('documents.id', $documentIds)

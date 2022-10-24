@@ -7,11 +7,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class DocumentStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
@@ -24,11 +19,6 @@ class DocumentStoreRequest extends FormRequest
         ]);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules(): array
     {
         return [
@@ -54,7 +44,7 @@ class DocumentStoreRequest extends FormRequest
             'answer_to_date' => 'nullable|date_format:Y-m-d',
             'performer' => 'nullable|max:255',
             'gr_document' => 'nullable',
-            'file' => 'required|mimes:jpeg,jpg,pdf',
+            'file' => 'required|mimes:jpeg,jpg,pdf,doc,docx,txt',
             'history' => 'nullable',
             'available_for_all' => 'nullable',
             'is_draft' => 'nullable',
@@ -71,6 +61,7 @@ class DocumentStoreRequest extends FormRequest
             'number_of_sheets' => 'Кол-во листов/экземпляров',
             'performer' => 'Исполнитель',
             'outgoing_number' => 'Исходящий номер',
+            'file' => 'Основной документ'
         ];
     }
 }

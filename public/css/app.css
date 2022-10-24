@@ -1242,9 +1242,11 @@ form .uploaded-file.no-max-width {
 .requested-documents .name i {
     color: #999;
     font-style: normal;
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
     margin-left: 5px;
+    float: right;
+    line-height: 22px;
 }
 
 .requested-documents .doc p {

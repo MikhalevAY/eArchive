@@ -57,7 +57,7 @@
     <div class="divider"></div>
     <div class="row">
         <span class="gray">Комментарий к запросу</span>
-        <p>{{ $accessRequest->comment }}</p>
+        <p>{!! nl2br($accessRequest->comment) !!}</p>
     </div>
     @if($accessRequest->status != 'closed')
         <div class="buttons">

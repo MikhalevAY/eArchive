@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $user_id
@@ -14,11 +13,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property integer $model_id
  * @property string $device_ip
  * @property string $text
+ * @property BelongsTo $user
  */
 class Log extends Model
 {
-    use HasFactory;
-
     protected $fillable = ['user_id', 'action', 'model', 'model_id', 'device_ip', 'text'];
 
     public const ACTION_DELETE = 'Удаление';
@@ -26,8 +24,6 @@ class Log extends Model
     public const ACTION_UPDATE = 'Обновление';
     public const ACTION_AUTH = 'Авторизация';
     public const ACTION_PASSWORD_RESET = 'Сброс пароля';
-
-    protected $with = ['user'];
 
     public static array $tHeads = [
         ['title' => 'Дата и время', 'field' => 'created_at', 'class' => ''],
@@ -37,9 +33,9 @@ class Log extends Model
         ['title' => 'Действие', 'field' => 'action', 'class' => 'w-140'],
     ];
 
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     protected function serializeDate(DateTimeInterface $date): string

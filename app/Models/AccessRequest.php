@@ -6,7 +6,6 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -15,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $comment
  * @property string $status
  * @property HasMany $documentAccesses
+ * @property BelongsTo $user
  */
 class AccessRequest extends Model
 {
@@ -45,7 +45,7 @@ class AccessRequest extends Model
 
     public function documentAccesses(): HasMany
     {
-        return $this->hasMany(DocumentAccess::class, 'access_request_id','id');
+        return $this->hasMany(DocumentAccess::class, 'access_request_id', 'id');
     }
 
     protected function serializeDate(DateTimeInterface $date): string

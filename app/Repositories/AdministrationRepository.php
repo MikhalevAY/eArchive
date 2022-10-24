@@ -10,8 +10,6 @@ use Illuminate\Support\Collection;
 
 class AdministrationRepository extends BaseRepository implements AdministrationRepositoryInterface
 {
-    private const BY = 20;
-
     public function getPaginated(array $params): LengthAwarePaginator
     {
         $perPage = $params['per_page'] ?? self::BY;
@@ -25,7 +23,7 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
 
     private function prepareQuery($params): Builder
     {
-        $query = User::select('*')->notDeleted();
+        $query = User::query()->select('*')->notDeleted();
 
         $query = $this->applyFilter($params, $query);
         $query = $this->applyOrderBy($params, $query);
@@ -55,7 +53,7 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
         $user->update($data);
 
         return [
-            'message' => __('messages.data_updated')
+            'message' => __('messages.data_updated'),
         ];
     }
 
@@ -64,7 +62,7 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
         $user->updateQuietly($data);
 
         return [
-            'message' => __('messages.data_updated')
+            'message' => __('messages.data_updated'),
         ];
     }
 
@@ -74,7 +72,7 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
 
         return [
             'message' => __('messages.user_stored'),
-            'user' => $user
+            'user' => $user,
         ];
     }
 
@@ -84,7 +82,7 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
 
         return [
             'message' => __('messages.user_deleted'),
-            'rowsToDelete' => [$user->id]
+            'rowsToDelete' => [$user->id],
         ];
     }
 
@@ -96,7 +94,7 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
 
         return [
             'message' => __('messages.users_deleted'),
-            'rowsToDelete' => $userIds
+            'rowsToDelete' => $userIds,
         ];
     }
 }

@@ -4,11 +4,9 @@ namespace App\Models;
 
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 /**
  * @property integer $id
@@ -22,7 +20,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'is_active',
@@ -40,7 +38,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'photo_url'
+        'photo_url',
     ];
 
     public const ROLE_TITLES = [
@@ -55,7 +53,7 @@ class User extends Authenticatable
         ['title' => 'Фамилия', 'field' => 'surname', 'class' => ''],
         ['title' => 'Имя Отчество', 'field' => 'name', 'class' => ''],
         ['title' => 'Роль', 'field' => 'role', 'class' => ''],
-        ['title' => 'Дата регистрации', 'field' => 'created_at', 'class' => 'text-center']
+        ['title' => 'Дата регистрации', 'field' => 'created_at', 'class' => 'text-center'],
     ];
 
     public function scopeNotDeleted($query)

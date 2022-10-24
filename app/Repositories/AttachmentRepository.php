@@ -9,12 +9,12 @@ class AttachmentRepository extends BaseRepository implements AttachmentRepositor
 {
     public function get(int $id): Attachment
     {
-        return Attachment::find($id);
+        return Attachment::query()->find($id);
     }
 
     public function store(array $data): void
     {
-        Attachment::create($data);
+        Attachment::query()->create($data);
     }
 
     public function delete(Attachment $attachment): void

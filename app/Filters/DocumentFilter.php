@@ -84,7 +84,8 @@ class DocumentFilter
         if (isset($params['all_documents']) && !adminOrArchivist()) {
             $query->documentAccessJoin()
                 ->selectRaw(
-                    'da.view, da.edit, da.delete, da.download, IF(da.id IS NOT NULL, IFNULL(da.is_allowed, -1), NULL) AS is_allowed'
+                    'da.view, da.edit, da.delete, da.download,
+                    (CASE WHEN da.id IS NOT NULL THEN COALESCE(da.is_allowed, -1) ELSE NULL END) AS is_allowed'
                 );
         }
 

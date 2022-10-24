@@ -9,12 +9,12 @@ class DocumentAccessRepository extends BaseRepository implements DocumentAccessR
 {
     public function store(array $data): void
     {
-        DocumentAccess::create($data);
+        DocumentAccess::query()->create($data);
     }
 
     public function storeMany(array $data): void
     {
-        DocumentAccess::insert($data);
+        DocumentAccess::query()->insert($data);
     }
 
     public function update(array $data, DocumentAccess $documentAccess): void

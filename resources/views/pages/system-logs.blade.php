@@ -10,13 +10,14 @@
             <h2>@yield('title')</h2>
             <form action="{{ route('logs') }}" method="get" class="no-ajax">
                 <div class="row with-reset">
-                    <input class="inline-block" placeholder="Автор" type="text" value="{{ request()->input('q') }}" name="q" autocomplete="off" />
+                    <input class="inline-block" placeholder="Автор" type="text" value="{{ request()->input('q') }}"
+                           name="q" autocomplete="off"/>
                     <input type="submit" value="" class="search">
                     <input @class(['visible' => $showResetButton, 'reset-row-inputs' => true]) type="button" value="">
                 </div>
                 <table class="elements">
                     <thead>
-                        <tr>
+                    <tr>
                         @foreach($tHeads as $th)
                             <th class="{{ $th['class'] }}" data-field="{{ $th['field'] }}">
                                 {{ $th['title'] }}
@@ -28,13 +29,13 @@
                                 </div>
                             </th>
                         @endforeach
-                        </tr>
+                    </tr>
                     </thead>
                     <tbody>
                     @forelse($logs as $log)
                         <tr>
                             <td class="light">{{ $log->created_at->format('d.m.Y в H:i') }}</td>
-                            <td>{{ $log->user->surname . ' ' . $log->user->name }}</td>
+                            <td>{{ $log->surname . ' ' . $log->name }}</td>
                             <td>{{ $log->device_ip }}</td>
                             <td>{{ $log->text }}</td>
                             <td>{{ $log->action }}</td>

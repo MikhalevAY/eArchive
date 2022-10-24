@@ -10,11 +10,12 @@ class MenuItemRepository implements MenuItemRepositoryInterface
 {
     public function availableForUser(): Collection
     {
-        return MenuItem::whereIn('id', function ($query) {
-            $query->select('menu_item_id')
-                ->from('menu_item_user')
-                ->where('user_role', '?')
-                ->setBindings([auth()->user()->role]);
-        })->orderBy('number', 'asc')->get();
+        return MenuItem::query()
+            ->whereIn('id', function ($query) {
+                $query->select('menu_item_id')
+                    ->from('menu_item_user')
+                    ->where('user_role', '?')
+                    ->setBindings([auth()->user()->role]);
+            })->orderBy('number', 'asc')->get();
     }
 }
