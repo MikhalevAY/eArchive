@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,6 +18,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $role
  * @property string $photo
  * @property integer $is_active
+ * @method static Builder|User query()
+ * @method Builder|User notDeleted()
  */
 class User extends Authenticatable
 {

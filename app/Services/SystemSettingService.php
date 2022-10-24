@@ -17,7 +17,12 @@ class SystemSettingService
             $logo = $data['logo']->store('logos', 'public');
             $data['logo'] = $logo;
         }
-        return $this->repository->update($data);
+
+        $this->repository->update($data);
+        
+        return [
+            'message' => __('messages.data_updated'),
+        ];
     }
 
     public function get(int $id): SystemSetting
@@ -34,7 +39,7 @@ class SystemSettingService
         return [
             'size' => $size,
             'ext' => end($ext),
-            'name' => str_replace('logos/', '', $logo)
+            'name' => str_replace('logos/', '', $logo),
         ];
     }
 }

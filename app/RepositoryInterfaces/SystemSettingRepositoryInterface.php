@@ -10,7 +10,7 @@ use App\Repositories\SystemSettingRepository;
  **/
 interface SystemSettingRepositoryInterface
 {
-    public function update(array $data): array;
+    public function update(array $data): bool;
 
     public function get(int $id): SystemSetting;
 }

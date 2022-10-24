@@ -22,13 +22,12 @@ class PasswordRepository implements PasswordRepositoryInterface
         DB::table('password_resets')->where('email', $email)->delete();
     }
 
-    public function insertRow(string $email, string $md5Email): bool
+    public function insertRow(string $email, string $md5Email): void
     {
         DB::table('password_resets')->insert([
             'email' => $email,
             'token' => $md5Email,
-            'created_at' => now()
+            'created_at' => now(),
         ]);
-        return true;
     }
 }

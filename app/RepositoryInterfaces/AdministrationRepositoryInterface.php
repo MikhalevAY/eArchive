@@ -16,13 +16,13 @@ interface AdministrationRepositoryInterface
 
     public function getAll(array $params): Collection;
 
-    public function update(array $data, User $user): array;
+    public function update(array $data, User $user): User;
 
-    public function updateQuietly(array $data, User $user): array;
+    public function updateQuietly(array $data, User $user): void;
 
-    public function store(array $data): array;
+    public function store(array $data): User;
 
-    public function delete(User $user): array;
+    public function delete(User $user): void;
 
-    public function deleteSelected(array $userIds): array;
+    public function deleteSelected(array $userIds): void;
 }

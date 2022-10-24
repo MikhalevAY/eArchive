@@ -34,19 +34,19 @@
                     @endif
                     <div class="access">
                         <div class="access-element">
-                            <div class="circle {{ $documentAccess->view == 1 ? 'checked' : '' }}"></div>
+                            <div class="circle {{ $documentAccess->view ? 'checked' : '' }}"></div>
                             <i>Просмотр</i>
                         </div>
                         <div class="access-element">
-                            <div class="circle {{ $documentAccess->edit == 1 ? 'checked' : '' }}"></div>
+                            <div class="circle {{ $documentAccess->edit ? 'checked' : '' }}"></div>
                             <i>Редактирование</i>
                         </div>
                         <div class="access-element">
-                            <div class="circle {{ $documentAccess->download == 1 ? 'checked' : '' }}"></div>
+                            <div class="circle {{ $documentAccess->download ? 'checked' : '' }}"></div>
                             <i>Скачивание</i>
                         </div>
                         <div class="access-element">
-                            <div class="circle {{ $documentAccess->delete == 1 ? 'checked' : '' }}"></div>
+                            <div class="circle {{ $documentAccess->delete ? 'checked' : '' }}"></div>
                             <i>Удаление</i>
                         </div>
                     </div>

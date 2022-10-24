@@ -10,10 +10,15 @@
             <div class="document-detailed">
                 <h2>@yield('title')</h2>
                 <div class="action-links">
-                    <a class="print {{ var_export($actions['view']) }}" @if($actions['view']) href="{{ route('document.print', ['document' => $document]) }}" target="_blank" @endif></a>
-                    <a class="edit {{ var_export($actions['edit']) }}" @if($actions['edit']) href="{{ route('document.edit', ['document' => $document]) }}" @endif></a>
-                    <a class="download {{ var_export($actions['download']) }}" @if($actions['download']) href="{{ route('document.download', ['document' => $document]) }}" @endif></a>
-                    <a class="modal-link delete {{ var_export($actions['delete']) }}" @if($actions['delete']) data-url="{{ route('deleteDocument', ['document' => $document]) }}" @endif></a>
+                    <a class="print {{ var_export($actions['view']) }}"
+                       @if($actions['view']) href="{{ route('document.print', ['document' => $document]) }}"
+                       target="_blank" @endif></a>
+                    <a class="edit {{ var_export($actions['edit']) }}"
+                       @if($actions['edit']) href="{{ route('document.edit', ['document' => $document]) }}" @endif></a>
+                    <a class="download {{ var_export($actions['download']) }}"
+                       @if($actions['download']) href="{{ route('document.download', ['document' => $document]) }}" @endif></a>
+                    <a class="modal-link delete {{ var_export($actions['delete']) }}"
+                       @if($actions['delete']) data-url="{{ route('deleteDocument', ['document' => $document]) }}" @endif></a>
                 </div>
                 <p>{{ $document->question }}</p>
                 <div class="document-info">
@@ -64,7 +69,8 @@
                 <div class="divider"></div>
                 <div class="files">
                     @if($actions['download'])
-                    <a class="download-archive" href="{{ route('document.download', ['document' => $document]) }}">Скачать архив</a>
+                        <a class="download-archive" href="{{ route('document.download', ['document' => $document]) }}">Скачать
+                            архив</a>
                     @endif
                     <h5>Основной документ</h5>
                     <div class="list">
@@ -72,23 +78,21 @@
                             <span>{{ $document->file_name }}</span>
                             <b>{{ $document->file_size }} Mb</b>
                             <div>
-                                <a href="#">Открыть</a>
                                 <a href="#">Скачать</a>
                             </div>
                         </div>
                     </div>
                     <h5>Вложения к документу</h5>
                     <div class="list">
-                    @foreach($document->attachments as $attachment)
+                        @foreach($document->attachments as $attachment)
                             <div class="file-block">
                                 <span>{{ $attachment->name }}</span>
                                 <b>{{ $attachment->size }} Mb</b>
                                 <div>
-                                    <a href="#">Открыть</a>
                                     <a href="#">Скачать</a>
                                 </div>
                             </div>
-                    @endforeach
+                        @endforeach
                     </div>
                 </div>
             </div>

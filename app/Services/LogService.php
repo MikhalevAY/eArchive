@@ -23,9 +23,11 @@ class LogService
 
     public function create(array $data): void
     {
-        $data['user_id'] = auth()->id();
-        $data['device_ip'] = request()->ip();
-
-        $this->repository->create($data);
+        $this->repository->create(
+            array_merge($data, [
+                'user_id' => auth()->id(),
+                'device_ip' => request()->ip(),
+            ])
+        );
     }
 }

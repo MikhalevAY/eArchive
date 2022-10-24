@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $comment
  * @property string $status
  * @property HasMany $documentAccesses
- * @property BelongsTo $user
+ * @property User $user
  */
 class AccessRequest extends Model
 {
@@ -30,7 +30,7 @@ class AccessRequest extends Model
     public static array $statusTitle = [
         'new' => 'Новый',
         'active' => 'Активный',
-        'closed' => 'Закрытый'
+        'closed' => 'Закрытый',
     ];
 
     public function user(): BelongsTo

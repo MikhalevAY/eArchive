@@ -46,22 +46,13 @@ class AccessRequestRepository extends BaseRepository implements AccessRequestRep
         return $query;
     }
 
-    public function update(array $params, AccessRequest $accessRequest): array
+    public function update(array $params, AccessRequest $accessRequest): void
     {
         $accessRequest->update($params);
-
-        return [
-            'message' => __('messages.access_request_updated'),
-        ];
     }
 
-    public function store(array $params): array
+    public function store(array $params): AccessRequest
     {
-        $accessRequest = auth()->user()->accessRequests()->create($params);
-
-        return [
-            'accessRequest' => $accessRequest,
-            'message' => __('messages.access_request_stored'),
-        ];
+        return auth()->user()->accessRequests()->create($params);
     }
 }

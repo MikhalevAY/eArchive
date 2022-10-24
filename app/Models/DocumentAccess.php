@@ -11,12 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property integer $id
  * @property integer $user_id
  * @property integer $document_id
- * @property integer $access_request_id
- * @property integer $view
- * @property integer $edit
- * @property integer $download
- * @property integer $delete
- * @property integer $is_allowed
+ * @property integer|null $access_request_id
+ * @property boolean $view
+ * @property boolean $edit
+ * @property boolean $download
+ * @property boolean $delete
+ * @property integer|null $is_allowed
  */
 class DocumentAccess extends Model
 {

@@ -5,15 +5,13 @@ namespace App\Services;
 use App\Models\AccessRequest;
 use App\RepositoryInterfaces\AccessRequestRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
 
 class AccessRequestService
 {
     public function __construct(
         public AccessRequestRepositoryInterface $repository,
-        public DocumentAccessService            $documentAccessService
-    )
-    {
+        public DocumentAccessService $documentAccessService
+    ) {
     }
 
     public function getPaginated(array $params): LengthAwarePaginator
@@ -31,32 +29,38 @@ class AccessRequestService
         if (isset($params['documents'])) {
             foreach ($accessRequest->documentAccesses as $documentAccess) {
                 $this->documentAccessService->update([
-                    'is_allowed' => $params['documents'][$documentAccess->document_id]
+                    'is_allowed' => $params['documents'][$documentAccess->document_id],
                 ], $documentAccess);
             }
         }
 
-        return $this->repository->update($params, $accessRequest);
+        $this->repository->update($params, $accessRequest);
+
+        return [
+            'message' => __('messages.access_request_updated'),
+        ];
     }
 
     public function store(array $params): array
     {
-        $data = $this->repository->store($params);
+        $accessRequest = $this->repository->store($params);
 
         foreach ($params['documents'] as $documentId) {
             $this->documentAccessService->store([
                 'user_id' => auth()->id(),
-                'access_request_id' => $data['accessRequest']->id,
+                'access_request_id' => $accessRequest->id,
                 'document_id' => $documentId,
                 'view' => isset($params['view'][$documentId]),
                 'edit' => isset($params['edit'][$documentId]),
                 'download' => isset($params['download'][$documentId]),
                 'delete' => isset($params['delete'][$documentId]),
-                'is_allowed' => null
+                'is_allowed' => null,
             ]);
         }
 
-        return $data;
+        return [
+            'message' => __('messages.access_request_stored'),
+        ];
     }
 
     public function getDocumentIds(AccessRequest $accessRequest, array $params): array

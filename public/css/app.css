@@ -1235,7 +1235,7 @@ form .uploaded-file.no-max-width {
 
 .requested-documents .name {
     color: var(--company-color);
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     padding-left: 28px;
 }
 
@@ -1308,7 +1308,7 @@ form .uploaded-file.no-max-width {
     padding: 0 16px;
     height: 32px;
     border-radius: 8px;
-    top: 16px;
+    top: 12px;
     right: 16px;
 }
 

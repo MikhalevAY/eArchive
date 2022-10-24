@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property integer $model_id
  * @property string $device_ip
  * @property string $text
- * @property BelongsTo $user
+ * @property User $user
  */
 class Log extends Model
 {

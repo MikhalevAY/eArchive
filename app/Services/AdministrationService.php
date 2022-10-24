@@ -7,8 +7,8 @@ use App\Models\User;
 use App\RepositoryInterfaces\AdministrationRepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class AdministrationService
 {
@@ -39,49 +39,74 @@ class AdministrationService
 
     public function update(array $data, User $user): array
     {
-        return $this->repository->update($data, $user);
+        $user = $this->repository->update($data, $user);
+
+        return [
+            'updateRow' => view('components.user-row', [
+                'user' => $user,
+                'role' => User::ROLE_TITLES[$user->role],
+            ])->render(),
+            'row_id' => $user->id,
+            'message' => __('messages.data_updated'),
+        ];
     }
 
+    /**
+     * @throws PHPMailerException
+     */
     public function store(array $data): array
     {
         $message = view('emails.registration', [
             'email' => $data['email'],
             'password' => $data['password'],
             'surname' => $data['surname'],
-            'name' => $data['name']
+            'name' => $data['name'],
         ])->render();
         $this->mailService->send([$data['email']], $message, __('messages.registration'));
 
         $data['password'] = bcrypt($data['password']);
 
-        $data = $this->repository->store($data);
+        $user = $this->repository->store($data);
 
-        $data['newRow'] = view('components.user-row', [
-            'user' => $data['user'],
-            'role' => User::ROLE_TITLES[$data['user']->role],
-        ])->render();
-
-        return $data;
+        return [
+            'newRow' => view('components.user-row', [
+                'user' => $user,
+                'role' => User::ROLE_TITLES[$user->role],
+            ])->render(),
+            'message' => __('messages.user_stored'),
+        ];
     }
 
     public function delete(User $user): array
     {
-        return $this->repository->delete($user);
+        $this->repository->delete($user);
+
+        return [
+            'message' => __('messages.user_deleted'),
+            'rowsToDelete' => [$user->id],
+        ];
     }
 
     public function deleteSelected(array $userIds): array
     {
-        return $this->repository->deleteSelected($userIds);
+        $this->repository->deleteSelected($userIds);
+
+        return [
+            'message' => __('messages.users_deleted'),
+            'rowsToDelete' => $userIds,
+        ];
     }
 
+    /**
+     * @throws PHPMailerException
+     */
     public function resetPassword(User $user): array
     {
         $newPassword = Str::random(self::PASSWORD_LENGTH);
-        $message = View::make('emails.password-reset', [
+        $message = view('emails.password-reset', [
             'email' => $user->email,
-            'password' => $newPassword
-        ]);
-        $message->render();
+            'password' => $newPassword,
+        ])->render();
 
         $this->mailService->send([$user->email], $message, __('messages.reset_password'));
 
@@ -96,7 +121,7 @@ class AdministrationService
         $this->repository->updateQuietly($data, $user);
 
         return [
-            'message' => __('messages.new_password_sent')
+            'message' => __('messages.new_password_sent'),
         ];
     }
 }

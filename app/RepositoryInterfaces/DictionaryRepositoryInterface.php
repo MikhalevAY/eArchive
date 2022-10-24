@@ -15,7 +15,7 @@ interface DictionaryRepositoryInterface
 
     public function byType(): Collection;
 
-    public function store(array $data): array;
+    public function store(array $data): Dictionary;
 
-    public function delete(Dictionary $dictionary): array;
+    public function delete(Dictionary $dictionary): bool;
 }

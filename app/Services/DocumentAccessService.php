@@ -10,9 +10,8 @@ class DocumentAccessService
 {
     public function __construct(
         public DocumentAccessRepositoryInterface $documentAccessRepository,
-        public AdministrationService             $administrationService
-    )
-    {
+        public AdministrationService $administrationService
+    ) {
     }
 
     public function store(array $data): void

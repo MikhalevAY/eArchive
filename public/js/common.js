@@ -81,6 +81,9 @@ function submitForm() {
             if (data.newRow) {
                 addRow(data.newRow);
             }
+            if (data.updateRow) {
+                updateRow(data.updateRow, data.row_id);
+            }
             if (data.changeStateBtn) {
                 $('tr[data-row=' + data.row + ']').find('.set-state').text(data.changeStateBtn);
             }
@@ -167,6 +170,11 @@ function fileInput() {
     } else {
         $span.html($this.val() !== '' ? $this.get(0).files[0].name : 'Выберите файл');
     }
+}
+
+function updateRow(row, rowID) {
+    $('.elements').find('[data-row=' + rowID + ']').after(row).remove();
+    $('.actions-menu').off().on('click', toggleActionsMenu);
 }
 
 function addRow(newRow) {

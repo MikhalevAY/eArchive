@@ -13,10 +13,7 @@ class DictionaryService
 
     public function all(): array
     {
-        $all = $this->repository->all();
-        $all[''] = '';
-
-        return $all;
+        return $this->repository->all();
     }
 
     public function byType(): array
@@ -31,11 +28,26 @@ class DictionaryService
 
     public function store(array $data): array
     {
-        return $this->repository->store($data);
+        $dictionary = $this->repository->store($data);
+
+        return [
+            'message' => __('messages.dictionary_item_stored'),
+            'dictionaryItem' => $dictionary,
+        ];
     }
 
     public function delete(Dictionary $dictionary): array
     {
-        return $this->repository->delete($dictionary);
+        if (!$this->repository->delete($dictionary)) {
+            return [
+                'class' => 'error',
+                'message' => __('messages.cannot_be_deleted'),
+            ];
+        }
+
+        return [
+            'message' => __('messages.dictionary_deleted'),
+            'rowsToDelete' => [$dictionary->id],
+        ];
     }
 }

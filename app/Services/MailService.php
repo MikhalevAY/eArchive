@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
-use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class MailService
 {
     /**
-     * @throws Exception
+     * @throws PHPMailerException
      */
     public function send(array $emails, string $message, string $subject): bool
     {
-        $mail = new PHPMailer(true);
+        $mail = new PHPMailer();
         $mail->CharSet = 'UTF-8';
         $mail->setFrom(config('mail.from.address'), config('app.name'));
 

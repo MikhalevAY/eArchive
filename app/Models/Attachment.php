@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property string $file
  * @property double $size
- * @property BelongsTo $document
+ * @property Document $document
  */
 class Attachment extends Model
 {

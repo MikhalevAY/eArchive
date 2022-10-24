@@ -19,31 +19,19 @@ class DictionaryRepository implements DictionaryRepositoryInterface
         return Dictionary::all();
     }
 
-    public function delete(Dictionary $dictionary): array
+    public function delete(Dictionary $dictionary): bool
     {
         try {
             $dictionary->delete();
-        } catch (Exception $exception) {
-            return [
-                'class' => 'error',
-                'message' => __('messages.cannot_be_deleted'),
-                'exceptionCode' => $exception->getCode(),
-            ];
+        } catch (Exception) {
+            return false;
         }
 
-        return [
-            'message' => __('messages.dictionary_deleted'),
-            'rowsToDelete' => [$dictionary->id],
-        ];
+        return true;
     }
 
-    public function store(array $data): array
+    public function store(array $data): Dictionary
     {
-        $latest = Dictionary::query()->create($data);
-
-        return [
-            'message' => __('messages.dictionary_item_stored'),
-            'dictionaryItem' => $latest,
-        ];
+        return Dictionary::query()->create($data);
     }
 }

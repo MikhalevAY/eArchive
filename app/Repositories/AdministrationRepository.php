@@ -48,53 +48,32 @@ class AdministrationRepository extends BaseRepository implements AdministrationR
         return $query;
     }
 
-    public function update(array $data, User $user): array
+    public function update(array $data, User $user): User
     {
         $user->update($data);
 
-        return [
-            'message' => __('messages.data_updated'),
-        ];
+        return $user;
     }
 
-    public function updateQuietly(array $data, User $user): array
+    public function updateQuietly(array $data, User $user): void
     {
         $user->updateQuietly($data);
-
-        return [
-            'message' => __('messages.data_updated'),
-        ];
     }
 
-    public function store(array $data): array
+    public function store(array $data): User
     {
-        $user = User::create($data);
-
-        return [
-            'message' => __('messages.user_stored'),
-            'user' => $user,
-        ];
+        return User::query()->create($data);
     }
 
-    public function delete(User $user): array
+    public function delete(User $user): void
     {
         $user->delete();
-
-        return [
-            'message' => __('messages.user_deleted'),
-            'rowsToDelete' => [$user->id],
-        ];
     }
 
-    public function deleteSelected(array $userIds): array
+    public function deleteSelected(array $userIds): void
     {
-        foreach (User::whereIn('id', $userIds)->get() as $user) {
+        foreach (User::query()->whereIn('id', $userIds)->get() as $user) {
             $user->delete();
         }
-
-        return [
-            'message' => __('messages.users_deleted'),
-            'rowsToDelete' => $userIds,
-        ];
     }
 }

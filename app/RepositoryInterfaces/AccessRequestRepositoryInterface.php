@@ -16,7 +16,7 @@ interface AccessRequestRepositoryInterface
 
     public function getAll(array $params): Collection;
 
-    public function update(array $params, AccessRequest $accessRequest): array;
+    public function update(array $params, AccessRequest $accessRequest): void;
 
-    public function store(array $params): array;
+    public function store(array $params): AccessRequest;
 }

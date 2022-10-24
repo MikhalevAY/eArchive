@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\{Builder, Model};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 /**
  * @property integer $id
+ * @method static Builder|Document query()
  */
 class Document extends Model
 {
@@ -44,7 +45,7 @@ class Document extends Model
         'file_name',
         'is_draft',
         'answer_to_date',
-        'file_size'
+        'file_size',
     ];
 
     protected $dates = ['registration_date', 'registration_time', 'outgoing_date', 'answer_to_date'];

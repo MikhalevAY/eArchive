@@ -8,6 +8,7 @@ use App\Scanners\{DocScanner, JpgScanner, PdfScanner, TxtScanner};
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DocumentService
@@ -89,7 +90,7 @@ class DocumentService
 
         return [
             'message' => __('messages.document_deleted'),
-            'rowsToDelete' => [$document->id]
+            'rowsToDelete' => [$document->id],
         ];
     }
 
@@ -100,7 +101,7 @@ class DocumentService
         if ($documents->isEmpty()) {
             return [
                 'message' => __('messages.no_rights_to_delete'),
-                'class' => 'error'
+                'class' => 'error',
             ];
         }
 
@@ -109,7 +110,7 @@ class DocumentService
         return [
             'closeWindow' => true,
             'message' => __('messages.documents_deleted'),
-            'rowsToDelete' => $documents->pluck('id')->toArray()
+            'rowsToDelete' => $documents->pluck('id')->toArray(),
         ];
     }
 
@@ -169,10 +170,8 @@ class DocumentService
 
     private function getTextFromFile(string $fileName): string
     {
-        $extension = explode('.', $fileName);
-        $extension = strtolower(end($extension));
-
         $filePath = public_path('storage/' . $fileName);
+        $extension = File::extension($filePath);
 
         return match ($extension) {
             'pdf' => (new PdfScanner())->getText($filePath),

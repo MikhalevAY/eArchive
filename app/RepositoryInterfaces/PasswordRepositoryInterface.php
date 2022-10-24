@@ -15,5 +15,5 @@ interface PasswordRepositoryInterface
 
     public function deleteRow(string $email): void;
 
-    public function insertRow(string $email, string $md5Email): bool;
+    public function insertRow(string $email, string $md5Email): void;
 }
