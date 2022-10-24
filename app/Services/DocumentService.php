@@ -161,11 +161,13 @@ class DocumentService
 
     private function uploadDocumentFile(array $data): array
     {
-        $data['file_name'] = $data['file']->getClientOriginalName();
-        $data['file_size'] = round(($data['file']->getSize() / 1024 / 1024), 3);
-        $data['file'] = $data['file']->store('documents', 'public');
+        $file = $data['file']->store('documents', 'public');
 
-        return $data;
+        return array_merge($data, [
+            'file_size' => round(($data['file']->getSize() / 1024 / 1024), 3),
+            'file_name' => $data['file']->getClientOriginalName(),
+            'file' => $file,
+        ]);
     }
 
     private function getTextFromFile(string $fileName): string

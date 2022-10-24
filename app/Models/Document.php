@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * @property integer $id
+ * @property integer $type_id
  * @method static Builder|Document query()
  */
 class Document extends Model

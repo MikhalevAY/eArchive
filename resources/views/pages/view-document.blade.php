@@ -33,7 +33,9 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td>Отправитель <span>{{ $dictionaries[$document->sender_id] }}</span></td>
+                            <td>Отправитель
+                                <span>{{ $document->sender_id ? $dictionaries[$document->sender_id] : '' }}</span>
+                            </td>
                             <td>Исход. номер <span>{{ $document->outgoing_number }}</span></td>
                             <td>исход. дата
                                 <span>
@@ -44,7 +46,9 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td>Получатель <span>{{ $dictionaries[$document->receiver_id] }}</span></td>
+                            <td>Получатель
+                                <span>{{ $document->receiver_id ? $dictionaries[$document->receiver_id] : '' }}</span>
+                            </td>
                             <td>Вход. номер <span>{{ $document->income_number }}</span></td>
                             <td>Дата рег. <span>{{ $document->registration_date->format('d.m.Y') }}</span></td>
                             <td>Время рег. <span>{{ $document->registration_time->format('H:i') }}</span></td>
