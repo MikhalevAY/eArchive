@@ -104,5 +104,5 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/artisan/{command}', function ($c) {
-    Artisan::call($c, ['--force' => true]);
+    Artisan::call($c, []);
 });
