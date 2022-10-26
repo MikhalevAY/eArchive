@@ -59,12 +59,18 @@ class AppServiceProvider extends ServiceProvider
             View::share('menuItems', $menuItems);
         });
 
+        $companyLogo = null;
+        $companyColor = '#999';
+
         if (Schema::hasTable('system_settings')) {
             $systemSetting = SystemSetting::query()->find(1);
             if ($systemSetting) {
-                View::share('companyLogo', $systemSetting->logo);
-                View::share('companyColor', $systemSetting->color);
+                $companyColor = $systemSetting->color;
+                $companyLogo = $systemSetting->logo;
             }
         }
+
+        View::share('companyLogo', $companyLogo);
+        View::share('companyColor', $companyColor);
     }
 }
