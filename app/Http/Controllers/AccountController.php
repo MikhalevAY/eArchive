@@ -16,27 +16,16 @@ class AccountController extends Controller
 
     public function update(AccountUpdateRequest $request): JsonResponse
     {
-        $data = $this->service->update($request->all());
-        $data['closeWindow'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->update($request->all()));
     }
 
     public function updatePassword(AccountUpdatePasswordRequest $request): JsonResponse
     {
-        $data = $this->service->updatePassword($request->all());
-        $data['closeWindow'] = true;
-        $data['reset'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->updatePassword($request->all()));
     }
 
     public function updatePhoto(AccountUpdatePhotoRequest $request): JsonResponse
     {
-        $data = $this->service->updatePhoto($request->all());
-        $data['closeWindow'] = true;
-        $data['reset'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->updatePhoto($request->all()));
     }
 }

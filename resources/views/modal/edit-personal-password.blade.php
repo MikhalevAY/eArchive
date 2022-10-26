@@ -1,10 +1,10 @@
 <h2>Сменить пароль</h2>
 <a class="close"></a>
-<form action="{{ route('updatePersonalPassword') }}" method="post">
+<form class="close-after" action="{{ route('updatePersonalPassword') }}" method="post">
     @csrf
     <div class="row">
         <span>Текущий пароль</span>
-        <input type="password" name="password" placeholder="Ваш пароль" autocomplete="off" />
+        <input type="password" name="password" placeholder="Ваш пароль" autocomplete="off"/>
         <div class="eye"></div>
     </div>
     <div class="row">
@@ -18,5 +18,4 @@
         <div class="eye"></div>
     </div>
     <input type="submit" value="Сохранить"/>
-    <div class="result center"></div>
 </form>

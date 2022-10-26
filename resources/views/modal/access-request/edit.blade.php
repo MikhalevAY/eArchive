@@ -3,7 +3,8 @@
     <span class="status {{ $accessRequest->status }}">{{ $statusTitle[$accessRequest->status] }}</span>
 </h2>
 <a class="close"></a>
-<form action="{{ route('access-request.update', ['accessRequest' => $accessRequest->id]) }}" method="post">
+<form class="close-after" action="{{ route('access-request.update', ['accessRequest' => $accessRequest->id]) }}"
+      method="post">
     @csrf
     <div class="col-3">
         <div class="row">
@@ -64,6 +65,5 @@
             <input type="submit" value="Подтвердить"/>
             <input type="button" value="Отменить" onClick="closeWindow()" class="no-bg">
         </div>
-        <div class="result"></div>
     @endif
 </form>

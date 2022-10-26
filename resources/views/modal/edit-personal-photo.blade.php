@@ -1,6 +1,6 @@
 <h2>Сменить фото</h2>
 <a class="close"></a>
-<form action="{{ route('updatePersonalPhoto') }}" method="post">
+<form class="close-after" action="{{ route('updatePersonalPhoto') }}" method="post">
     @csrf
     <div class="row">
         <span>Фото</span>

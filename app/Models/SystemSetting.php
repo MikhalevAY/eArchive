@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $logo
  * @property string $color
+ * @method static Builder|SystemSetting query()
  */
 class SystemSetting extends Model
 {

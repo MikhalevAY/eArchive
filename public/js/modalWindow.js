@@ -7,6 +7,7 @@ $(document).ready(function () {
     });
 });
 
+// TODO Добавить класс к форме в modal window чтобы избавиться от closeWindow в response
 function openWindow() {
     let $this = $(this);
     let modalWrapper = $('.modal-wrapper').html('');

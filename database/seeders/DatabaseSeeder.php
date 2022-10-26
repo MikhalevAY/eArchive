@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             StopWordsSeeder::class,
         ]);
 
-        if (app()->isLocal()) {
-            Document::factory(1000)->createQuietly();
-        }
+        //if (app()->isLocal()) {
+        Document::factory(500)->createQuietly();
+        //}
     }
 }

@@ -1,10 +1,10 @@
 <h2>Редактировать данные</h2>
 <a class="close"></a>
-<form action="{{ route('adm.store') }}" method="post">
+<form class="close-after" action="{{ route('adm.store') }}" method="post">
     @csrf
     <div class="row">
         <span>Фамилия</span>
-        <input type="text" name="surname" placeholder="Фамилия" value="" autocomplete="off" />
+        <input type="text" name="surname" placeholder="Фамилия" value="" autocomplete="off"/>
     </div>
     <div class="row">
         <span>Имя</span>
@@ -23,10 +23,9 @@
         <select name="role">
             <option value="">Выберите</option>
             @foreach($roleTitles as $k => $role)
-            <option value="{{ $k }}">{{ $role }}</option>
+                <option value="{{ $k }}">{{ $role }}</option>
             @endforeach
         </select>
     </div>
     <input type="submit" value="Сохранить"/>
-    <div class="result center"></div>
 </form>

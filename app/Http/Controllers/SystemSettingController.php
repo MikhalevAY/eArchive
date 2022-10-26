@@ -6,7 +6,6 @@ use App\Http\Requests\SystemSettingUpdateRequest;
 use App\Models\SystemSetting;
 use App\Services\SystemSettingService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SystemSettingController extends Controller
@@ -17,11 +16,11 @@ class SystemSettingController extends Controller
 
     public function index(): View
     {
-        $systemSetting = SystemSetting::find(1);
+        $systemSetting = SystemSetting::query()->find(1);
         return view('pages.system-settings')->with([
             'colors' => SystemSetting::$defaultColors,
             'systemSetting' => $systemSetting,
-            'file' => $this->service->getLogoParams($systemSetting->logo)
+            'file' => $this->service->getLogoParams($systemSetting->logo),
         ]);
     }
 

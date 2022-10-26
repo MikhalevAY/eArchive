@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
  * @property integer $id
  * @property integer $type_id
  * @method static Builder|Document query()
+ * @method Builder|Document documentAccessJoin()
  */
 class Document extends Model
 {

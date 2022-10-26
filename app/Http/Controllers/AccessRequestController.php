@@ -23,7 +23,7 @@ class AccessRequestController extends Controller
             'tHeads' => AccessRequest::$tHeads,
             'statusTitle' => AccessRequest::$statusTitle,
             'sortBy' => $this->service->getOrderBy($request->validated()),
-            'showResetButton' => $request->input('q') != ''
+            'showResetButton' => $request->input('q') != '',
         ]);
     }
 
@@ -31,17 +31,12 @@ class AccessRequestController extends Controller
     {
         $documents = $this->service->getDocumentIds($accessRequest, $request->all());
         $data = $this->service->update(array_merge($request->validated(), ['documents' => $documents]), $accessRequest);
-        $data['closeWindow'] = true;
 
         return response()->json($data);
     }
 
     public function store(AccessRequestStoreRequest $request): JsonResponse
     {
-        $data = $this->service->store($request->validated());
-        $data['reset'] = true;
-        $data['closeWindow'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->store($request->validated()));
     }
 }

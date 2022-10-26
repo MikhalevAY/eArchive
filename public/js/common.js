@@ -48,11 +48,9 @@ $(document).ready(function () {
 function submitForm() {
     let form = $(this);
     let button = form.find('input[type=submit]');
-    let result = form.find('.result');
     let message = [];
     let formData = new FormData(this);
     button.addClass('loading').attr('disabled', 'disabled');
-    result.html('').removeClass('error success');
     form.find('.error').removeClass('error');
     $.ajax({
         url: form.attr('action'),
@@ -64,15 +62,15 @@ function submitForm() {
             $('.loading').removeClass('loading').removeAttr('disabled');
             form.find('input[name=is_draft]').val('0');
             showPopUp(data.class ?? 'success', data.message);
+            if (form.hasClass('close-after')) {
+                closeWindow();
+            }
             if (data.url) {
                 window.location.href = data.url;
             }
             if (data.reset) {
                 form.trigger('reset');
                 $('input[type=file]').trigger('change');
-            }
-            if (data.closeWindow) {
-                closeWindow();
             }
             if (data.rowsToDelete) {
                 button.remove();

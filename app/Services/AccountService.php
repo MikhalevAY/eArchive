@@ -35,15 +35,20 @@ class AccountService
     {
         $photo = $data['photo']->store('avatars', 'public');
 
-        Image::make(public_path("storage/{$photo}"))
-            ->orientate()
-            ->fit(self::AVATAR_SIZE, self::AVATAR_SIZE)
-            ->save();
+        $this->handlePhoto($photo);
 
         $this->repository->updatePhoto(['photo' => $photo]);
 
         return [
             'message' => __('messages.data_updated'),
         ];
+    }
+
+    private function handlePhoto($photo): void
+    {
+        Image::make(public_path("storage/{$photo}"))
+            ->orientate()
+            ->fit(self::AVATAR_SIZE, self::AVATAR_SIZE)
+            ->save();
     }
 }

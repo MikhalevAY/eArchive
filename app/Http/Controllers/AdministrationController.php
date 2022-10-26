@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Services\AdministrationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class AdministrationController extends Controller
 {
@@ -25,58 +26,47 @@ class AdministrationController extends Controller
             'tHeads' => User::$tHeads,
             'sortBy' => $this->service->getOrderBy($request->validated()),
             'showResetButton' => $request->input('q') != '',
-            'roleTitles' => User::ROLE_TITLES
+            'roleTitles' => User::ROLE_TITLES,
         ]);
     }
 
     public function update(AdministrationUpdateRequest $request, User $user): JsonResponse
     {
-        $data = $this->service->update($request->validated(), $user);
-        $data['closeWindow'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->update($request->validated(), $user));
     }
 
     public function setState(AdministrationSetStateRequest $request, User $user): JsonResponse
     {
         $data = $this->service->update($request->validated(), $user);
-        $data['closeWindow'] = true;
         $data['changeStateBtn'] = $user->is_active ? 'Деактивировать' : 'Активировать';
         $data['row'] = $user->id;
 
         return response()->json($data);
     }
 
+    /**
+     * @throws PHPMailerException
+     */
     public function store(AdministrationStoreRequest $request): JsonResponse
     {
-        $data = $this->service->store($request->validated());
-        $data['closeWindow'] = true;
-        $data['reset'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->store($request->validated()));
     }
 
     public function delete(User $user): JsonResponse
     {
-        $data = $this->service->delete($user);
-        $data['closeWindow'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->delete($user));
     }
 
     public function deleteSelected(AdministrationDeleteSelectedRequest $request): JsonResponse
     {
-        $data = $this->service->deleteSelected($request->input('users'));
-        $data['closeWindow'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->deleteSelected($request->input('users')));
     }
 
+    /**
+     * @throws PHPMailerException
+     */
     public function resetPassword(User $user): JsonResponse
     {
-        $data = $this->service->resetPassword($user);
-        $data['closeWindow'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->resetPassword($user));
     }
 }

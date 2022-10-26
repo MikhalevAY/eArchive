@@ -108,7 +108,6 @@ class DocumentService
         $this->repository->delete($documents);
 
         return [
-            'closeWindow' => true,
             'message' => __('messages.documents_deleted'),
             'rowsToDelete' => $documents->pluck('id')->toArray(),
         ];

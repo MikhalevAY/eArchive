@@ -1,10 +1,10 @@
 <h2>Редактировать данные</h2>
 <a class="close"></a>
-<form action="{{ route('adm.update', ['user' => $user->id]) }}" method="post">
+<form class="close-after" action="{{ route('adm.update', ['user' => $user->id]) }}" method="post">
     @csrf
     <div class="row">
         <span>Фамилия</span>
-        <input type="text" name="surname" placeholder="Фамилия" value="{{ $user->surname }}" autocomplete="off" />
+        <input type="text" name="surname" placeholder="Фамилия" value="{{ $user->surname }}" autocomplete="off"/>
     </div>
     <div class="row">
         <span>Имя</span>
@@ -21,9 +21,9 @@
     <div class="row">
         <span>Роль в системе</span>
         <select name="role">
-        @foreach($roleTitles as $k => $role)
-            <option @selected($k == $user->role) value="{{ $k }}">{{ $role }}</option>
-        @endforeach
+            @foreach($roleTitles as $k => $role)
+                <option @selected($k == $user->role) value="{{ $k }}">{{ $role }}</option>
+            @endforeach
         </select>
     </div>
     <input type="submit" value="Сохранить"/>

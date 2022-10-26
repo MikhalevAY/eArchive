@@ -9,6 +9,7 @@ use App\Services\AuthService;
 use App\Services\PasswordService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class PasswordController extends Controller
 {
@@ -18,8 +19,7 @@ class PasswordController extends Controller
         public PasswordService $service,
         public AuthService $authService,
         public AccountService $accountService
-    )
-    {
+    ) {
     }
 
     public function remind(): View
@@ -27,6 +27,9 @@ class PasswordController extends Controller
         return view('password.remind');
     }
 
+    /**
+     * @throws PHPMailerException
+     */
     public function restore(PasswordRestoreRequest $request): JsonResponse
     {
         $data = $this->service->restore($request->validated());

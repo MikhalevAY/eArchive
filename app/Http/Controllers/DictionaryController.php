@@ -24,20 +24,11 @@ class DictionaryController extends Controller
 
     public function store(DictionaryStoreRequest $request): JsonResponse
     {
-        $data = $this->service->store($request->validated());
-        $data['closeWindow'] = true;
-        $data['reset'] = true;
-
-        return response()->json($data);
+        return response()->json($this->service->store($request->validated()));
     }
 
     public function delete(Dictionary $dictionary): JsonResponse
     {
-        $data = $this->service->delete($dictionary);
-        if (!isset($data['class'])) {
-            $data['closeWindow'] = true;
-        }
-
-        return response()->json($data);
+        return response()->json($this->service->delete($dictionary));
     }
 }

@@ -23,9 +23,8 @@ class DocumentController extends Controller
 {
     public function __construct(
         public DictionaryService $dictionaryService,
-        public DocumentService   $documentService
-    )
-    {
+        public DocumentService $documentService
+    ) {
     }
 
     public function index(): RedirectResponse
@@ -41,7 +40,7 @@ class DocumentController extends Controller
             'document' => $document->load('attachments'),
             'shelfLife' => Document::$shelfLife,
             'actions' => $request->get('actions'),
-            'dictionaries' => $this->dictionaryService->all()
+            'dictionaries' => $this->dictionaryService->all(),
         ]);
     }
 
@@ -58,7 +57,7 @@ class DocumentController extends Controller
     {
         return view('pages.registration-of-documents.add')->with([
             'dictionaries' => $this->dictionaryService->byType(),
-            'shelfLife' => Document::$shelfLife
+            'shelfLife' => Document::$shelfLife,
         ]);
     }
 
@@ -75,7 +74,7 @@ class DocumentController extends Controller
         return view('pages.registration-of-documents.edit')->with([
             'dictionaries' => $this->dictionaryService->byType(),
             'shelfLife' => Document::$shelfLife,
-            'document' => $document
+            'document' => $document,
         ]);
     }
 
@@ -90,7 +89,6 @@ class DocumentController extends Controller
     public function delete(DocumentDeleteRequest $request, Document $document): JsonResponse
     {
         $data = $this->documentService->delete($document);
-        $data['closeWindow'] = true;
         if ($request->input('redirect')) {
             $data['url'] = $request->input('redirect');
         }
