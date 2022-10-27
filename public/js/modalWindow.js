@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    //$(document).on('click', '.modal-window', closeWindow);
     $(document).on('click', '.modal-link', openWindow);
     $('.modal').on('click', function (e) {
         if (!$(e.target).hasClass('close'))

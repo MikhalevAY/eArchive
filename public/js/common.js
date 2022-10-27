@@ -2,7 +2,11 @@ $(document).ready(function () {
 
     $('.phone').mask("+7 (999) 999-99-99");
     $('.date').mask('9999-99-99');
-    $('.time').mask("99:99");
+    $('.time').on('focus', function (e) {
+        let date = new Date();
+        $(this).val(date.getHours() + ':' + date.getMinutes());
+        e.target().selectionStart = 0;
+    }).mask("99:99");
 
     $(document).on('click', '.eye', changeInputType);
 
@@ -60,8 +64,6 @@ function submitForm() {
         processData: false,
         success: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');
-            form.find('input[name=is_draft]').val('0');
-            showPopUp(data.class ?? 'success', data.message);
             if (form.hasClass('close-after')) {
                 closeWindow();
             }
@@ -70,6 +72,7 @@ function submitForm() {
             }
             if (data.reset) {
                 form.trigger('reset');
+                form.find('input[name=is_draft]').val('0');
                 $('input[type=file]').trigger('change');
             }
             if (data.rowsToDelete) {
@@ -88,6 +91,7 @@ function submitForm() {
             if (data.dictionaryItem) {
                 newDictionaryItem(data.dictionaryItem);
             }
+            showPopUp(data.class ?? 'success', data.message);
         },
         error: function (data) {
             $('.loading').removeClass('loading').removeAttr('disabled');

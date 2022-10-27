@@ -15,7 +15,7 @@ class DocumentStoreRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'author_email' => auth()->user()->email
+            'author_email' => auth()->user()->email,
         ]);
     }
 
@@ -32,7 +32,7 @@ class DocumentStoreRequest extends FormRequest
             'income_number' => 'nullable|max:255',
             'registration_date' => 'required|date_format:Y-m-d',
             'registration_time' => 'required|date_format:H:i',
-            'addressee' => 'nullable',
+            'addressee' => 'nullable|max:255',
             'question' => 'required',
             'delivery_type_id' => 'nullable|exists:dictionaries,id',
             'number_of_sheets' => 'nullable|integer',
@@ -40,7 +40,7 @@ class DocumentStoreRequest extends FormRequest
             'summary' => 'required',
             'shelf_life' => 'required',
             'note' => 'nullable',
-            'answer_to_number' => 'nullable',
+            'answer_to_number' => 'nullable|max:255',
             'answer_to_date' => 'nullable|date_format:Y-m-d',
             'performer' => 'nullable|max:255',
             'gr_document' => 'nullable',
@@ -61,7 +61,7 @@ class DocumentStoreRequest extends FormRequest
             'number_of_sheets' => 'Кол-во листов/экземпляров',
             'performer' => 'Исполнитель',
             'outgoing_number' => 'Исходящий номер',
-            'file' => 'Основной документ'
+            'file' => 'Основной документ',
         ];
     }
 }
