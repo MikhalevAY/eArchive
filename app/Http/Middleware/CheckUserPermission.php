@@ -11,7 +11,7 @@ class CheckUserPermission
     public function handle(Request $request, Closure $next)
     {
         $menuItems = getUserAccess(auth()->user()->role);
-        $pageUrlId = MenuItem::where('url', request()->segment(1))->first();
+        $pageUrlId = MenuItem::query()->where('url', request()->segment(1))->first();
 
         if ($pageUrlId && in_array($pageUrlId->id, $menuItems)) {
             return $next($request);
