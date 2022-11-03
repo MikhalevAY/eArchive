@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 /**
  * @property integer $id
  * @property integer $type_id
+ * @property string $file
  * @method static Builder|Document query()
  * @method Builder|Document documentAccessJoin()
  */
@@ -97,6 +99,11 @@ class Document extends Model
     public function scopeNotDeleted($query)
     {
         return $query->whereNull('deleted_at');
+    }
+
+    public function getFileExtensionAttribute(): string
+    {
+        return File::extension(public_path('storage/' . $this->file));
     }
 
     public function author(): BelongsTo

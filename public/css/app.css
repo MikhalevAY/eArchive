@@ -433,6 +433,25 @@ input[type=button].loading {
     background: url(../images/file.svg) no-repeat right center;
 }
 
+.files .file-block.pdf:after {
+    background: url(../images/pdf.svg) no-repeat right center;
+}
+
+.files .file-block.doc:after,
+.files .file-block.docx:after {
+    background: url(../images/doc.svg) no-repeat right center;
+}
+
+.files .file-block.xls:after,
+.files .file-block.xlsx:after {
+    background: url(../images/xls.svg) no-repeat right center;
+}
+
+.files .file-block.jpg:after,
+.files .file-block.jpeg:after {
+    background: url(../images/jpg.svg) no-repeat right center;
+}
+
 .files .file-block b {
     color: #8F97A2;
     font-size: 14px;
@@ -474,6 +493,7 @@ input[type=button].loading {
 
 .document-detailed p {
     max-width: 80%;
+    word-break: break-all;
 }
 
 .document-info {
@@ -805,6 +825,36 @@ form .uploaded-file .file-img,
     background: var(--company-color);
     mask: url(../images/uploaded-file.svg) no-repeat center;
     -webkit-mask: url(../images/uploaded-file.svg) no-repeat center;
+}
+
+form .uploaded-file .file-img.pdf,
+.attachments .attachment .file-img.pdf {
+    mask: url(../images/pdf.svg) no-repeat center;
+    -webkit-mask: url(../images/pdf.svg) no-repeat center;
+}
+
+form .uploaded-file .file-img.doc,
+.attachments .attachment .file-img.doc,
+form .uploaded-file .file-img.docx,
+.attachments .attachment .file-img.docx {
+    mask: url(../images/doc.svg) no-repeat center;
+    -webkit-mask: url(../images/doc.svg) no-repeat center;
+}
+
+form .uploaded-file .file-img.xls,
+.attachments .attachment .file-img.xls,
+form .uploaded-file .file-img.xlsx,
+.attachments .attachment .file-img.xlsx {
+    mask: url(../images/xls.svg) no-repeat center;
+    -webkit-mask: url(../images/xls.svg) no-repeat center;
+}
+
+form .uploaded-file .file-img.jpg,
+.attachments .attachment .file-img.jpg,
+form .uploaded-file .file-img.jpeg,
+.attachments .attachment .file-img.jpeg {
+    mask: url(../images/jpg.svg) no-repeat center;
+    -webkit-mask: url(../images/jpg.svg) no-repeat center;
 }
 
 form .uploaded-file .logo {

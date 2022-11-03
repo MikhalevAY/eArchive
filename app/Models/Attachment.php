@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\File;
 
 /**
  * @property integer $document_id
@@ -19,6 +20,11 @@ class Attachment extends Model
     use HasFactory;
 
     protected $fillable = ['document_id', 'name', 'file', 'size'];
+
+    public function getExtensionAttribute(): string
+    {
+        return File::extension(public_path('storage/' . $this->file));
+    }
 
     public function document(): BelongsTo
     {

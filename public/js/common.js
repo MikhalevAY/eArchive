@@ -2,10 +2,14 @@ $(document).ready(function () {
 
     $('.phone').mask("+7 (999) 999-99-99");
     $('.date').mask('9999-99-99');
-    $('.time').on('focus', function (e) {
+    $('.time').on('focus', function () {
+        if ($(this).val() !== '') {
+            return false;
+        }
         let date = new Date();
-        $(this).val(date.getHours() + ':' + date.getMinutes());
-        e.target().selectionStart = 0;
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        $(this).val(('0' + hours).slice(-2) + ':' + (minutes < 10 ? '0' + minutes : minutes));
     }).mask("99:99");
 
     $(document).on('click', '.eye', changeInputType);

@@ -78,7 +78,7 @@
                     @endif
                     <h5>Основной документ</h5>
                     <div class="list">
-                        <div class="file-block">
+                        <div class="file-block {{ $document->file_extension }}">
                             <span>{{ $document->file_name }}</span>
                             <b>{{ $document->file_size }} Mb</b>
                             <div>
@@ -89,7 +89,7 @@
                     <h5>Вложения к документу</h5>
                     <div class="list">
                         @foreach($document->attachments as $attachment)
-                            <div class="file-block">
+                            <div class="file-block {{ $attachment->extension }}">
                                 <span>{{ $attachment->name }}</span>
                                 <b>{{ $attachment->size }} Mb</b>
                                 <div>
