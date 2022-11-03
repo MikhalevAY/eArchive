@@ -47,11 +47,13 @@
                 <div class="col-2">
                     <div class="row">
                         <span>Исходящий номер</span>
-                        <input class="no-max-width" type="text" name="outgoing_number" placeholder="Исходящий номер" autocomplete="off" />
+                        <input class="no-max-width" type="text" name="outgoing_number" placeholder="Исходящий номер"
+                               autocomplete="off"/>
                     </div>
                     <div class="row">
                         <span>Исходящая дата</span>
-                        <input class="date no-max-width" type="text" name="outgoing_date" placeholder="Исходящая дата" autocomplete="off" />
+                        <input class="date no-max-width" type="text" name="outgoing_date" placeholder="Исходящая дата"
+                               autocomplete="off"/>
                     </div>
                 </div>
                 <div class="divider m-t-15"></div>
@@ -71,25 +73,29 @@
                 <div class="col-3">
                     <div class="row">
                         <span>Входящий номер</span>
-                        <input class="no-max-width" type="text" name="income_number" placeholder="Входящий номер" autocomplete="off" />
+                        <input class="no-max-width" type="text" name="income_number" placeholder="Входящий номер"
+                               autocomplete="off"/>
                     </div>
                     <div class="row">
                         <span>Дата регистрации</span>
-                        <input class="date no-max-width" type="text" name="registration_date" placeholder="Дата регистрации " autocomplete="off" />
+                        <input class="date no-max-width" type="text" name="registration_date"
+                               placeholder="Дата регистрации " autocomplete="off"/>
                     </div>
                     <div class="row">
                         <span>Время регистрации</span>
-                        <input class="time no-max-width" type="text" name="registration_time" placeholder="Время регистрации" autocomplete="off" />
+                        <input class="time no-max-width" type="text" name="registration_time"
+                               placeholder="Время регистрации" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="row">
                         <span>Адресат</span>
-                        <input class="no-max-width" type="text" name="addressee" placeholder="ФИО" autocomplete="off" />
+                        <input class="no-max-width" type="text" name="addressee" placeholder="ФИО" autocomplete="off"/>
                     </div>
                     <div class="row">
                         <span>Характер вопроса</span>
-                        <input class="no-max-width" type="text" name="question" placeholder="Характер вопроса" autocomplete="off" />
+                        <input class="no-max-width" type="text" name="question" placeholder="Характер вопроса"
+                               autocomplete="off"/>
                     </div>
                 </div>
                 <div class="divider m-t-15"></div>
@@ -107,7 +113,8 @@
                     </div>
                     <div class="row">
                         <span>Кол-во листов/экземпляров</span>
-                        <input class="no-max-width" type="text" name="number_of_sheets" placeholder="Укажите количество " autocomplete="off" />
+                        <input class="no-max-width" type="text" name="number_of_sheets"
+                               placeholder="Укажите количество " autocomplete="off"/>
                     </div>
                     <div class="row">
                         <span>Язык обращения</span>
@@ -137,13 +144,15 @@
                     </div>
                     <div class="row">
                         <span>ФИО исполнителя</span>
-                        <input class="no-max-width" type="text" name="performer" placeholder="ФИО исполнителя" autocomplete="off" />
+                        <input class="no-max-width" type="text" name="performer" placeholder="ФИО исполнителя"
+                               autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-1">
                     <div class="row">
                         <span>Примечание</span>
-                        <input class="no-max-width" type="text" name="note" placeholder="Примечание" autocomplete="off" />
+                        <input class="no-max-width" type="text" name="note" placeholder="Примечание"
+                               autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-2">
@@ -151,11 +160,13 @@
                         <div class="col-2">
                             <div class="row">
                                 <span>Ответное на:</span>
-                                <input class="no-max-width" type="text" name="answer_to_number" placeholder="Укажите номер" autocomplete="off" />
+                                <input class="no-max-width" type="text" name="answer_to_number"
+                                       placeholder="Укажите номер" autocomplete="off"/>
                             </div>
                             <div class="row">
                                 <span>&nbsp;</span>
-                                <input class="date no-max-width" type="text" name="answer_to_date" placeholder="Дата" autocomplete="off" />
+                                <input class="date no-max-width" type="text" name="answer_to_date" placeholder="Дата"
+                                       autocomplete="off"/>
                             </div>
                         </div>
                     </div>
@@ -165,7 +176,9 @@
                             <div class="checkmark"></div>
                             <i>GR-документ</i>
                         </label>
-                        <div class="label-hint max-500">Корреспондент входит в список государственных органов GR-список, включенный в базу «Справочники»</div>
+                        <div class="label-hint max-500">Корреспондент входит в список государственных органов GR-список,
+                            включенный в базу «Справочники»
+                        </div>
                     </div>
                 </div>
                 <div class="divider m-t-15"></div>
@@ -181,17 +194,19 @@
                 </div>
                 <div class="row">
                     <span>Вложения к документу</span>
-                    <label class="file-label no-max-width" for="attachments">
+                    <label class="file-label no-max-width" for="multiple-file">
                         <div><i data-text="Выберите файлы" class="file-name">Выберите файлы</i></div>
-                        <input class="file-input" id="attachments" type="file" name="attachments[]" multiple>
+                        <input class="file-input" id="multiple-file" type="file" name="multiple-file[]" multiple>
                     </label>
+                    <div class="attachments new-attachments"></div>
                 </div>
                 <div class="divider m-t-15"></div>
 
                 <div class="col-1 m-b-15">
                     <div class="row">
                         <span>История согласования/исполнения</span>
-                        <textarea class="no-max-width" name="history" placeholder="История всех действий пользователей с объектом"></textarea>
+                        <textarea class="no-max-width" name="history"
+                                  placeholder="История всех действий пользователей с объектом"></textarea>
                     </div>
                 </div>
 

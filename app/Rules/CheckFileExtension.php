@@ -25,8 +25,8 @@ class CheckFileExtension implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        $ext = explode($value, '.');
-        $ext = end($ext);
+        $ext = explode('.', $value->getClientOriginalName());
+        $ext = strtolower(end($ext));
 
         return !in_array($ext, ['exe', 'php']);
     }

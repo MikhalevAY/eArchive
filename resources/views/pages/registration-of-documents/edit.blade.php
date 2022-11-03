@@ -232,10 +232,11 @@
                             @endforeach
                         </div>
                     @endif
-                    <label class="file-label no-max-width" for="attachments">
-                        <div><i data-text="Добавить еще файлы" class="file-name">Добавить еще файлы</i></div>
-                        <input class="file-input" id="attachments" type="file" name="attachments[]" multiple>
+                    <label class="file-label no-max-width" for="multiple-file">
+                        <div><i data-text="Выберите файлы" class="file-name">Выберите файлы</i></div>
+                        <input class="file-input" id="multiple-file" type="file" name="multiple-file[]" multiple>
                     </label>
+                    <div class="attachments new-attachments"></div>
                 </div>
                 <div class="divider m-t-15"></div>
 

@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('#multiple-file').on('change', prepareAttachments);
+
     $('.phone').mask("+7 (999) 999-99-99");
     $('.date').mask('9999-99-99');
     $('.time').on('focus', function () {
@@ -53,6 +55,56 @@ $(document).ready(function () {
 
 });
 
+function prepareAttachments() {
+    let container = $(this).closest('.row').find('.new-attachments');
+    for (let file of $(this).get(0).files) {
+        let attachment = generateAttachmentRow(file);
+        let existing = [];
+        $('input[name="attachments[]"]').each(function () {
+            existing.push(strReplace("C:\\fakepath\\", "", $(this).val()));
+        });
+        if (!inArray(file.name, existing)) {
+            container.append(attachment);
+        }
+    }
+}
+
+function generateAttachmentRow(file) {
+    let attachment = $('<div>', {
+        'class': 'attachment',
+    });
+    let fileImg = $('<div>', {
+        'class': 'file-img ' + getExtFromName(file.name)
+    });
+    let info = $('<div>', {
+        'class': 'info',
+        'html': '<h3>' + file.name + '</h3>'
+    });
+    let deleteElement = $('<a>', {
+        'class': 'delete delete-attachment'
+    });
+    deleteElement.on('click', function () {
+        $(this).parent().remove();
+    });
+    let input = $('<input>', {
+        'type': 'file',
+        'name': 'attachments[]',
+    });
+
+    let dataTransfer = new DataTransfer();
+    dataTransfer.items.add(file);
+    input.get(0).files = dataTransfer.files;
+
+    attachment.append(fileImg).append(info).append(deleteElement).append(input);
+
+    return attachment;
+}
+
+function getExtFromName(name) {
+    name = name.split('.');
+    return name.slice(-1).pop();
+}
+
 function submitForm() {
     let form = $(this);
     let button = form.find('input[type=submit]');
@@ -77,6 +129,7 @@ function submitForm() {
             if (data.reset) {
                 form.trigger('reset');
                 form.find('input[name=is_draft]').val('0');
+                form.find('.new-attachments').html('');
                 $('input[type=file]').trigger('change');
             }
             if (data.rowsToDelete) {
@@ -171,9 +224,7 @@ function toggleResetVisibility() {
 function fileInput() {
     let $this = $(this);
     let $span = $this.parent().find('i');
-    if ($this.prop('multiple')) {
-        $span.html($this.val() !== '' ? 'Выбранных файлов: ' + $this.get(0).files.length : $span.data('text'));
-    } else {
+    if (!$this.prop('multiple')) {
         $span.html($this.val() !== '' ? $this.get(0).files[0].name : 'Выберите файл');
     }
 }
@@ -210,6 +261,10 @@ function getField(field, form) {
     field = field.split('.');
     field = field.length > 1 ? field[0] + "[]" : field[0];
     return form.find("[name='" + field + "']")
+}
+
+function strReplace(search, replace, subject) {
+    return subject.split(search).join(replace);
 }
 
 function inArray(a, array) {

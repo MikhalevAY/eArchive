@@ -17,7 +17,7 @@ return [
     'document_stored' => 'Документ сохранен в черновики',
     'document_deleted' => 'Документ удалён',
     'documents_deleted' => 'Выбранные документы удалены',
-    'wrong_file_format' => 'Неверный формат файла',
+    'wrong_file_format' => 'Неверный формат файла. Все кроме *.exe и *.php',
     'access_request_updated' => 'Запрос на доступ подтвержден',
     'access_request_stored' => 'Ваш запрос на доступ отправлен',
     'dictionary_deleted' => 'Элемент справочника удалён',
