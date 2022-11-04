@@ -7,7 +7,7 @@ services:
                 uid: 1000
             context: ./
             dockerfile: docker-compose/Dockerfile
-        image: php-application
+        image: php
         container_name: archive_php
         restart: unless-stopped
         working_dir: /var/www/
@@ -24,6 +24,7 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             PGDATA: /data/postgres
+            UPLOAD_LIMIT: 1024M
         volumes:
             - postgres:/data/postgres
         ports:
@@ -34,7 +35,7 @@ services:
 
     nginx:
         image: nginx:latest
-        container_name: pe_nginx
+        container_name: archive_nginx
         restart: unless-stopped
         ports:
             - "80:80"

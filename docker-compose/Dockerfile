@@ -11,10 +11,11 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
         git \
         zip \
+        libzip-dev \
         unzip \
         curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo_pgsql mbstring exif
+    && docker-php-ext-install -j$(nproc) gd pdo_pgsql mbstring exif zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
