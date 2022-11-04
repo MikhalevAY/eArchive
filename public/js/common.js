@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    $('#multiple-file').on('change', prepareAttachments);
-
     $('.phone').mask("+7 (999) 999-99-99");
     $('.date').mask('9999-99-99');
     $('.time').on('focus', function () {
@@ -14,7 +12,7 @@ $(document).ready(function () {
         $(this).val(('0' + hours).slice(-2) + ':' + (minutes < 10 ? '0' + minutes : minutes));
     }).mask("99:99");
 
-    $(document).on('click', '.eye', changeInputType);
+    $(document).on('click', 'div.eye', changeInputType);
 
     $('form').each(function () {
         if (!$(this).hasClass('no-ajax'))
@@ -28,6 +26,8 @@ $(document).ready(function () {
     });
 
     $('.file-input').on('change', fileInput);
+
+    $('#multiple-file').on('change', prepareAttachments);
 
     $('.submit-button').on('click', function () {
         $(this).addClass('loading').attr('disabled', 'disabled');
@@ -61,7 +61,7 @@ function prepareAttachments() {
         let attachment = generateAttachmentRow(file);
         let existing = [];
         $('input[name="attachments[]"]').each(function () {
-            existing.push(strReplace("C:\\fakepath\\", "", $(this).val()));
+            existing.push($(this).val().split('\\').pop());
         });
         if (!inArray(file.name, existing)) {
             container.append(attachment);
@@ -74,7 +74,7 @@ function generateAttachmentRow(file) {
         'class': 'attachment',
     });
     let fileImg = $('<div>', {
-        'class': 'file-img ' + getExtFromName(file.name)
+        'class': 'file-img ' + file.name.split('.').slice(-1).pop()
     });
     let info = $('<div>', {
         'class': 'info',
@@ -98,11 +98,6 @@ function generateAttachmentRow(file) {
     attachment.append(fileImg).append(info).append(deleteElement).append(input);
 
     return attachment;
-}
-
-function getExtFromName(name) {
-    name = name.split('.');
-    return name.slice(-1).pop();
 }
 
 function submitForm() {

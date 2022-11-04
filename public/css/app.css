@@ -10,7 +10,7 @@
 
 html {
     height: 100%;
-    max-width: 1920px;
+    max-width: 2580px;
     margin: 0 auto;
 }
 
@@ -1963,7 +1963,7 @@ form .uploaded-file.no-max-width {
 }
 
 .elements .actions-menu {
-    width: 24px;
+    width: 44px;
     height: 24px;
     cursor: pointer;
     margin: 0 auto;
