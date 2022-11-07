@@ -174,11 +174,15 @@ class DocumentService
         $filePath = public_path('storage/' . $fileName);
         $extension = File::extension($filePath);
 
+        if (!File::exists($filePath)) {
+            return '';
+        }
+
         return match ($extension) {
             'pdf' => (new PdfScanner())->getText($filePath),
             'txt' => (new TxtScanner())->getText($filePath),
-            'jpg' => (new JpgScanner())->getText($filePath),
             'doc', 'docx' => (new DocScanner())->getText($filePath),
+            'jpg', 'png', 'jpeg' => (new JpgScanner())->getText($filePath),
         };
     }
 }

@@ -24,7 +24,6 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
             PGDATA: /data/postgres
-            UPLOAD_LIMIT: 1024M
         volumes:
             - postgres:/data/postgres
         ports:

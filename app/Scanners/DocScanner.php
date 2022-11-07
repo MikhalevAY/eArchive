@@ -2,7 +2,6 @@
 
 namespace App\Scanners;
 
-use Illuminate\Support\Facades\File;
 use PhpOffice\PhpWord\Exception\Exception;
 use PhpOffice\PhpWord\IOFactory;
 
@@ -10,10 +9,6 @@ class DocScanner extends BaseScanner implements ScannerInterface
 {
     public function getText(string $filePath): string
     {
-        if (!File::exists($filePath)) {
-            return '';
-        }
-
         $text = '';
 
         try {

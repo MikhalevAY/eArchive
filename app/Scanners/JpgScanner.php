@@ -2,18 +2,20 @@
 
 namespace App\Scanners;
 
-use Illuminate\Support\Facades\File;
+use Exception;
+use thiagoalessio\TesseractOCR\TesseractOCR;
 
 class JpgScanner extends BaseScanner implements ScannerInterface
 {
     public function getText(string $filePath): string
     {
-        if (!File::exists($filePath)) {
-            return '';
-        }
-
         $text = '';
 
-        return $text;
+        try {
+            $text = (new TesseractOCR($filePath))->lang('rus', 'eng')->run();
+        } catch (Exception $e) {
+        }
+
+        return $this->handleText($text);
     }
 }
