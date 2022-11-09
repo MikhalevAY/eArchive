@@ -1,4 +1,4 @@
-<tr data-row="{{ $user->id }}">
+<tr class="{{ $user->is_active != 1 ? 'inactive' : '' }}" data-row="{{ $user->id }}">
     <td>
         <label class="checkbox">
             <input type="checkbox" value="{{ $user->id }}" name="users[]">

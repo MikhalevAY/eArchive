@@ -1862,6 +1862,14 @@ form .uploaded-file.no-max-width {
     background: #FFF;
 }
 
+.elements .inactive td {
+    opacity: .6;
+}
+
+.elements .inactive td:last-child {
+    opacity: 1;
+}
+
 .elements .less-padding {
     padding: 0 16px;
 }
