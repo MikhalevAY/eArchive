@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Jobs\SetDocumentText;
 use App\Models\Document;
 use App\RepositoryInterfaces\DocumentRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -123,20 +124,44 @@ class DocumentService
         return $this->zipArchiveService->download('document-' . $document->id . '.zip', collect([$document]));
     }
 
+    public function print(Document $document)
+    {
+        return $this->pdfService->print($document);
+    }
+
+    public function actionWithSelected(array $params): JsonResponse
+    {
+        if (!isset($params['documents'])) {
+            return response()->json(['message' => __('messages.at_least_one_document')], 400);
+        }
+
+        $documents = $this->getAvailableForAction(
+            $params['documents'],
+            $params['type']
+        );
+
+        if ($documents->isEmpty()) {
+            return response()->json(['message' => __('messages.no_rights_to_documents')], 400);
+        }
+
+        if ($params['type'] == 'view') {
+            $url = route('document.exportSelected');
+        } else {
+            $url = route('document.downloadSelected');
+        }
+
+        return response()->json(['url' => $url]);
+    }
+
     public function downloadSelected(array $documentIds): BinaryFileResponse|RedirectResponse
     {
         $documents = $this->getAvailableForAction($documentIds, 'download');
 
         if ($documents->isEmpty()) {
-            return redirect()->back();
+            return redirect()->route('archiveSearch');
         }
 
         return $this->zipArchiveService->download('documents.zip', $documents);
-    }
-
-    public function print(Document $document)
-    {
-        return $this->pdfService->print($document);
     }
 
     public function exportSelected(array $documentIds): BinaryFileResponse|RedirectResponse
@@ -144,7 +169,7 @@ class DocumentService
         $documents = $this->getAvailableForAction($documentIds, 'view');
 
         if ($documents->isEmpty()) {
-            return redirect()->back();
+            return redirect()->route('archiveSearch');
         }
 
         return $this->pdfService->exportSelected($documents);

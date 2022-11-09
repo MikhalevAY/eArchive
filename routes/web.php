@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('/delete-selected', 'deleteSelected')->name('document.deleteSelected');
         Route::get('/export-selected', 'exportSelected')->name('document.exportSelected');
         Route::get('/download-selected', 'downloadSelected')->name('document.downloadSelected');
+        Route::get('/action-with-selected', 'actionWithSelected')->name('document.actionWithSelected');
     });
 
     Route::controller(ModalController::class)->group(function () {

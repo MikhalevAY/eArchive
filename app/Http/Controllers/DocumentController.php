@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ActionWithSelectedRequest;
 use App\Http\Requests\DocumentDeleteRequest;
 use App\Http\Requests\DocumentDeleteSelectedRequest;
 use App\Http\Requests\DocumentDownloadSelectedRequest;
@@ -111,6 +112,11 @@ class DocumentController extends Controller
         return response()->json(
             $this->documentService->deleteSelected($request->input('documents'))
         );
+    }
+
+    public function actionWithSelected(ActionWithSelectedRequest $request): JsonResponse
+    {
+        return $this->documentService->actionWithSelected($request->validated());
     }
 
     public function exportSelected(DocumentExportSelectedRequest $request): BinaryFileResponse|RedirectResponse

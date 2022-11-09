@@ -45,9 +45,22 @@ function toggleItems() {
 
 function actionWithSelected() {
     let documents = getChecked('documents');
-    if (documents.length > 0) {
-        document.location.href = $(this).data('href') + '?documents=' + documents.join(',');
-    }
+    let $this = $(this);
+
+    $.ajax({
+        type: 'GET',
+        url: '/documents/action-with-selected',
+        data: {'documents': documents, 'type': $this.data('type')},
+        dataType: 'json',
+        success: function (data) {
+            document.location.href = data.url + '?documents=' + documents.join(',');
+        },
+        statusCode: {
+            400: function (data) {
+                showPopUp('error', data.responseJSON.message);
+            }
+        },
+    });
 }
 
 function toggleDocAccess() {

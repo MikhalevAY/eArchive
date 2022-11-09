@@ -20,10 +20,12 @@
                                 <i></i>Запросить доступ
                             </a>
                         @endif
-                        <a class="smaller with-text export action-with-selected"
-                           data-href="{{ route('document.exportSelected') }}"><i></i>Выгрузить в отчет</a>
-                        <a title="Скачать выбранные" class="smaller download action-with-selected"
-                           data-href="{{ route('document.downloadSelected') }}"><i></i></a>
+                        <a class="smaller with-text export action-with-selected" data-type="view">
+                            <i></i>Выгрузить в отчет
+                        </a>
+                        <a title="Скачать выбранные" class="smaller download action-with-selected" data-type="download">
+                            <i></i>
+                        </a>
                         <a title="Удалить выбранные" class="smaller delete modal-link"
                            data-url="{{ route('deleteSelectedDocuments') }}" data-post="1" data-name="documents"><i></i></a>
                     </div>
