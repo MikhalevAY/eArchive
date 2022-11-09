@@ -2,13 +2,12 @@
 
 namespace App\Services;
 
+use App\Jobs\SetDocumentText;
 use App\Models\Document;
 use App\RepositoryInterfaces\DocumentRepositoryInterface;
-use App\Scanners\{DocScanner, JpgScanner, PdfScanner, TxtScanner};
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DocumentService
@@ -41,9 +40,10 @@ class DocumentService
     {
         // Сохраняем документ
         $data = $this->uploadDocumentFile($data);
-        $data['text'] = $this->getTextFromFile($data['file']);
-
         $document = $this->repository->store($data);
+
+        // Сканируем файл
+        dispatch(new SetDocumentText($document, $document->file));
 
         // Сохраняем вложения
         if (isset($data['attachments'])) {
@@ -64,7 +64,7 @@ class DocumentService
     {
         if (isset($data['file'])) {
             $data = $this->uploadDocumentFile($data);
-            $data['text'] = $this->getTextFromFile($data['file']);
+            dispatch(new SetDocumentText($document, $data['file']));
         }
 
         $document = $this->repository->update($data, $document);
@@ -166,23 +166,7 @@ class DocumentService
             'file_size' => round(($data['file']->getSize() / 1024 / 1024), 3),
             'file_name' => $data['file']->getClientOriginalName(),
             'file' => $file,
+            'text' => __('messages.text_is_loading'),
         ]);
-    }
-
-    private function getTextFromFile(string $fileName): string
-    {
-        $filePath = public_path('storage/' . $fileName);
-        $extension = File::extension($filePath);
-
-        if (!File::exists($filePath)) {
-            return '';
-        }
-
-        return match ($extension) {
-            'pdf' => (new PdfScanner())->getText($filePath),
-            'txt' => (new TxtScanner())->getText($filePath),
-            'doc', 'docx' => (new DocScanner())->getText($filePath),
-            'jpg', 'png', 'jpeg' => (new JpgScanner())->getText($filePath),
-        };
     }
 }

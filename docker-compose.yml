@@ -1,4 +1,5 @@
 version: "4.13"
+
 services:
     app:
         build:
@@ -9,6 +10,23 @@ services:
             dockerfile: docker-compose/Dockerfile
         image: php
         container_name: archive_php
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - archive
+
+    supervisor:
+        build:
+            args:
+                user: archive
+                uid: 1000
+            context: ./
+            dockerfile: docker-compose/Supervisor.Dockerfile
+        image: supervisor
+        container_name: archive_supervisor
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
@@ -43,6 +61,17 @@ services:
             - ./docker-compose/nginx:/etc/nginx/conf.d/
         networks:
             - archive
+
+#    supervisor:
+#        image: redditsaved/laravel-supervisord:latest
+#        container_name: archive_supervisor
+#        restart: unless-stopped
+#        networks:
+#            - archive
+#        depends_on:
+#            - app
+#            - nginx
+#        command: supervisord
 
 networks:
     archive:

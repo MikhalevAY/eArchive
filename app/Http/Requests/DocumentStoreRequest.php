@@ -44,7 +44,7 @@ class DocumentStoreRequest extends FormRequest
             'answer_to_date' => 'nullable|date_format:Y-m-d',
             'performer' => 'nullable|max:255',
             'gr_document' => 'nullable',
-            'file' => 'required|mimes:jpeg,jpg,pdf,doc,docx,txt',
+            'file' => 'required|mimes:jpeg,jpg,png,pdf,doc,docx,txt',
             'history' => 'nullable',
             'available_for_all' => 'nullable',
             'is_draft' => 'nullable',

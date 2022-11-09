@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
         libzip-dev \
         unzip \
         curl \
+        supervisor \
         tesseract-ocr \
         tesseract-ocr-rus \
         libmagickwand-dev \
@@ -25,6 +26,14 @@ RUN pecl install imagick  \
     && docker-php-ext-enable imagick
 
 COPY docker-compose/php/policy.xml /etc/ImageMagick-6/policy.xml
+
+# SuperVisor
+RUN mkdir -p "/etc/supervisor/logs"
+
+COPY docker-compose/supervisor/workers.conf /etc/supervisor/conf.d/workers.conf
+COPY docker-compose/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+
+ENTRYPOINT /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
 
 # Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
