@@ -18,6 +18,7 @@ class AccountService
         $this->repository->update($data);
 
         return [
+            'updateUserBlock' => view('components.user-block')->render(),
             'message' => __('messages.data_updated'),
         ];
     }
@@ -40,6 +41,7 @@ class AccountService
         $this->repository->updatePhoto(['photo' => $photo]);
 
         return [
+            'updateUserBlock' => view('components.user-block')->render(),
             'message' => __('messages.data_updated'),
         ];
     }

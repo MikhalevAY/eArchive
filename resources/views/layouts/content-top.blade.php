@@ -1,12 +1,11 @@
 <div class="content-top">
     @isset($link)
-    <a href="#" class="history-back">Вернуться назад</a>
+        <a href="#" class="history-back">Вернуться назад</a>
     @endisset
     <div class="user-block">
-        <div class="photo">
-            <img src="{{ auth()->user()->photo_url }}" alt="" draggable="false">
+        <div class="user-to-update">
+            @include('components.user-block')
         </div>
-        <div class="name">{{ auth()->user()->surname }} {{ auth()->user()->name }}</div>
         <div class="hidden-menu">
             <div class="link">
                 <a class="modal-link change-photo" data-url="{{ route('editPersonalPhoto') }}">Поменять фото профиля</a>

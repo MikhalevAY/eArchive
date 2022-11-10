@@ -127,6 +127,9 @@ function submitForm() {
                 form.find('.new-attachments').html('');
                 $('input[type=file]').trigger('change');
             }
+            if (data.updateUserBlock) {
+                updateUserBlock(data.updateUserBlock);
+            }
             if (data.rowsToDelete) {
                 button.remove();
                 deleteRows(data.rowsToDelete);
@@ -160,6 +163,10 @@ function submitForm() {
     });
 
     return false;
+}
+
+function updateUserBlock(html) {
+    $('.user-to-update').html(html);
 }
 
 function newDictionaryItem(item) {
