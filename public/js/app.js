@@ -33,6 +33,8 @@ $(document).ready(function () {
 
     $('.toggle-link').on('click', toggleDocumentInfo);
 
+    $('.show-full-text').on('click', showFullText);
+
     $('.dictionary h1').on('click', toggleItems);
 
 });
@@ -80,6 +82,11 @@ function toggleDocAccess() {
 function toggleDocumentInfo() {
     $(this).hide().siblings('a').show();
     $(this).parent().children('table').toggleClass('closed');
+}
+
+function showFullText() {
+    $(this).hide().siblings('a').show();
+    $('.document-text').toggleClass('collapsed');
 }
 
 function toggleFileDelete() {

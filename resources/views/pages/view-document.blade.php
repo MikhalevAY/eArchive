@@ -66,9 +66,11 @@
                     </table>
                 </div>
                 <div class="divider"></div>
-                <div class="document-text">
+                <div class="document-text collapsed">
                     <p>{!! nl2br($document->text) !!}</p>
                 </div>
+                <a class="show-full-text collapse">Развернуть</a>
+                <a class="show-full-text">Свернуть</a>
 
                 <div class="divider"></div>
                 <div class="files">

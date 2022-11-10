@@ -2044,6 +2044,29 @@ form .uploaded-file.no-max-width {
     background: url(../images/delete.svg) no-repeat 8px center;
 }
 
+.document-text {
+    margin-bottom: 15px;
+}
+
+.document-text.collapsed {
+    height: 220px;
+    overflow: hidden;
+}
+
+.show-full-text {
+    color: var(--company-color);
+    cursor: pointer;
+    display: none;
+}
+
+.show-full-text.collapse {
+    display: block;
+}
+
+.show-full-text:hover {
+    text-decoration: underline;
+}
+
 .checkbox {
     display: block;
     position: relative;

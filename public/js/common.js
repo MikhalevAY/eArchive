@@ -197,7 +197,7 @@ function showPopUp(state, text) {
         popUp.fadeOut(200, function () {
             $(this).remove();
         });
-    }, 2000);
+    }, 4000);
 }
 
 function getChecked(name) {
