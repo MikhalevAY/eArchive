@@ -416,7 +416,7 @@ input[type=button].loading {
 .files .file-block {
     border: 1px solid #E3E4EB;
     border-radius: 12px;
-    padding: 8px 12px 8px 32px;
+    padding: 8px 12px 8px 36px;
     display: inline-block;
     position: relative;
     width: 206px;
@@ -426,8 +426,8 @@ input[type=button].loading {
     content: '';
     display: block;
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     top: 8px;
     left: 8px;
     background: url(../images/file.svg) no-repeat right center;
@@ -448,8 +448,17 @@ input[type=button].loading {
 }
 
 .files .file-block.jpg:after,
-.files .file-block.jpeg:after {
+.files .file-block.jpeg:after,
+.files .file-block.png:after {
     background: url(../images/jpg.svg) no-repeat right center;
+}
+
+.files .file-block.zip:after {
+    background: url(../images/zip.svg) no-repeat right center;
+}
+
+.files .file-block.rar:after {
+    background: url(../images/rar.svg) no-repeat right center;
 }
 
 .files .file-block b {
@@ -822,39 +831,43 @@ form .uploaded-file .file-img,
     width: 28px;
     height: 28px;
     float: left;
-    background: var(--company-color);
-    mask: url(../images/uploaded-file.svg) no-repeat center;
-    -webkit-mask: url(../images/uploaded-file.svg) no-repeat center;
+    background: url(../images/uploaded-file.svg) no-repeat center;
 }
 
 form .uploaded-file .file-img.pdf,
 .attachments .attachment .file-img.pdf {
-    mask: url(../images/pdf.svg) no-repeat center;
-    -webkit-mask: url(../images/pdf.svg) no-repeat center;
+    background: url(../images/pdf.svg) no-repeat center;
+}
+
+form .uploaded-file .file-img.zip,
+.attachments .attachment .file-img.zip {
+    background: url(../images/zip.svg) no-repeat center;
+}
+
+form .uploaded-file .file-img.rar,
+.attachments .attachment .file-img.rar {
+    background: url(../images/rar.svg) no-repeat center;
 }
 
 form .uploaded-file .file-img.doc,
 .attachments .attachment .file-img.doc,
 form .uploaded-file .file-img.docx,
 .attachments .attachment .file-img.docx {
-    mask: url(../images/doc.svg) no-repeat center;
-    -webkit-mask: url(../images/doc.svg) no-repeat center;
+    background: url(../images/doc.svg) no-repeat center;
 }
 
 form .uploaded-file .file-img.xls,
 .attachments .attachment .file-img.xls,
 form .uploaded-file .file-img.xlsx,
 .attachments .attachment .file-img.xlsx {
-    mask: url(../images/xls.svg) no-repeat center;
-    -webkit-mask: url(../images/xls.svg) no-repeat center;
+    background: url(../images/xls.svg) no-repeat center;
 }
 
 form .uploaded-file .file-img.jpg,
 .attachments .attachment .file-img.jpg,
 form .uploaded-file .file-img.jpeg,
 .attachments .attachment .file-img.jpeg {
-    mask: url(../images/jpg.svg) no-repeat center;
-    -webkit-mask: url(../images/jpg.svg) no-repeat center;
+    background: url(../images/jpg.svg) no-repeat center;
 }
 
 form .uploaded-file .logo {
