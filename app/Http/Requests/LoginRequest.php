@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 
 class LoginRequest extends FormRequest
 {
@@ -20,6 +21,7 @@ class LoginRequest extends FormRequest
     {
         $this->merge([
             'is_active' => 1,
+            'email' => Str::lower($this->email),
         ]);
     }
 
@@ -27,7 +29,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'is_active' => 'required|int',
-            'email' => 'required',
+            'email' => 'required|email:strict',
             'password' => 'required',
         ];
     }
@@ -35,7 +37,7 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            '*.required' => 'Укажите данные для входа'
+            '*.required' => 'Укажите данные для входа',
         ];
     }
 }

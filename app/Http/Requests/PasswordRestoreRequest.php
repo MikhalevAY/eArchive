@@ -19,7 +19,7 @@ class PasswordRestoreRequest extends FormRequest
     public function prepareForValidation()
     {
         $this->merge([
-            'md5Email' => md5($this->email)
+            'md5Email' => md5($this->email),
         ]);
     }
 
@@ -31,15 +31,15 @@ class PasswordRestoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|exists:users,email',
-            'md5Email' => 'required'
+            'email' => 'required|email:strict|exists:users,email,deleted_at,NULL',
+            'md5Email' => 'required',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'email' => 'E-mail'
+            'email' => 'E-mail',
         ];
     }
 }
