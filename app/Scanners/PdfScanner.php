@@ -3,24 +3,26 @@
 namespace App\Scanners;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Imagick;
 use ImagickException;
 
 class PdfScanner extends BaseScanner implements ScannerInterface
 {
     public const RESOLUTION = 300;
-    public const TMPDIR = 'tmp';
 
     /**
      * @throws ImagickException
      */
     public function getText(string $filePath): string
     {
-        if (!Storage::exists(self::TMPDIR)) {
-            Storage::makeDirectory(self::TMPDIR);
+        $tempDir = 'tmp_' . Str::random(8);
+
+        if (!Storage::exists($tempDir)) {
+            Storage::makeDirectory($tempDir);
         }
 
-        $imagePath = public_path('storage/' . self::TMPDIR . '/image.jpg');
+        $imagePath = public_path("storage/$tempDir/image.jpg");
 
         $image = $this->createImage($filePath, $imagePath);
 
@@ -36,7 +38,7 @@ class PdfScanner extends BaseScanner implements ScannerInterface
             }
         }
 
-        Storage::deleteDirectory(self::TMPDIR);
+        Storage::deleteDirectory($tempDir);
 
         return $text;
     }
