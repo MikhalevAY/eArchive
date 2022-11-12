@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\DownloadFile;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,9 +18,19 @@ use Illuminate\Support\Facades\File;
  */
 class Attachment extends Model
 {
-    use HasFactory;
+    use HasFactory, DownloadFile;
 
     protected $fillable = ['document_id', 'name', 'file', 'size'];
+
+    public function fileName(): string
+    {
+        return $this->name;
+    }
+
+    public function filePath(): string
+    {
+        return $this->file;
+    }
 
     public function getExtensionAttribute(): string
     {

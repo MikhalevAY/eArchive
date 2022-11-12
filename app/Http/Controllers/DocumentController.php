@@ -128,4 +128,9 @@ class DocumentController extends Controller
     {
         return $this->documentService->downloadSelected($request->input('documents'));
     }
+
+    public function downloadFile(string $file, string $name): BinaryFileResponse
+    {
+        return response()->download(public_path("/storage/$file"), $name);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\DownloadFile;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\{Builder, Model};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,12 +15,13 @@ use Illuminate\Support\Facades\File;
  * @property integer $id
  * @property integer $type_id
  * @property string $file
+ * @property string $file_name
  * @method static Builder|Document query()
  * @method Builder|Document documentAccessJoin()
  */
 class Document extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, DownloadFile;
 
     protected $fillable = [
         'type_id',
@@ -77,6 +79,16 @@ class Document extends Model
         10 => '10 лет',
         9999 => 'Без срока',
     ];
+
+    public function fileName(): string
+    {
+        return $this->file_name;
+    }
+
+    public function filePath(): string
+    {
+        return $this->file;
+    }
 
     public function scopeDocumentAccessJoin($query)
     {

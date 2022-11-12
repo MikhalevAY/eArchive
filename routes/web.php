@@ -76,6 +76,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/export-selected', 'exportSelected')->name('document.exportSelected');
         Route::get('/download-selected', 'downloadSelected')->name('document.downloadSelected');
         Route::get('/action-with-selected', 'actionWithSelected')->name('document.actionWithSelected');
+        Route::get('/download-file/{file}/{name}', 'downloadFile')->name('document.downloadFile')
+            ->where('file', '(.*)');
     });
 
     Route::controller(ModalController::class)->group(function () {

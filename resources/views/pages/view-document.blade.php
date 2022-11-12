@@ -84,7 +84,7 @@
                             <span>{{ $document->file_name }}</span>
                             <b>{{ $document->file_size }} Mb</b>
                             <div>
-                                <a href="#">Скачать</a>
+                                <a href="{{ $document->downloadLink() }}">Скачать</a>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                                 <span>{{ $attachment->name }}</span>
                                 <b>{{ $attachment->size }} Mb</b>
                                 <div>
-                                    <a href="#">Скачать</a>
+                                    <a href="{{ $attachment->downloadLink() }}">Скачать</a>
                                 </div>
                             </div>
                         @endforeach
