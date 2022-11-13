@@ -2313,3 +2313,8 @@ form .uploaded-file.no-max-width {
     background: var(--company-color);
     border-radius: 4px;
 }
+
+::selection {
+    background: var(--company-color);
+    color: #FFF;
+}

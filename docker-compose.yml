@@ -55,7 +55,7 @@ services:
         container_name: archive_nginx
         restart: unless-stopped
         ports:
-            - "8999:80"
+            - "80:80"
         volumes:
             - ./:/var/www
             - ./docker-compose/nginx:/etc/nginx/conf.d/
