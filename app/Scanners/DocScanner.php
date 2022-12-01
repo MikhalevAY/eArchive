@@ -18,7 +18,7 @@ class DocScanner extends BaseScanner implements ScannerInterface
             } else {
                 $docFile = IOFactory::createReader('MsDoc')->load($filePath);
             }
-            
+
             foreach ($docFile->getSections() as $section) {
                 foreach ($section->getElements() as $element) {
                     if (method_exists($element, 'getElements')) {
