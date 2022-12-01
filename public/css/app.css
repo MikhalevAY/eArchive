@@ -796,6 +796,7 @@ form .file-label div {
 form .file-label i {
     font-style: normal;
     max-width: 350px;
+    height: 80px;
     overflow: hidden;
     display: block;
 }
