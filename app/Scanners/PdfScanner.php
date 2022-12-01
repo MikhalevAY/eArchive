@@ -9,7 +9,7 @@ use ImagickException;
 
 class PdfScanner extends BaseScanner implements ScannerInterface
 {
-    public const RESOLUTION = 300;
+    public const RESOLUTION = 150;
 
     /**
      * @throws ImagickException
@@ -52,6 +52,7 @@ class PdfScanner extends BaseScanner implements ScannerInterface
         $image->setResolution(self::RESOLUTION, self::RESOLUTION);
         $image->setBackgroundColor('white');
         $image->readImage($filePath);
+        $image->scaleImage(800, 0);
         $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
         $image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
         $image->writeImages($imagePath, true);
