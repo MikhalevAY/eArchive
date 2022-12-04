@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\ActionIsAllowed;
+use App\Http\Middleware\CheckApiToken;
 use App\Http\Middleware\CheckUserPermission;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkUserPermission' => CheckUserPermission::class,
-        'actionIsAllowed' => ActionIsAllowed::class
+        'actionIsAllowed' => ActionIsAllowed::class,
+        'CheckApiToken' => CheckApiToken::class,
     ];
 }

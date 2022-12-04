@@ -26,6 +26,16 @@ class DictionaryService
         return $toReturn;
     }
 
+    public function byTypeWithoutType(): array
+    {
+        $toReturn = [];
+        foreach ($this->repository->byType() as $row) {
+            $toReturn[$row['type']][] = collect($row)->except(['type']);
+        }
+
+        return $toReturn;
+    }
+
     public function store(array $data): array
     {
         $dictionary = $this->repository->store($data);
