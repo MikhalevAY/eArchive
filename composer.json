@@ -20,7 +20,8 @@
         "phpmailer/phpmailer": "^6.6",
         "phpoffice/phpword": "^0.18.3",
         "thiagoalessio/tesseract_ocr": "^2.12",
-        "ext-imagick": "*"
+        "ext-imagick": "*",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

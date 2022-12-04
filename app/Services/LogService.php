@@ -25,7 +25,7 @@ class LogService
     {
         $this->repository->create(
             array_merge($data, [
-                'user_id' => auth()->id(),
+                'user_id' => !isset($data['user_id']) ? auth()->id() : $data['user_id'],
                 'device_ip' => request()->ip(),
             ])
         );

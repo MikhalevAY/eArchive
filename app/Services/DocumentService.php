@@ -9,6 +9,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DocumentService
@@ -57,7 +59,10 @@ class DocumentService
         }
 
         return [
-            'message' => __('messages.' . ($data['is_draft'] == 1 ? 'document_stored' : 'document_registered')),
+            'message' => __(
+                'messages.' .
+                (isset($data['is_draft']) && $data['is_draft'] == 1 ? 'document_stored' : 'document_registered')
+            ),
         ];
     }
 
@@ -185,13 +190,52 @@ class DocumentService
 
     private function uploadDocumentFile(array $data): array
     {
-        $file = $data['file']->store('documents', 'public');
+        if (isset($data['file'])) {
+            $file = $data['file']->store('documents', 'public');
 
-        return array_merge($data, [
-            'file_size' => round(($data['file']->getSize() / 1024 / 1024), 3),
-            'file_name' => $data['file']->getClientOriginalName(),
-            'file' => $file,
-            'text' => __('messages.text_is_loading'),
-        ]);
+            return array_merge($data, [
+                'file_size' => round(($data['file']->getSize() / 1024 / 1024), 3),
+                'file_name' => $data['file']->getClientOriginalName(),
+                'file' => $file,
+                'text' => __('messages.text_is_loading'),
+            ]);
+        } else {
+            $base64String = $data['file_base64'];
+            $extension = $this->getMimeExtension($this->base64Mimetype($base64String));
+            $fileName = 'documents/' . Str::random() . '.' . $extension;
+            Storage::put($fileName, base64_decode($base64String));
+
+            return array_merge($data, [
+                'file_size' => round((Storage::size($fileName) / 1024 / 1024), 3),
+                'file_name' => 'Archive document',
+                'file' => $fileName,
+                'text' => __('messages.text_is_loading'),
+            ]);
+        }
+    }
+
+    private function getMimeExtension(string $mimeType): string
+    {
+        return match ($mimeType) {
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'application/msword' => 'doc',
+            'application/pdf' => 'pdf',
+            'image/jpeg' => 'jpg',
+            default => 'txt',
+        };
+    }
+
+    private function base64Mimetype(string $encoded): ?string
+    {
+        if ($decoded = base64_decode($encoded, true)) {
+            $tmpFile = tmpFile();
+            $tmpFilename = stream_get_meta_data($tmpFile)['uri'];
+
+            file_put_contents($tmpFilename, $decoded);
+
+            return mime_content_type($tmpFilename) ?: null;
+        }
+
+        return null;
     }
 }
