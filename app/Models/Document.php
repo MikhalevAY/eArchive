@@ -123,6 +123,11 @@ class Document extends Model
         return $this->belongsTo(User::class, 'author_email', 'email')->withTrashed();
     }
 
+    public function authorId(): int
+    {
+        return $this->author()->pluck('id')->first();
+    }
+
     public function type(): BelongsTo
     {
         return $this->belongsTo(Dictionary::class, 'type_id', 'id');

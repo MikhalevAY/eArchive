@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Models\Document;
 use App\Models\Log;
-use App\Models\User;
 use App\Services\LogService;
 
 class DocumentObserver
@@ -26,7 +25,7 @@ class DocumentObserver
      */
     public function created(Document $document)
     {
-        $userId = User::where('email', 'ivan@test.kz')->get()->pluck('id')->toArray()[0];
+        $userId = $document->authorId();
         $this->logService->create(
             array_merge($this->data, [
                 'user_id' => $userId,
