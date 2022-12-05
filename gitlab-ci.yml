@@ -1,0 +1,13 @@
+stages: # List of stages for jobs, and their order of execution
+  - build
+
+build:
+  stage: build
+  tags: [ earchive_test ]
+  #   only:
+  #     - stage
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  script:
+    - docker rm "archive_php" -f
+    - docker-compose up -d

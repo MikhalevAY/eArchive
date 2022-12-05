@@ -43,15 +43,15 @@ class Document extends Model
         'shelf_life',
         'note',
         'answer_to_number',
+        'answer_to_date',
         'gr_document',
         'performer',
         'text',
         'history',
         'file',
         'file_name',
-        'is_draft',
-        'answer_to_date',
         'file_size',
+        'is_draft',
     ];
 
     protected $dates = ['registration_date', 'registration_time', 'outgoing_date', 'answer_to_date'];
