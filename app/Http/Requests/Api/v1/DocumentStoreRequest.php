@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\v1;
 
+use App\Rules\CheckBase64String;
 use App\Rules\CheckFileExtension;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -37,7 +38,7 @@ class DocumentStoreRequest extends FormRequest
             'answer_to_date' => 'nullable|date_format:Y-m-d',
             'performer' => 'nullable|max:255',
             'gr_document' => 'nullable',
-            'file_base64' => 'required|string',
+            'file_base64' => ['required', 'string', new CheckBase64String],
             'history' => 'nullable',
             'available_for_all' => 'nullable',
             'is_draft' => 'nullable',

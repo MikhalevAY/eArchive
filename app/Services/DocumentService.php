@@ -207,7 +207,7 @@ class DocumentService
 
             return array_merge($data, [
                 'file_size' => round((Storage::size($fileName) / 1024 / 1024), 3),
-                'file_name' => 'Archive document',
+                'file_name' => 'Archive document.' . $extension,
                 'file' => $fileName,
                 'text' => __('messages.text_is_loading'),
             ]);
